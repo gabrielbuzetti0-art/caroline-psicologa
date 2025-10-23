@@ -129,7 +129,9 @@
         }
         .section-title { font-size: 2.5rem; color: #ff6b35; margin-bottom: 1.5rem; }
 
-        .especialidades { background: #fff8f5; padding: 4rem 0; }
+        .section-bg-white { background: white; }
+        .section-bg-light { background: #fff8f5; }
+
         .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin-top: 2rem; }
         .card {
             background: white; padding: 2rem; border-radius: 15px;
@@ -140,9 +142,6 @@
         .card-icon { font-size: 3rem; margin-bottom: 1rem; }
         .card h3 { color: #ff6b35; margin-bottom: 1rem; font-size: 1.5rem; }
 
-        .service-section { background: white; padding: 4rem 0; }
-        .service-section:nth-child(even) { background: #fff8f5; }
-        
         .service-content {
             background: linear-gradient(135deg, #fff8f5 0%, #ffe5d9 100%);
             padding: 2.5rem; border-radius: 20px; margin-top: 2rem;
@@ -156,7 +155,6 @@
             border-left: 4px solid #ff6b35;
         }
 
-        .blog { background: #fff8f5; }
         .blog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 2rem; }
         .blog-card { background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 5px 15px rgba(255, 107, 53, 0.1); transition: transform 0.3s; }
         .blog-card:hover { transform: translateY(-5px); }
@@ -168,7 +166,6 @@
         .blog-content { padding: 1.5rem; }
         .blog-content h3 { color: #ff6b35; margin-bottom: 0.5rem; }
 
-        .testimonials { background: white; }
         .testimonial-card {
             background: #fff8f5; padding: 2rem; border-radius: 15px;
             margin-bottom: 1.5rem; border-left: 4px solid #ff6b35;
@@ -233,7 +230,6 @@
             box-shadow: 0 10px 25px rgba(255, 107, 53, 0.3);
         }
 
-        .faq { background: #fff8f5; }
         .faq-item {
             background: white; padding: 1.5rem; border-radius: 10px; margin-bottom: 1rem;
             transition: background 0.3s;
@@ -242,7 +238,7 @@
         .faq-question { font-weight: bold; color: #ff6b35; font-size: 1.1rem; margin-bottom: 0.5rem; }
         .faq-answer { color: #555; line-height: 1.8; }
 
-        .contact { background: linear-gradient(135deg, #ff8c42 0%, #ff6b35 100%); color: white; text-align: center; }
+        .contact { background: linear-gradient(135deg, #ff8c42 0%, #ff6b35 100%); color: white; text-align: center; padding: 4rem 2rem; }
         .contact-buttons { display: flex; gap: 2rem; justify-content: center; margin-top: 2rem; flex-wrap: wrap; }
         .contact-btn {
             background: white; color: #ff6b35; padding: 15px 35px; border-radius: 50px;
@@ -281,6 +277,15 @@
             display: none;
         }
 
+        .offer-item {
+            background: #fff8f5; 
+            border-left: 4px solid #ff6b35; 
+            border-radius: 12px; 
+            padding: 1.25rem 1rem;
+            margin-bottom: 1rem;
+        }
+        .offer-item h3 { color: #ff6b35; margin-bottom: .4rem; }
+
         @media (max-width: 768px) {
             .nav-links { display: none; }
             .menu-toggle { display: block; }
@@ -290,7 +295,8 @@
             .about { grid-template-columns: 1fr; }
             .section-title { font-size: 2rem; }
 
-            .nav-links {
+            .nav-links.active {
+                display: flex;
                 position: absolute;
                 top: 60px; right: 0;
                 background: #ff6b35;
@@ -319,9 +325,8 @@
         }
         .whatsapp-float:hover { transform: scale(1.1); }
 
-        #inicio, #sobre, #especialidades, #psicoterapia, #supervisao, #estudantes, #palestras, 
-        #minicursos, #mentoria-individual, #mentoria-grupo, #blog, #depoimentos, #faq, #contato {
-            scroll-margin-top: 90px;
+        section {
+            scroll-margin-top: 80px;
         }
     </style>
 </head>
@@ -368,39 +373,41 @@
         <a href="https://wa.me/5517996258369?text=Olá! Gostaria de agendar uma consulta." class="cta-button" target="_blank">Agende sua Consulta</a>
     </section>
 
-    <section class="container" id="sobre">
-        <div class="about">
-            <div class="about-image">🧡</div>
-            <div>
-                <h2 class="section-title">Sobre Mim</h2>
-                <p style="margin-bottom: 1rem;">
-                    Olá! Sou Caroline Marques Brito, psicóloga com atuação em Bauru-SP e atendimento online para todo o Brasil.
-                </p>
-                <p style="margin-bottom: 1rem;">
-                    Meu trabalho é baseado em evidências científicas e voltado para ajudar você a compreender seus pensamentos, emoções e comportamentos, promovendo mudanças significativas em sua vida.
-                </p>
-                <p style="margin-bottom: 1rem;">
-                    Realizo atendimento 100% online, proporcionando conforto e praticidade para que você possa cuidar da sua saúde mental de onde estiver.
-                </p>
-                <p style="margin-bottom: 1rem;">
-                    <strong>CRP:</strong> 14/0165-4<br>
-                    <strong>Formações:</strong><br>
-                    • Psicologia + Pós-graduação em TCC<br>
-                    • Psicologia Baseada em Evidências - Instituto Fernanda Landeira<br>
-                    • Obesidade e Emagrecimento - Instituto Fernanda Landeira
-                </p>
-                <p style="margin-top: 1.5rem;">
-                    <strong>Serviços oferecidos:</strong><br>
-                    ✨ Psicoterapia individual<br>
-                    ✨ Supervisões clínicas para psicólogas<br>
-                    ✨ Mentorias para estudantes de Psicologia<br>
-                    ✨ Palestras e encontros sobre saúde mental
-                </p>
+    <section class="section-bg-white" id="sobre">
+        <div class="container">
+            <div class="about">
+                <div class="about-image">🧡</div>
+                <div>
+                    <h2 class="section-title">Sobre Mim</h2>
+                    <p style="margin-bottom: 1rem;">
+                        Olá! Sou Caroline Marques Brito, psicóloga com atuação em Bauru-SP e atendimento online para todo o Brasil.
+                    </p>
+                    <p style="margin-bottom: 1rem;">
+                        Meu trabalho é baseado em evidências científicas e voltado para ajudar você a compreender seus pensamentos, emoções e comportamentos, promovendo mudanças significativas em sua vida.
+                    </p>
+                    <p style="margin-bottom: 1rem;">
+                        Realizo atendimento 100% online, proporcionando conforto e praticidade para que você possa cuidar da sua saúde mental de onde estiver.
+                    </p>
+                    <p style="margin-bottom: 1rem;">
+                        <strong>CRP:</strong> 14/0165-4<br>
+                        <strong>Formações:</strong><br>
+                        • Psicologia + Pós-graduação em TCC<br>
+                        • Psicologia Baseada em Evidências - Instituto Fernanda Landeira<br>
+                        • Obesidade e Emagrecimento - Instituto Fernanda Landeira
+                    </p>
+                    <p style="margin-top: 1.5rem;">
+                        <strong>Serviços oferecidos:</strong><br>
+                        ✨ Psicoterapia individual<br>
+                        ✨ Supervisões clínicas para psicólogas<br>
+                        ✨ Mentorias para estudantes de Psicologia<br>
+                        ✨ Palestras e encontros sobre saúde mental
+                    </p>
+                </div>
             </div>
         </div>
     </section>
 
-    <section class="especialidades" id="especialidades">
+    <section class="section-bg-light" id="especialidades">
         <div class="container">
             <h2 class="section-title" style="text-align: center;">Áreas de Atuação</h2>
             <div class="cards-grid">
@@ -438,7 +445,7 @@
         </div>
     </section>
 
-    <section class="service-section" id="psicoterapia">
+    <section class="section-bg-white" id="psicoterapia">
         <div class="container">
             <h2 class="section-title">🧠 Psicoterapia Individual</h2>
             <div class="service-content">
@@ -459,7 +466,7 @@
         </div>
     </section>
 
-    <section class="service-section" id="supervisao">
+    <section class="section-bg-light" id="supervisao">
         <div class="container">
             <h2 class="section-title">👩‍⚕️ Supervisão para Psicólogas</h2>
             <div class="service-content">
@@ -481,7 +488,7 @@
         </div>
     </section>
 
-    <section class="service-section" id="estudantes">
+    <section class="section-bg-white" id="estudantes">
         <div class="container">
             <h2 class="section-title">🎓 Formação para Estudantes de Psicologia</h2>
             <div class="service-content">
@@ -505,7 +512,7 @@
         </div>
     </section>
 
-    <section class="service-section" id="palestras">
+    <section class="section-bg-light" id="palestras">
         <div class="container">
             <h2 class="section-title">💬 Palestras e Encontros</h2>
             <div class="service-content">
@@ -517,26 +524,57 @@
                 </p>
                 
                 <h3 style="color: #ff6b35; margin-bottom: 1rem;">Temas disponíveis:</h3>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem;">
-                    <div style="background: white; border-left: 4px solid #ff6b35; border-radius: 12px; padding: 1.25rem 1rem;">
-                        <h3 style="color: #ff6b35; margin-bottom: .4rem;">Saúde Mental no Trabalho</h3>
-                        <p>Ansiedade no ambiente corporativo, prevenção ao burnout e bem-estar organizacional.</p>
-                    </div>
-                    <div style="background: white; border-left: 4px solid #ff6b35; border-radius: 12px; padding: 1.25rem 1rem;">
-                        <h3 style="color: #ff6b35; margin-bottom: .4rem;">Comunicação Não Violenta</h3>
-                        <p>Estratégias para melhorar relações e resolver conflitos de forma saudável.</p>
-                    </div>
-                    <div style="background: white; border-left: 4px solid #ff6b35; border-radius: 12px; padding: 1.25rem 1rem;">
-                        <h3 style="color: #ff6b35; margin-bottom: .4rem;">Gestão das Emoções</h3>
-                        <p>Como lidar com ansiedade, estresse e regulação emocional no dia a dia.</p>
-                    </div>
-                    <div style="background: white; border-left: 4px solid #ff6b35; border-radius: 12px; padding: 1.25rem 1rem;">
-                        <h3 style="color: #ff6b35; margin-bottom: .4rem;">Relacionamentos Saudáveis</h3>
-                        <p>Habilidades de comunicação, estabelecimento de limites e empatia.</p>
-                    </div>
-                    <div style="background: white; border-left: 4px solid #ff6b35; border-radius: 12px; padding: 1.25rem 1rem;">
-                        <h3 style="color: #ff6b35; margin-bottom: .4rem;">Saúde Mental para Líderes</h3>
-                        <p>Como criar ambientes de trabalho mais acolhedores e produtivos.</p>
-                    </div>
-                    <div style="background: white; border-left: 4px solid #ff6b35; border-radius: 12px; padding: 1.25rem 1rem;">
-                        <h3 style="color: #ff6b35; margin-bottom: .4rem;">Autocuidado e Qualidade
+                <div class="offer-item">
+                    <h3>Saúde Mental no Trabalho</h3>
+                    <p>Ansiedade no ambiente corporativo, prevenção ao burnout e bem-estar organizacional.</p>
+                </div>
+                <div class="offer-item">
+                    <h3>Comunicação Não Violenta</h3>
+                    <p>Estratégias para melhorar relações e resolver conflitos de forma saudável.</p>
+                </div>
+                <div class="offer-item">
+                    <h3>Gestão das Emoções</h3>
+                    <p>Como lidar com ansiedade, estresse e regulação emocional no dia a dia.</p>
+                </div>
+                <div class="offer-item">
+                    <h3>Relacionamentos Saudáveis</h3>
+                    <p>Habilidades de comunicação, estabelecimento de limites e empatia.</p>
+                </div>
+                <div class="offer-item">
+                    <h3>Saúde Mental para Líderes</h3>
+                    <p>Como criar ambientes de trabalho mais acolhedores e produtivos.</p>
+                </div>
+                <div class="offer-item">
+                    <h3>Autocuidado e Qualidade de Vida</h3>
+                    <p>Reflexões práticas sobre equilíbrio emocional e bem-estar.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-bg-white" id="minicursos">
+        <div class="container">
+            <h2 class="section-title">📚 Minicursos</h2>
+            <p>Formações curtas e práticas (on-line), com material de apoio e exercícios.</p>
+            <div style="margin-top:2rem;">
+                <div class="offer-item">
+                    <h3>Gestão da Ansiedade em 4 Encontros</h3>
+                    <p>Psicoeducação, respiração diafragmática, reestruturação cognitiva e plano de ação.</p>
+                </div>
+                <div class="offer-item">
+                    <h3>Comunicação Não Violenta</h3>
+                    <p>Prática de CNV para conflitos familiares e profissionais.</p>
+                </div>
+                <div class="offer-item">
+                    <h3>Hábitos e Rotina Saudável</h3>
+                    <p>Ferramentas da TCC para criar e manter hábitos.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-bg-light" id="mentoria-individual">
+        <div class="container">
+            <h2 class="section-title">👤 Mentorias Individuais</h2>
+            <p>Encontros individuais com metas claras e acompanhamento entre sessões.
+Foco na sua demanda específica, com tarefas práticas e devolutivas objetivas.
