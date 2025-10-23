@@ -60,9 +60,7 @@
         }
         .nav-links a:hover { opacity: 0.8; }
 
-        .more {
-            position: relative;
-        }
+        .more { position: relative; }
         .more-toggle {
             background: rgba(255,255,255,0.15);
             border: none;
@@ -147,7 +145,6 @@
 
         .service-section { background: white; }
         .service-section:nth-child(even) { background: #fff8f5; }
-        
         .service-content {
             background: linear-gradient(135deg, #fff8f5 0%, #ffe5d9 100%);
             padding: 2.5rem; border-radius: 20px; margin-top: 2rem;
@@ -168,7 +165,7 @@
         .blog-image {
             width: 100%; height: 200px;
             background: linear-gradient(135deg, #ff8c42 0%, #ff6b35 100%);
-            display: flex; align-items: center; justify-content: center; font-size: 4rem;
+            display: flex; align-items: center; justify-content: center; font-size: 4rem; color:#fff;
         }
         .blog-content { padding: 1.5rem; }
         .blog-content h3 { color: #ff6b35; margin-bottom: 0.5rem; }
@@ -254,10 +251,26 @@
         #minicursos, #mentoria-individual, #mentoria-grupo {
             scroll-margin-top: 90px;
         }
+
+        /* === Extras para Depoimentos com envio e moderação === */
+        .t-wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:20px}
+        .t-card{background:#fff;border:1px solid #eaeaea;border-radius:16px;padding:18px;box-shadow:0 6px 14px rgba(0,0,0,.04)}
+        .t-row{display:flex;flex-direction:column;gap:10px}
+        .t-row input,.t-row textarea,.t-row select{padding:12px 14px;border:1px solid #eaeaea;border-radius:12px}
+        .t-row textarea{min-height:110px;resize:vertical}
+        .stars{display:flex;gap:6px}
+        .star{font-size:20px;cursor:pointer;user-select:none}
+        .star.active{color:#ffb703}
+        .tag{font-size:12px;background:#fff8f5;border:1px solid #ffe0d4;padding:4px 8px;border-radius:999px;color:#ff6b35}
+        .admin-panel{display:none;position:fixed;inset:auto 16px 16px 16px;max-height:55vh;overflow:auto;background:#fff;border:1px solid #eaeaea;border-radius:16px;padding:16px;box-shadow:0 10px 30px rgba(0,0,0,.12);z-index:9999}
+        .admin-panel.open{display:block}
+        .admin-panel h4{margin:0 0 6px}
+        .pill{display:inline-block;padding:6px 10px;border-radius:999px;background:#fff8f5;border:1px solid #ffe0d4;color:#ff6b35;font-size:12px}
     </style>
 </head>
 <body>
-    <a href="https://wa.me/5517996258369?text=Olá! Gostaria de agendar uma consulta." class="whatsapp-float" target="_blank" rel="noopener noreferrer">💬</a>
+    <!-- Atualizei o número para o informado -->
+    <a href="https://wa.me/5517996258369?text=Olá! Vim pelo site e quero agendar uma consulta." class="whatsapp-float" target="_blank" rel="noopener noreferrer">💬</a>
 
     <header>
         <nav>
@@ -305,7 +318,7 @@
             <div>
                 <h2 class="section-title">Sobre Mim</h2>
                 <p style="margin-bottom: 1rem;">
-                    Olá! Sou Caroline Marques Brito, psicóloga formada com especialização em Terapia Cognitivo Comportamental (TCC). 
+                    Olá! Sou Caroline Marques Brito, psicóloga com especialização em Terapia Cognitivo Comportamental (TCC).
                 </p>
                 <p style="margin-bottom: 1rem;">
                     Meu trabalho é baseado em evidências científicas e voltado para ajudar você a compreender seus pensamentos, emoções e comportamentos, promovendo mudanças significativas em sua vida.
@@ -348,17 +361,17 @@
                 <div class="card">
                     <div class="card-icon">🎭</div>
                     <h3>Transtorno Borderline</h3>
-                    <p>Suporte especializado utilizando a abordagem metodológica da DBT (Terapia Comportamental Dialética) para instabilidade emocional, relações interpessoais e regulação de emoções.</p>
+                    <p>Suporte com ferramentas da DBT (Terapia Comportamental Dialética) para regulação emocional e relações.</p>
                 </div>
                 <div class="card">
                     <div class="card-icon">💔</div>
                     <h3>Problemas de Relacionamento</h3>
-                    <p>Ajuda para conflitos conjugais, familiares e dificuldades nas relações interpessoais.</p>
+                    <p>Ajuda para comunicação, limites, empatia e resolução de conflitos.</p>
                 </div>
                 <div class="card">
                     <div class="card-icon">💼</div>
                     <h3>Questões Profissionais</h3>
-                    <p>Orientação para estresse no trabalho, síndrome de burnout e dificuldades na carreira.</p>
+                    <p>Orientação para estresse no trabalho, burnout e dificuldades na carreira.</p>
                 </div>
                 <div class="card">
                     <div class="card-icon">👨‍👩‍👧</div>
@@ -374,16 +387,13 @@
         <div class="service-content">
             <h3 style="color: #ff6b35; margin-bottom: 1rem;">Como funciona?</h3>
             <p style="margin-bottom: 1rem;">
-                As sessões têm duração de <strong>50 minutos</strong>, realizadas <strong>100% online</strong>, por meio de uma plataforma de vídeo segura e estável.
+                Sessões de <strong>50 minutos</strong>, <strong>100% online</strong>, com técnicas da <strong>Terapia Cognitivo-Comportamental (TCC)</strong>.
             </p>
             <p style="margin-bottom: 1rem;">
-                Basta encontrar um lugar confortável e reservado, onde você se sinta à vontade para conversar e se expressar.
-            </p>
-            <p style="margin-bottom: 1rem;">
-                Os encontros acontecem <strong>uma vez por semana</strong> (ou conforme sua necessidade) e são conduzidos com base nas técnicas da <strong>Terapia Cognitivo-Comportamental (TCC)</strong>.
+                Encontros geralmente <strong>1x por semana</strong>, com plano de ação prático e acolhimento.
             </p>
             <p>
-                Durante o processo, você encontrará <strong>acolhimento, escuta ativa e planos de ação personalizados</strong>, sempre com o objetivo de promover autoconhecimento e bem-estar emocional.
+                Você encontra escuta ativa, estratégias claras e acompanhamento para evolução contínua.
             </p>
         </div>
     </section>
@@ -391,19 +401,13 @@
     <section class="service-section container" id="supervisao">
         <h2 class="section-title">👩‍⚕️ Supervisão para Psicólogas</h2>
         <div class="service-content">
-            <p style="margin-bottom: 1rem;">
-                Se você é psicóloga e sente <strong>insegurança na sua prática clínica</strong>, tem dúvidas sobre intervenções ou gostaria de aprimorar seu raciocínio clínico, eu posso te ajudar.
-            </p>
-            <p style="margin-bottom: 1rem;">
-                Com base nas minhas formações e experiência em TCC, ofereço um <strong>espaço seguro e técnico</strong> para reflexão, construção de estratégias e fortalecimento da sua atuação profissional.
-            </p>
-            
+            <p style="margin-bottom: 1rem;">Espaço técnico e seguro para aprimorar a prática clínica com base na TCC.</p>
             <div class="highlight-box">
-                <h3 style="color: #ff6b35; margin-bottom: 0.8rem;">Detalhes da Supervisão</h3>
-                <p style="margin-bottom: 0.5rem;">⏰ <strong>Duração:</strong> 1 hora</p>
-                <p style="margin-bottom: 0.5rem;">💰 <strong>Investimento:</strong> R$ 100,00</p>
-                <p style="margin-bottom: 1rem;">📋 <strong>Antes do encontro:</strong> Você preenche um formulário breve com suas principais dúvidas e desafios, para que possamos aproveitar ao máximo o tempo juntas.</p>
-                <p>📄 <strong>Ao final:</strong> Você recebe um material de apoio com os pontos trabalhados durante a sessão.</p>
+                <h3 style="color: #ff6b35; margin-bottom: 0.8rem;">Detalhes</h3>
+                <p>⏰ <strong>Duração:</strong> 1 hora</p>
+                <p>📋 <strong>Antes do encontro:</strong> formulário breve sobre dúvidas e casos.</p>
+                <p>📄 <strong>Após a sessão:</strong> material de apoio com pontos trabalhados.</p>
+                <p style="margin-top:.5rem" class="faq-answer"><em>(Valores não exibidos no site; solicitar por WhatsApp.)</em></p>
             </div>
         </div>
     </section>
@@ -411,109 +415,63 @@
     <section class="service-section container" id="estudantes">
         <h2 class="section-title">🎓 Formação para Estudantes de Psicologia</h2>
         <div class="service-content">
-            <p style="margin-bottom: 1rem;">
-                Se você é <strong>estudante de Psicologia</strong> e tem curiosidade sobre o trabalho clínico, sente insegurança com os atendimentos ou quer entender melhor como funciona a TCC na prática, este espaço é para você.
-            </p>
-            <p style="margin-bottom: 1rem;">
-                Vamos conversar sobre:
-            </p>
-            <ul style="margin-left: 2rem; margin-bottom: 1rem;">
-                <li>Os primeiros passos na clínica</li>
-                <li>O papel do terapeuta</li>
-                <li>A estrutura da Terapia Cognitivo-Comportamental</li>
-                <li>Esclarecimento de dúvidas práticas</li>
-                <li>Ferramentas que vão te ajudar a se preparar para a atuação profissional</li>
+            <p>Para quem quer entender a TCC na prática, ganhar segurança nos atendimentos e construir repertório clínico.</p>
+            <ul style="margin-left: 1.25rem; margin-top:.75rem;">
+                <li>Primeiros passos na clínica e papel do terapeuta</li>
+                <li>Estrutura da TCC e formulação de caso</li>
+                <li>Ferramentas e dúvidas práticas</li>
             </ul>
-            <p>
-                Um espaço de aprendizado, troca e fortalecimento da sua formação em Psicologia.
-            </p>
         </div>
     </section>
 
     <section class="service-section container" id="palestras">
         <h2 class="section-title">💬 Palestras e Encontros</h2>
         <div class="service-content">
-            <p style="margin-bottom: 1.5rem;">
-                Se você faz parte de uma <strong>empresa, instituição de ensino ou grupo</strong> e busca alguém para falar sobre saúde mental, relações, emoções, autocuidado ou comportamento humano, posso desenvolver uma <strong>palestra personalizada</strong> conforme o tema e o público.
-            </p>
-            <p style="margin-bottom: 1.5rem;">
-                O objetivo é promover <strong>reflexão, aprendizado e acolhimento</strong>, sempre com uma linguagem leve, prática e baseada na Psicologia Cognitivo-Comportamental.
-            </p>
-            
-            <h3 style="color: #ff6b35; margin-bottom: 1rem;">Temas disponíveis:</h3>
-            <div class="offer-grid">
-                <div class="offer">
-                    <h3>Saúde Mental no Trabalho</h3>
-                    <p>Ansiedade no ambiente corporativo, prevenção ao burnout e bem-estar organizacional.</p>
-                </div>
-                <div class="offer">
-                    <h3>Comunicação Não Violenta</h3>
-                    <p>Estratégias para melhorar relações e resolver conflitos de forma saudável.</p>
-                </div>
-                <div class="offer">
-                    <h3>Gestão das Emoções</h3>
-                    <p>Como lidar com ansiedade, estresse e regulação emocional no dia a dia.</p>
-                </div>
-                <div class="offer">
-                    <h3>Relacionamentos Saudáveis</h3>
-                    <p>Habilidades de comunicação, estabelecimento de limites e empatia.</p>
-                </div>
-                <div class="offer">
-                    <h3>Saúde Mental para Líderes</h3>
-                    <p>Como criar ambientes de trabalho mais acolhedores e produtivos.</p>
-                </div>
-                <div class="offer">
-                    <h3>Autocuidado e Qualidade de Vida</h3>
-                    <p>Reflexões práticas sobre equilíbrio emocional e bem-estar.</p>
-                </div>
+            <p>Conteúdos personalizados sobre saúde mental, relações e autocuidado, com linguagem leve e baseada em evidências.</p>
+            <div class="offer-grid" style="margin-top:1rem;">
+                <div class="offer"><h3>Saúde Mental no Trabalho</h3><p>Ansiedade, burnout e bem-estar organizacional.</p></div>
+                <div class="offer"><h3>Comunicação Não Violenta</h3><p>Relações mais empáticas e resolução de conflitos.</p></div>
+                <div class="offer"><h3>Gestão das Emoções</h3><p>Ansiedade, estresse e regulação emocional.</p></div>
+                <div class="offer"><h3>Relacionamentos Saudáveis</h3><p>Limites, comunicação e respeito mútuo.</p></div>
             </div>
         </div>
     </section>
 
     <section class="offers container" id="minicursos">
         <h2 class="section-title">📚 Minicursos</h2>
-        <p>Formações curtas e práticas (on-line), com material de apoio e exercícios.</p>
+        <p>Formações online, curtas e práticas, com material de apoio.</p>
         <div class="offer-grid" style="margin-top:1rem;">
-            <div class="offer">
-                <h3>Gestão da Ansiedade em 4 Encontros</h3>
-                <p>Psicoeducação, respiração diafragmática, reestruturação cognitiva e plano de ação.</p>
-            </div>
-            <div class="offer">
-                <h3>Comunicação Não Violenta</h3>
-                <p>Prática de CNV para conflitos familiares e profissionais.</p>
-            </div>
-            <div class="offer">
-                <h3>Hábitos e Rotina Saudável</h3>
-                <p>Ferramentas da TCC para criar e manter hábitos.</p>
-            </div>
+            <div class="offer"><h3>Gestão da Ansiedade em 4 Encontros</h3><p>Psicoeducação, respiração, reestruturação cognitiva e plano de ação.</p></div>
+            <div class="offer"><h3>Comunicação Não Violenta</h3><p>Prática aplicada em conflitos do dia a dia.</p></div>
+            <div class="offer"><h3>Hábitos e Rotina Saudável</h3><p>Ferramentas da TCC para criar e manter hábitos.</p></div>
         </div>
     </section>
 
     <section class="offers container" id="mentoria-individual">
         <h2 class="section-title">👤 Mentorias Individuais</h2>
-        <p>Encontros 1:1 focados na sua demanda específica, com plano personalizado e acompanhamento.</p>
-        <div class="offer" style="margin-top:1rem;">
-            <h3>Como funciona</h3>
-            <p>Sessões de 50 min, avaliação inicial, metas claras e tarefas entre os encontros.</p>
-        </div>
+        <p>Encontros 1:1 com metas claras e tarefas entre sessões.</p>
     </section>
 
     <section class="offers container" id="mentoria-grupo">
         <h2 class="section-title">👥 Mentorias em Grupo</h2>
-        <p>Turmas pequenas com objetivos comuns (ex.: gestão da ansiedade; comunicação em casais).</p>
-        <div class="offer" style="margin-top:1rem;">
-            <h3>Formato</h3>
-            <p>Encontros semanais on-line, comunidade de apoio e materiais complementares.</p>
-        </div>
+        <p>Turmas pequenas para objetivos em comum (ex.: ansiedade; comunicação em casais).</p>
     </section>
 
     <section class="tcc container">
         <h2 class="section-title" style="text-align: center;">O que é a Terapia Cognitivo Comportamental?</h2>
         <div class="tcc-content">
             <p style="margin-bottom: 1rem;">
-                A <strong>Terapia Cognitivo Comportamental (TCC)</strong> é uma abordagem terapêutica cientificamente comprovada que foca na relação entre pensamentos, emoções e comportamentos.
+                A <strong>Terapia Cognitivo Comportamental (TCC)</strong> é uma abordagem com forte base científica, focada na relação entre pensamentos, emoções e comportamentos.
             </p>
             <p style="margin-bottom: 1rem;">
-                Na TCC, trabalhamos juntos para identificar padrões de pensamento disfuncionais que podem estar causando sofrimento emocional e comportamentos prejudiciais. A partir disso, desenvolvemos estratégias práticas para modificar esses padrões.
+                Identificamos padrões que mantêm o sofrimento e construímos estratégias práticas para mudar esses ciclos.
             </p>
-            <p style
+            <p>
+                Na TCC, você participa ativamente do processo, com intervenções orientadas a objetivos e mensuráveis.
+            </p>
+        </div>
+    </section>
+
+    <!-- ===== BLOG ===== -->
+    <section class="blog container" id="blog">
+        <h2 class="section-title" st
