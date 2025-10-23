@@ -2,16 +2,14 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
+    <!-- Base: garante caminhos corretos no GitHub Pages -->
+    <base href="https://gabrielbuzetti0-art.github.io/caroline-psicologa/">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Caroline Marques Brito - Psicóloga especializada em Terapia Cognitivo Comportamental (TCC). Atendimento online para ansiedade, depressão, borderline e relacionamentos.">
     <meta name="keywords" content="psicóloga online, terapia cognitivo comportamental, TCC, ansiedade, depressão, borderline, terapia online">
     <title>Caroline Marques Brito - Psicóloga Online | TCC</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -39,11 +37,15 @@
             justify-content: space-between;
             align-items: center;
             padding: 0 2rem;
+            position: relative;
         }
 
-        .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
+        .logo { font-size: 1.5rem; font-weight: bold; }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
         }
 
         .nav-links {
@@ -58,9 +60,47 @@
             transition: opacity 0.3s;
             font-weight: 500;
         }
+        .nav-links a:hover { opacity: 0.8; }
 
-        .nav-links a:hover {
-            opacity: 0.8;
+        /* 3 pontinhos (more menu) */
+        .more {
+            position: relative;
+        }
+        .more-toggle {
+            background: rgba(255,255,255,0.15);
+            border: none;
+            color: white;
+            font-size: 1.35rem;
+            line-height: 1;
+            padding: .5rem .7rem;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        .more-toggle:focus { outline: 2px solid rgba(255,255,255,0.5); }
+
+        .more-dropdown {
+            position: absolute;
+            top: 120%;
+            right: 0;
+            background: #fff;
+            color: #333;
+            border-radius: 12px;
+            min-width: 240px;
+            box-shadow: 0 12px 28px rgba(0,0,0,0.18);
+            display: none;
+            overflow: hidden;
+            z-index: 1100;
+        }
+        .more-dropdown a {
+            display: block;
+            padding: .9rem 1rem;
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+        }
+        .more-dropdown a:hover {
+            background: #fff3ee;
+            color: #ff6b35;
         }
 
         /* Hero Section */
@@ -71,344 +111,187 @@
             text-align: center;
             margin-top: 60px;
         }
-
-        .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            animation: fadeInUp 1s ease;
-        }
-
-        .hero p {
-            font-size: 1.3rem;
-            margin-bottom: 2rem;
-            opacity: 0.95;
-        }
-
+        .hero h1 { font-size: 3rem; margin-bottom: 1rem; animation: fadeInUp 1s ease; }
+        .hero p { font-size: 1.3rem; margin-bottom: 2rem; opacity: 0.95; }
         .cta-button {
             display: inline-block;
-            background: white;
-            color: #ff6b35;
-            padding: 15px 40px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 1.1rem;
+            background: white; color: #ff6b35;
+            padding: 15px 40px; border-radius: 50px;
+            text-decoration: none; font-weight: bold; font-size: 1.1rem;
             transition: transform 0.3s, box-shadow 0.3s;
         }
-
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-        }
+        .cta-button:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
 
         /* Container */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 4rem 2rem;
-        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 4rem 2rem; }
 
         /* About Section */
-        .about {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            align-items: center;
-        }
-
+        .about { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
         .about-image {
-            width: 100%;
-            height: 400px;
+            width: 100%; height: 400px;
             background: linear-gradient(135deg, #ffe5d9 0%, #ffd4c1 100%);
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 6rem;
+            border-radius: 20px; display: flex; align-items: center; justify-content: center; font-size: 6rem;
         }
-
-        .section-title {
-            font-size: 2.5rem;
-            color: #ff6b35;
-            margin-bottom: 1.5rem;
-        }
+        .section-title { font-size: 2.5rem; color: #ff6b35; margin-bottom: 1.5rem; }
 
         /* Especialidades */
-        .especialidades {
-            background: #fff8f5;
-            padding: 4rem 0;
-        }
-
-        .cards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
+        .especialidades { background: #fff8f5; padding: 4rem 0; }
+        .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin-top: 2rem; }
         .card {
-            background: white;
-            padding: 2rem;
-            border-radius: 15px;
+            background: white; padding: 2rem; border-radius: 15px;
             box-shadow: 0 5px 15px rgba(255, 107, 53, 0.1);
             transition: transform 0.3s, box-shadow 0.3s;
         }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.2);
-        }
-
-        .card-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-
-        .card h3 {
-            color: #ff6b35;
-            margin-bottom: 1rem;
-            font-size: 1.5rem;
-        }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(255, 107, 53, 0.2); }
+        .card-icon { font-size: 3rem; margin-bottom: 1rem; }
+        .card h3 { color: #ff6b35; margin-bottom: 1rem; font-size: 1.5rem; }
 
         /* TCC Section */
-        .tcc {
-            background: white;
-        }
-
+        .tcc { background: white; }
         .tcc-content {
             background: linear-gradient(135deg, #fff8f5 0%, #ffe5d9 100%);
-            padding: 3rem;
-            border-radius: 20px;
-            margin-top: 2rem;
+            padding: 3rem; border-radius: 20px; margin-top: 2rem;
         }
 
         /* Blog Section */
-        .blog {
-            background: #fff8f5;
-        }
-
-        .blog-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .blog-card {
-            background: white;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(255, 107, 53, 0.1);
-            transition: transform 0.3s;
-        }
-
-        .blog-card:hover {
-            transform: translateY(-5px);
-        }
-
+        .blog { background: #fff8f5; }
+        .blog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 2rem; }
+        .blog-card { background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 5px 15px rgba(255, 107, 53, 0.1); transition: transform 0.3s; }
+        .blog-card:hover { transform: translateY(-5px); }
         .blog-image {
-            width: 100%;
-            height: 200px;
+            width: 100%; height: 200px;
             background: linear-gradient(135deg, #ff8c42 0%, #ff6b35 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 4rem;
+            display: flex; align-items: center; justify-content: center; font-size: 4rem;
         }
+        .blog-content { padding: 1.5rem; }
+        .blog-content h3 { color: #ff6b35; margin-bottom: 0.5rem; }
 
-        .blog-content {
-            padding: 1.5rem;
+        /* Ofertas (novas seções) */
+        .offers { background: #fff; }
+        .offer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; margin-top: 1.5rem; }
+        .offer {
+            background: #fff8f5; border-left: 4px solid #ff6b35;
+            border-radius: 12px; padding: 1.25rem 1rem;
         }
-
-        .blog-content h3 {
-            color: #ff6b35;
-            margin-bottom: 0.5rem;
-        }
+        .offer h3 { color: #ff6b35; margin-bottom: .4rem; }
 
         /* Testimonials */
-        .testimonials {
-            background: white;
-        }
-
+        .testimonials { background: white; }
         .testimonial-card {
-            background: #fff8f5;
-            padding: 2rem;
-            border-radius: 15px;
-            margin-bottom: 1.5rem;
-            border-left: 4px solid #ff6b35;
+            background: #fff8f5; padding: 2rem; border-radius: 15px;
+            margin-bottom: 1.5rem; border-left: 4px solid #ff6b35;
         }
-
-        .testimonial-card p {
-            font-style: italic;
-            margin-bottom: 1rem;
-            color: #555;
-        }
-
-        .testimonial-author {
-            font-weight: bold;
-            color: #ff6b35;
-        }
+        .testimonial-card p { font-style: italic; margin-bottom: 1rem; color: #555; }
+        .testimonial-author { font-weight: bold; color: #ff6b35; }
 
         /* FAQ */
-        .faq {
-            background: #fff8f5;
-        }
-
+        .faq { background: #fff8f5; }
         .faq-item {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 10px;
-            margin-bottom: 1rem;
-            cursor: pointer;
-            transition: background 0.3s;
+            background: white; padding: 1.5rem; border-radius: 10px; margin-bottom: 1rem; cursor: pointer; transition: background 0.3s;
         }
-
-        .faq-item:hover {
-            background: #fff8f5;
-        }
-
-        .faq-question {
-            font-weight: bold;
-            color: #ff6b35;
-            font-size: 1.1rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .faq-answer {
-            color: #555;
-            line-height: 1.8;
-        }
+        .faq-item:hover { background: #fff8f5; }
+        .faq-question { font-weight: bold; color: #ff6b35; font-size: 1.1rem; margin-bottom: 0.5rem; }
+        .faq-answer { color: #555; line-height: 1.8; }
 
         /* Contact Section */
-        .contact {
-            background: linear-gradient(135deg, #ff8c42 0%, #ff6b35 100%);
-            color: white;
-            text-align: center;
-        }
-
-        .contact-buttons {
-            display: flex;
-            gap: 2rem;
-            justify-content: center;
-            margin-top: 2rem;
-            flex-wrap: wrap;
-        }
-
+        .contact { background: linear-gradient(135deg, #ff8c42 0%, #ff6b35 100%); color: white; text-align: center; }
+        .contact-buttons { display: flex; gap: 2rem; justify-content: center; margin-top: 2rem; flex-wrap: wrap; }
         .contact-btn {
-            background: white;
-            color: #ff6b35;
-            padding: 15px 35px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: bold;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
+            background: white; color: #ff6b35; padding: 15px 35px; border-radius: 50px;
+            text-decoration: none; font-weight: bold; display: inline-flex; align-items: center; gap: 10px;
             transition: transform 0.3s, box-shadow 0.3s;
         }
-
-        .contact-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-        }
+        .contact-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
 
         /* Footer */
-        footer {
-            background: #2c2c2c;
-            color: white;
-            text-align: center;
-            padding: 2rem;
-        }
+        footer { background: #2c2c2c; color: white; text-align: center; padding: 2rem; }
 
-        /* Mobile Menu */
+        /* Mobile */
         .menu-toggle {
             display: none;
-            background: none;
-            border: none;
-            color: white;
-            font-size: 1.5rem;
-            cursor: pointer;
+            background: none; border: none; color: white;
+            font-size: 1.5rem; cursor: pointer;
         }
 
         @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .menu-toggle { display: block; }
+
+            .hero h1 { font-size: 2rem; }
+            .about { grid-template-columns: 1fr; }
+            .section-title { font-size: 2rem; }
+
+            /* menu mobile aberto */
             .nav-links {
                 display: none;
+                position: absolute;
+                top: 60px; right: 0;
+                background: #ff6b35;
+                flex-direction: column;
+                gap: 1rem; padding: 1rem 1.5rem;
+                border-bottom-left-radius: 12px;
+                box-shadow: 0 10px 25px rgba(0,0,0,0.2);
             }
+            .nav-links a { padding: .25rem 0; }
 
-            .menu-toggle {
-                display: block;
-            }
-
-            .hero h1 {
-                font-size: 2rem;
-            }
-
-            .about {
-                grid-template-columns: 1fr;
-            }
-
-            .section-title {
-                font-size: 2rem;
-            }
+            /* dropdown 3 pontinhos mais “gordinho” no mobile */
+            .more-dropdown { min-width: 220px; }
         }
 
         @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(30px); }
+            to   { opacity: 1; transform: translateY(0); }
         }
 
+        /* Botão WhatsApp flutuante */
         .whatsapp-float {
-            position: fixed;
-            width: 60px;
-            height: 60px;
-            bottom: 40px;
-            right: 40px;
-            background-color: #25d366;
-            color: #FFF;
-            border-radius: 50px;
-            text-align: center;
-            font-size: 30px;
-            box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
-            z-index: 999;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: transform 0.3s;
-            text-decoration: none;
+            position: fixed; width: 60px; height: 60px; bottom: 40px; right: 40px;
+            background-color: #25d366; color: #FFF; border-radius: 50px; text-align: center; font-size: 30px;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.3); z-index: 999; display: flex; align-items: center; justify-content: center;
+            cursor: pointer; transition: transform 0.3s; text-decoration: none;
         }
+        .whatsapp-float:hover { transform: scale(1.1); }
 
-        .whatsapp-float:hover {
-            transform: scale(1.1);
+        /* Compensa header fixo ao rolar para âncoras */
+        #inicio, #sobre, #especialidades, #blog, #depoimentos, #faq, #contato,
+        #palestras, #minicursos, #mentoria-individual, #mentoria-grupo {
+            scroll-margin-top: 90px;
         }
     </style>
 </head>
 <body>
     <!-- WhatsApp Floating Button -->
-    <a href="https://wa.me/5517996258369?text=Olá! Gostaria de agendar uma consulta." class="whatsapp-float" target="_blank">
-        💬
-    </a>
+    <a href="https://wa.me/5517996258369?text=Olá! Gostaria de agendar uma consulta." class="whatsapp-float" target="_blank" rel="noopener noreferrer">💬</a>
 
     <!-- Header -->
     <header>
         <nav>
             <div class="logo">Caroline M. Brito</div>
-            <button class="menu-toggle">☰</button>
-            <ul class="nav-links">
-                <li><a href="#inicio">Início</a></li>
-                <li><a href="#sobre">Sobre</a></li>
-                <li><a href="#especialidades">Especialidades</a></li>
-                <li><a href="#blog">Blog</a></li>
-                <li><a href="#depoimentos">Depoimentos</a></li>
-                <li><a href="#faq">FAQ</a></li>
-                <li><a href="#contato">Contato</a></li>
-            </ul>
+
+            <div class="nav-right">
+                <button class="menu-toggle" aria-label="Abrir menu principal">☰</button>
+
+                <ul class="nav-links">
+                    <li><a href="#inicio">Início</a></li>
+                    <li><a href="#sobre">Sobre</a></li>
+                    <li><a href="#especialidades">Especialidades</a></li>
+                    <li><a href="#blog">Blog</a></li>
+                    <li><a href="#depoimentos">Depoimentos</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                    <li><a href="#contato">Contato</a></li>
+                </ul>
+
+                <!-- 3 pontinhos -->
+                <div class="more">
+                    <button class="more-toggle" aria-haspopup="true" aria-expanded="false" aria-label="Mais opções">⋯</button>
+                    <div class="more-dropdown" role="menu" aria-label="Mais opções">
+                        <a href="#palestras" role="menuitem">🎤 Palestras</a>
+                        <a href="#minicursos" role="menuitem">📚 Minicursos</a>
+                        <a href="#mentoria-individual" role="menuitem">👤 Mentorias Individuais</a>
+                        <a href="#mentoria-grupo" role="menuitem">👥 Mentorias em Grupo</a>
+                    </div>
+                </div>
+            </div>
         </nav>
     </header>
 
@@ -492,9 +375,7 @@
             <p style="margin-bottom: 1rem;">
                 Na TCC, trabalhamos juntos para identificar padrões de pensamento disfuncionais que podem estar causando sofrimento emocional e comportamentos prejudiciais. A partir disso, desenvolvemos estratégias práticas para modificar esses padrões.
             </p>
-            <p style="margin-bottom: 1rem;">
-                <strong>Benefícios da TCC:</strong>
-            </p>
+            <p style="margin-bottom: 1rem;"><strong>Benefícios da TCC:</strong></p>
             <ul style="margin-left: 2rem; margin-bottom: 1rem;">
                 <li>Resultados em curto/médio prazo</li>
                 <li>Técnicas práticas aplicáveis ao cotidiano</li>
@@ -502,11 +383,67 @@
                 <li>Eficácia comprovada cientificamente</li>
                 <li>Prevenção de recaídas</li>
             </ul>
-            <p>
-                É uma terapia estruturada, diretiva e focada em objetivos, ideal para quem busca mudanças concretas em sua vida.
-            </p>
+            <p>É uma terapia estruturada, diretiva e focada em objetivos, ideal para quem busca mudanças concretas em sua vida.</p>
         </div>
     </section>
+
+    <!-- NOVAS SEÇÕES (menu ⋯) -->
+    <section class="offers container" id="palestras">
+        <h2 class="section-title">Palestras</h2>
+        <p>Conteúdos para empresas, escolas e eventos: ansiedade no trabalho, comunicação não violenta, prevenção ao burnout, saúde mental para líderes e equipes.</p>
+        <div class="offer-grid" style="margin-top:1rem;">
+            <div class="offer">
+                <h3>Saúde Mental no Ambiente de Trabalho</h3>
+                <p>Dicas práticas para reduzir estresse e aumentar bem-estar e produtividade.</p>
+            </div>
+            <div class="offer">
+                <h3>Ansiedade: Entenda e Gerencie</h3>
+                <p>Estratégias baseadas em TCC para o dia a dia.</p>
+            </div>
+            <div class="offer">
+                <h3>Relacionamentos Saudáveis</h3>
+                <p>Habilidades de comunicação, limites e empatia.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="offers container" id="minicursos">
+        <h2 class="section-title">Minicursos</h2>
+        <p>Formações curtas e práticas (on-line), com material de apoio e exercícios.</p>
+        <div class="offer-grid" style="margin-top:1rem;">
+            <div class="offer">
+                <h3>Gestão da Ansiedade em 4 Encontros</h3>
+                <p>Psicoeducação, respiração diafragmática, reestruturação cognitiva e plano de ação.</p>
+            </div>
+            <div class="offer">
+                <h3>Comunicação Não Violenta</h3>
+                <p>Prática de CNV para conflitos familiares e profissionais.</p>
+            </div>
+            <div class="offer">
+                <h3>Hábitos e Rotina Saudável</h3>
+                <p>Ferramentas da TCC para criar e manter hábitos.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="offers container" id="mentoria-individual">
+        <h2 class="section-title">Mentorias Individuais</h2>
+        <p>Encontros 1:1 focados na sua demanda específica, com plano personalizado e acompanhamento.</p>
+        <div class="offer" style="margin-top:1rem;">
+            <h3>Como funciona</h3>
+            <p>Sessões de 50 min, avaliação inicial, metas claras e tarefas entre os encontros.</p>
+        </div>
+    </section>
+
+    <section class="offers container" id="mentoria-grupo">
+        <h2 class="section-title">Mentorias em Grupo</h2>
+        <p>Turmas pequenas com objetivos comuns (ex.: gestão da ansiedade; comunicação em casais).</p>
+        <div class="offer" style="margin-top:1rem;">
+            <h3>Formato</h3>
+            <p>Encontros semanais on-line, comunidade de apoio e materiais complementares.</p>
+        </div>
+    </section>
+    <!-- FIM NOVAS SEÇÕES -->
 
     <!-- Blog Section -->
     <section class="blog" id="blog">
@@ -559,47 +496,27 @@
     <section class="faq" id="faq">
         <div class="container">
             <h2 class="section-title" style="text-align: center;">Perguntas Frequentes</h2>
-            
             <div class="faq-item">
                 <div class="faq-question">Como funciona a consulta online?</div>
                 <div class="faq-answer">
                     As consultas são realizadas por videochamada em plataforma segura. Você só precisa de um local tranquilo, internet estável e um dispositivo (celular, tablet ou computador). É tão eficaz quanto a terapia presencial!
                 </div>
             </div>
-
             <div class="faq-item">
                 <div class="faq-question">Quanto tempo dura cada sessão?</div>
-                <div class="faq-answer">
-                    Cada sessão tem duração de aproximadamente 50 minutos.
-                </div>
+                <div class="faq-answer">Cada sessão tem duração de aproximadamente 50 minutos.</div>
             </div>
-
             <div class="faq-item">
                 <div class="faq-question">Com que frequência devo fazer terapia?</div>
-                <div class="faq-answer">
-                    Geralmente as sessões são semanais, mas a frequência pode ser ajustada conforme suas necessidades e objetivos terapêuticos.
-                </div>
+                <div class="faq-answer">Geralmente as sessões são semanais, mas pode variar conforme sua necessidade.</div>
             </div>
-
             <div class="faq-item">
                 <div class="faq-question">A TCC é indicada para mim?</div>
-                <div class="faq-answer">
-                    A TCC é eficaz para diversos transtornos e dificuldades emocionais. Em nossa primeira conversa, podemos avaliar juntos se essa abordagem é a mais adequada para seu caso.
-                </div>
+                <div class="faq-answer">Na primeira conversa avaliamos juntos se é a abordagem mais adequada.</div>
             </div>
-
             <div class="faq-item">
                 <div class="faq-question">Como faço para agendar uma consulta?</div>
-                <div class="faq-answer">
-                    É simples! Entre em contato pelo WhatsApp ou e-mail. Vamos conversar sobre sua demanda e encontrar o melhor horário para você.
-                </div>
-            </div>
-
-            <div class="faq-item">
-                <div class="faq-question">Quanto tempo dura o tratamento?</div>
-                <div class="faq-answer">
-                    A TCC é uma terapia focada em objetivos, geralmente de curto a médio prazo. A duração varia de acordo com cada caso, mas você já pode notar melhorias nas primeiras sessões.
-                </div>
+                <div class="faq-answer">Entre em contato pelo WhatsApp ou e-mail e combinamos o melhor horário.</div>
             </div>
         </div>
     </section>
@@ -612,25 +529,74 @@
                 Dê o primeiro passo para cuidar da sua saúde mental. Entre em contato e agende sua consulta!
             </p>
             <div class="contact-buttons">
-                <a href="https://wa.me/5517996258369?text=Olá! Gostaria de agendar uma consulta." class="contact-btn" target="_blank">
+                <a href="https://wa.me/5517996258369?text=Olá! Gostaria de agendar uma consulta." class="contact-btn" target="_blank" rel="noopener noreferrer">
                     💬 WhatsApp: (17) 99625-8369
                 </a>
-                <a href="mailto:carolinemarquesbrito@gmail.com" class="contact-btn">
+                <a href="mailto:carolinemarquesbrito@gmail.com" class="contact-btn" target="_blank" rel="noopener noreferrer">
                     📧 E-mail
                 </a>
             </div>
-            <p style="margin-top: 2rem; opacity: 0.9;">
-                Atendimento 100% Online | Todo o Brasil
-            </p>
+            <p style="margin-top: 2rem; opacity: 0.9;">Atendimento 100% Online | Todo o Brasil</p>
         </div>
     </section>
 
     <!-- Footer -->
     <footer>
         <p>&copy; 2025 Caroline Marques Brito - Psicóloga CRP [Número]. Todos os direitos reservados.</p>
-        <p style="margin-top: 0.5rem; font-size: 0.9rem;">
-            Desenvolvido com 🧡 para cuidar da sua saúde mental
-        </p>
+        <p style="margin-top: 0.5rem; font-size: 0.9rem;">Desenvolvido com 🧡 para cuidar da sua saúde mental</p>
     </footer>
+
+    <!-- Scripts -->
+    <script>
+      // Abre links externos em nova aba com segurança
+      document.querySelectorAll('a[href^="http"]').forEach(a => {
+        const isSameHost = a.href.includes(location.hostname);
+        if (!isSameHost) {
+          a.setAttribute('target', '_blank');
+          a.setAttribute('rel', 'noopener noreferrer');
+        }
+      });
+
+      // Toggle do menu mobile (☰)
+      const btn = document.querySelector('.menu-toggle');
+      const nav = document.querySelector('.nav-links');
+      if (btn && nav) {
+        btn.addEventListener('click', () => {
+          const isVisible = getComputedStyle(nav).display !== 'none';
+          nav.style.display = isVisible ? 'none' : 'flex';
+        });
+      }
+      document.querySelectorAll('.nav-links a').forEach(a => {
+        a.addEventListener('click', () => {
+          if (window.innerWidth <= 768) nav.style.display = 'none';
+        });
+      });
+
+      // 3 pontinhos (⋯) dropdown
+      const moreBtn = document.querySelector('.more-toggle');
+      const dropdown = document.querySelector('.more-dropdown');
+
+      function closeDropdown(){ dropdown.style.display = 'none'; moreBtn.setAttribute('aria-expanded','false'); }
+      function openDropdown(){ dropdown.style.display = 'block'; moreBtn.setAttribute('aria-expanded','true'); }
+
+      moreBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = dropdown.style.display === 'block';
+        isOpen ? closeDropdown() : openDropdown();
+      });
+
+      // Fecha ao clicar fora ou apertar Esc
+      document.addEventListener('click', (e) => {
+        if (!dropdown.contains(e.target) && e.target !== moreBtn) closeDropdown();
+      });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeDropdown();
+      });
+
+      // Fecha dropdown ao clicar em um item (e no mobile rola até a seção)
+      dropdown.querySelectorAll('a').forEach(a => {
+        a.addEventListener('click', () => closeDropdown());
+      });
+    </script>
 </body>
 </html>
