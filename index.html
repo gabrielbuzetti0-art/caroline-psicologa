@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <base href="https://gabrielbuzetti0-art.github.io/caroline-psicologa/">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Caroline Marques Brito - Psicóloga CRP 14/0165-4 especializada em Terapia Cognitivo Comportamental (TCC). Atendimento online, supervisão clínica e formação para estudantes.">
-    <meta name="keywords" content="psicóloga online, terapia cognitivo comportamental, TCC, DBT, ansiedade, depressão, borderline, supervisão clínica">
-    <title>Caroline Marques Brito - Psicóloga Online | TCC</title>
+    <meta name="description" content="Caroline Marques Brito - Psicóloga CRP 14/0165-4 em Bauru-SP. Especialista em TCC, atendimento online para ansiedade, depressão e relacionamentos.">
+    <meta name="keywords" content="psicóloga Bauru, psicóloga online, TCC, ansiedade, depressão, relacionamentos, DBT">
+    <title>Caroline Marques Brito - Psicóloga Online | TCC | Bauru-SP</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -60,7 +60,9 @@
         }
         .nav-links a:hover { opacity: 0.8; }
 
-        .more { position: relative; }
+        .more {
+            position: relative;
+        }
         .more-toggle {
             background: rgba(255,255,255,0.15);
             border: none;
@@ -106,7 +108,8 @@
             margin-top: 60px;
         }
         .hero h1 { font-size: 3rem; margin-bottom: 1rem; animation: fadeInUp 1s ease; }
-        .hero p { font-size: 1.3rem; margin-bottom: 2rem; opacity: 0.95; }
+        .hero p { font-size: 1.3rem; margin-bottom: 1.5rem; opacity: 0.95; }
+        .hero .location { font-size: 1.1rem; opacity: 0.9; margin-bottom: 2rem; }
         .cta-button {
             display: inline-block;
             background: white; color: #ff6b35;
@@ -137,14 +140,9 @@
         .card-icon { font-size: 3rem; margin-bottom: 1rem; }
         .card h3 { color: #ff6b35; margin-bottom: 1rem; font-size: 1.5rem; }
 
-        .tcc { background: white; }
-        .tcc-content {
-            background: linear-gradient(135deg, #fff8f5 0%, #ffe5d9 100%);
-            padding: 3rem; border-radius: 20px; margin-top: 2rem;
-        }
-
-        .service-section { background: white; }
+        .service-section { background: white; padding: 4rem 0; }
         .service-section:nth-child(even) { background: #fff8f5; }
+        
         .service-content {
             background: linear-gradient(135deg, #fff8f5 0%, #ffe5d9 100%);
             padding: 2.5rem; border-radius: 20px; margin-top: 2rem;
@@ -165,18 +163,10 @@
         .blog-image {
             width: 100%; height: 200px;
             background: linear-gradient(135deg, #ff8c42 0%, #ff6b35 100%);
-            display: flex; align-items: center; justify-content: center; font-size: 4rem; color:#fff;
+            display: flex; align-items: center; justify-content: center; font-size: 4rem;
         }
         .blog-content { padding: 1.5rem; }
         .blog-content h3 { color: #ff6b35; margin-bottom: 0.5rem; }
-
-        .offers { background: #fff; }
-        .offer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; margin-top: 1.5rem; }
-        .offer {
-            background: #fff8f5; border-left: 4px solid #ff6b35;
-            border-radius: 12px; padding: 1.25rem 1rem;
-        }
-        .offer h3 { color: #ff6b35; margin-bottom: .4rem; }
 
         .testimonials { background: white; }
         .testimonial-card {
@@ -186,11 +176,69 @@
         .testimonial-card p { font-style: italic; margin-bottom: 1rem; color: #555; }
         .testimonial-author { font-weight: bold; color: #ff6b35; }
 
+        .testimonial-form {
+            background: linear-gradient(135deg, #fff8f5 0%, #ffe5d9 100%);
+            padding: 2.5rem;
+            border-radius: 20px;
+            margin-top: 3rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            color: #ff6b35;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ffe5d9;
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #ff6b35;
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #ff8c42 0%, #ff6b35 100%);
+            color: white;
+            padding: 12px 40px;
+            border: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255, 107, 53, 0.3);
+        }
+
         .faq { background: #fff8f5; }
         .faq-item {
-            background: white; padding: 1.5rem; border-radius: 10px; margin-bottom: 1rem; cursor: pointer; transition: background 0.3s;
+            background: white; padding: 1.5rem; border-radius: 10px; margin-bottom: 1rem;
+            transition: background 0.3s;
         }
-        .faq-item:hover { background: #fff8f5; }
+        .faq-item:hover { background: #fffaf7; }
         .faq-question { font-weight: bold; color: #ff6b35; font-size: 1.1rem; margin-bottom: 0.5rem; }
         .faq-answer { color: #555; line-height: 1.8; }
 
@@ -203,6 +251,19 @@
         }
         .contact-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
 
+        .contact-info {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            display: inline-block;
+        }
+
+        .contact-info p {
+            margin: 0.5rem 0;
+            font-size: 1.1rem;
+        }
+
         footer { background: #2c2c2c; color: white; text-align: center; padding: 2rem; }
 
         .menu-toggle {
@@ -211,16 +272,25 @@
             font-size: 1.5rem; cursor: pointer;
         }
 
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-top: 1rem;
+            display: none;
+        }
+
         @media (max-width: 768px) {
             .nav-links { display: none; }
             .menu-toggle { display: block; }
 
             .hero h1 { font-size: 2rem; }
+            .hero p { font-size: 1.1rem; }
             .about { grid-template-columns: 1fr; }
             .section-title { font-size: 2rem; }
 
             .nav-links {
-                display: none;
                 position: absolute;
                 top: 60px; right: 0;
                 background: #ff6b35;
@@ -232,6 +302,8 @@
             .nav-links a { padding: .25rem 0; }
 
             .more-dropdown { min-width: 220px; }
+            
+            .contact-buttons { flex-direction: column; align-items: center; }
         }
 
         @keyframes fadeInUp {
@@ -247,30 +319,14 @@
         }
         .whatsapp-float:hover { transform: scale(1.1); }
 
-        #inicio, #sobre, #especialidades, #psicoterapia, #supervisao, #estudantes, #palestras, #blog, #depoimentos, #faq, #contato,
-        #minicursos, #mentoria-individual, #mentoria-grupo {
+        #inicio, #sobre, #especialidades, #psicoterapia, #supervisao, #estudantes, #palestras, 
+        #minicursos, #mentoria-individual, #mentoria-grupo, #blog, #depoimentos, #faq, #contato {
             scroll-margin-top: 90px;
         }
-
-        /* === Extras para Depoimentos com envio e moderação === */
-        .t-wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:20px}
-        .t-card{background:#fff;border:1px solid #eaeaea;border-radius:16px;padding:18px;box-shadow:0 6px 14px rgba(0,0,0,.04)}
-        .t-row{display:flex;flex-direction:column;gap:10px}
-        .t-row input,.t-row textarea,.t-row select{padding:12px 14px;border:1px solid #eaeaea;border-radius:12px}
-        .t-row textarea{min-height:110px;resize:vertical}
-        .stars{display:flex;gap:6px}
-        .star{font-size:20px;cursor:pointer;user-select:none}
-        .star.active{color:#ffb703}
-        .tag{font-size:12px;background:#fff8f5;border:1px solid #ffe0d4;padding:4px 8px;border-radius:999px;color:#ff6b35}
-        .admin-panel{display:none;position:fixed;inset:auto 16px 16px 16px;max-height:55vh;overflow:auto;background:#fff;border:1px solid #eaeaea;border-radius:16px;padding:16px;box-shadow:0 10px 30px rgba(0,0,0,.12);z-index:9999}
-        .admin-panel.open{display:block}
-        .admin-panel h4{margin:0 0 6px}
-        .pill{display:inline-block;padding:6px 10px;border-radius:999px;background:#fff8f5;border:1px solid #ffe0d4;color:#ff6b35;font-size:12px}
     </style>
 </head>
 <body>
-    <!-- Atualizei o número para o informado -->
-    <a href="https://wa.me/5517996258369?text=Olá! Vim pelo site e quero agendar uma consulta." class="whatsapp-float" target="_blank" rel="noopener noreferrer">💬</a>
+    <a href="https://wa.me/5517996258369?text=Olá! Gostaria de agendar uma consulta." class="whatsapp-float" target="_blank" rel="noopener noreferrer">💬</a>
 
     <header>
         <nav>
@@ -308,8 +364,8 @@
     <section class="hero" id="inicio">
         <h1>Caroline Marques Brito</h1>
         <p>Psicóloga CRP 14/0165-4 | Especialista em Terapia Cognitivo Comportamental (TCC)</p>
-        <p>Atendimento Online para todo o Brasil</p>
-        <a href="#contato" class="cta-button">Agende sua Consulta</a>
+        <p class="location">📍 Bauru - SP | Atendimento Online para todo o Brasil</p>
+        <a href="https://wa.me/5517996258369?text=Olá! Gostaria de agendar uma consulta." class="cta-button" target="_blank">Agende sua Consulta</a>
     </section>
 
     <section class="container" id="sobre">
@@ -318,7 +374,7 @@
             <div>
                 <h2 class="section-title">Sobre Mim</h2>
                 <p style="margin-bottom: 1rem;">
-                    Olá! Sou Caroline Marques Brito, psicóloga com especialização em Terapia Cognitivo Comportamental (TCC).
+                    Olá! Sou Caroline Marques Brito, psicóloga com atuação em Bauru-SP e atendimento online para todo o Brasil.
                 </p>
                 <p style="margin-bottom: 1rem;">
                     Meu trabalho é baseado em evidências científicas e voltado para ajudar você a compreender seus pensamentos, emoções e comportamentos, promovendo mudanças significativas em sua vida.
@@ -361,17 +417,17 @@
                 <div class="card">
                     <div class="card-icon">🎭</div>
                     <h3>Transtorno Borderline</h3>
-                    <p>Suporte com ferramentas da DBT (Terapia Comportamental Dialética) para regulação emocional e relações.</p>
+                    <p>Suporte especializado utilizando a abordagem metodológica da DBT (Terapia Comportamental Dialética) para instabilidade emocional e regulação de emoções.</p>
                 </div>
                 <div class="card">
                     <div class="card-icon">💔</div>
                     <h3>Problemas de Relacionamento</h3>
-                    <p>Ajuda para comunicação, limites, empatia e resolução de conflitos.</p>
+                    <p>Ajuda para conflitos conjugais, familiares e dificuldades nas relações interpessoais.</p>
                 </div>
                 <div class="card">
                     <div class="card-icon">💼</div>
                     <h3>Questões Profissionais</h3>
-                    <p>Orientação para estresse no trabalho, burnout e dificuldades na carreira.</p>
+                    <p>Orientação para estresse no trabalho, síndrome de burnout e dificuldades na carreira.</p>
                 </div>
                 <div class="card">
                     <div class="card-icon">👨‍👩‍👧</div>
@@ -382,96 +438,105 @@
         </div>
     </section>
 
-    <section class="service-section container" id="psicoterapia">
-        <h2 class="section-title">🧠 Psicoterapia Individual</h2>
-        <div class="service-content">
-            <h3 style="color: #ff6b35; margin-bottom: 1rem;">Como funciona?</h3>
-            <p style="margin-bottom: 1rem;">
-                Sessões de <strong>50 minutos</strong>, <strong>100% online</strong>, com técnicas da <strong>Terapia Cognitivo-Comportamental (TCC)</strong>.
-            </p>
-            <p style="margin-bottom: 1rem;">
-                Encontros geralmente <strong>1x por semana</strong>, com plano de ação prático e acolhimento.
-            </p>
-            <p>
-                Você encontra escuta ativa, estratégias claras e acompanhamento para evolução contínua.
-            </p>
-        </div>
-    </section>
-
-    <section class="service-section container" id="supervisao">
-        <h2 class="section-title">👩‍⚕️ Supervisão para Psicólogas</h2>
-        <div class="service-content">
-            <p style="margin-bottom: 1rem;">Espaço técnico e seguro para aprimorar a prática clínica com base na TCC.</p>
-            <div class="highlight-box">
-                <h3 style="color: #ff6b35; margin-bottom: 0.8rem;">Detalhes</h3>
-                <p>⏰ <strong>Duração:</strong> 1 hora</p>
-                <p>📋 <strong>Antes do encontro:</strong> formulário breve sobre dúvidas e casos.</p>
-                <p>📄 <strong>Após a sessão:</strong> material de apoio com pontos trabalhados.</p>
-                <p style="margin-top:.5rem" class="faq-answer"><em>(Valores não exibidos no site; solicitar por WhatsApp.)</em></p>
+    <section class="service-section" id="psicoterapia">
+        <div class="container">
+            <h2 class="section-title">🧠 Psicoterapia Individual</h2>
+            <div class="service-content">
+                <h3 style="color: #ff6b35; margin-bottom: 1rem;">Como funciona?</h3>
+                <p style="margin-bottom: 1rem;">
+                    As sessões têm duração de <strong>50 minutos</strong>, realizadas <strong>100% online</strong>, por meio de uma plataforma de vídeo segura e estável.
+                </p>
+                <p style="margin-bottom: 1rem;">
+                    Basta encontrar um lugar confortável e reservado, onde você se sinta à vontade para conversar e se expressar.
+                </p>
+                <p style="margin-bottom: 1rem;">
+                    Os encontros acontecem <strong>uma vez por semana</strong> (ou conforme sua necessidade) e são conduzidos com base nas técnicas da <strong>Terapia Cognitivo-Comportamental (TCC)</strong>.
+                </p>
+                <p>
+                    Durante o processo, você encontrará <strong>acolhimento, escuta ativa e planos de ação personalizados</strong>, sempre com o objetivo de promover autoconhecimento e bem-estar emocional.
+                </p>
             </div>
         </div>
     </section>
 
-    <section class="service-section container" id="estudantes">
-        <h2 class="section-title">🎓 Formação para Estudantes de Psicologia</h2>
-        <div class="service-content">
-            <p>Para quem quer entender a TCC na prática, ganhar segurança nos atendimentos e construir repertório clínico.</p>
-            <ul style="margin-left: 1.25rem; margin-top:.75rem;">
-                <li>Primeiros passos na clínica e papel do terapeuta</li>
-                <li>Estrutura da TCC e formulação de caso</li>
-                <li>Ferramentas e dúvidas práticas</li>
-            </ul>
-        </div>
-    </section>
-
-    <section class="service-section container" id="palestras">
-        <h2 class="section-title">💬 Palestras e Encontros</h2>
-        <div class="service-content">
-            <p>Conteúdos personalizados sobre saúde mental, relações e autocuidado, com linguagem leve e baseada em evidências.</p>
-            <div class="offer-grid" style="margin-top:1rem;">
-                <div class="offer"><h3>Saúde Mental no Trabalho</h3><p>Ansiedade, burnout e bem-estar organizacional.</p></div>
-                <div class="offer"><h3>Comunicação Não Violenta</h3><p>Relações mais empáticas e resolução de conflitos.</p></div>
-                <div class="offer"><h3>Gestão das Emoções</h3><p>Ansiedade, estresse e regulação emocional.</p></div>
-                <div class="offer"><h3>Relacionamentos Saudáveis</h3><p>Limites, comunicação e respeito mútuo.</p></div>
+    <section class="service-section" id="supervisao">
+        <div class="container">
+            <h2 class="section-title">👩‍⚕️ Supervisão para Psicólogas</h2>
+            <div class="service-content">
+                <p style="margin-bottom: 1rem;">
+                    Se você é psicóloga e sente <strong>insegurança na sua prática clínica</strong>, tem dúvidas sobre intervenções ou gostaria de aprimorar seu raciocínio clínico, eu posso te ajudar.
+                </p>
+                <p style="margin-bottom: 1rem;">
+                    Com base nas minhas formações e experiência em TCC, ofereço um <strong>espaço seguro e técnico</strong> para reflexão, construção de estratégias e fortalecimento da sua atuação profissional.
+                </p>
+                
+                <div class="highlight-box">
+                    <h3 style="color: #ff6b35; margin-bottom: 0.8rem;">Detalhes da Supervisão</h3>
+                    <p style="margin-bottom: 0.5rem;">⏰ <strong>Duração:</strong> 1 hora</p>
+                    <p style="margin-bottom: 1rem;">📋 <strong>Antes do encontro:</strong> Você preenche um formulário breve com suas principais dúvidas e desafios, para que possamos aproveitar ao máximo o tempo juntas.</p>
+                    <p style="margin-bottom: 1rem;">📄 <strong>Ao final:</strong> Você recebe um material de apoio com os pontos trabalhados durante a sessão.</p>
+                    <p style="color: #ff6b35; font-weight: bold;">💬 Entre em contato para saber valores e disponibilidade</p>
+                </div>
             </div>
         </div>
     </section>
 
-    <section class="offers container" id="minicursos">
-        <h2 class="section-title">📚 Minicursos</h2>
-        <p>Formações online, curtas e práticas, com material de apoio.</p>
-        <div class="offer-grid" style="margin-top:1rem;">
-            <div class="offer"><h3>Gestão da Ansiedade em 4 Encontros</h3><p>Psicoeducação, respiração, reestruturação cognitiva e plano de ação.</p></div>
-            <div class="offer"><h3>Comunicação Não Violenta</h3><p>Prática aplicada em conflitos do dia a dia.</p></div>
-            <div class="offer"><h3>Hábitos e Rotina Saudável</h3><p>Ferramentas da TCC para criar e manter hábitos.</p></div>
+    <section class="service-section" id="estudantes">
+        <div class="container">
+            <h2 class="section-title">🎓 Formação para Estudantes de Psicologia</h2>
+            <div class="service-content">
+                <p style="margin-bottom: 1rem;">
+                    Se você é <strong>estudante de Psicologia</strong> e tem curiosidade sobre o trabalho clínico, sente insegurança com os atendimentos ou quer entender melhor como funciona a TCC na prática, este espaço é para você.
+                </p>
+                <p style="margin-bottom: 1rem;">
+                    Vamos conversar sobre:
+                </p>
+                <ul style="margin-left: 2rem; margin-bottom: 1rem;">
+                    <li>Os primeiros passos na clínica</li>
+                    <li>O papel do terapeuta</li>
+                    <li>A estrutura da Terapia Cognitivo-Comportamental</li>
+                    <li>Esclarecimento de dúvidas práticas</li>
+                    <li>Ferramentas que vão te ajudar a se preparar para a atuação profissional</li>
+                </ul>
+                <p>
+                    Um espaço de aprendizado, troca e fortalecimento da sua formação em Psicologia.
+                </p>
+            </div>
         </div>
     </section>
 
-    <section class="offers container" id="mentoria-individual">
-        <h2 class="section-title">👤 Mentorias Individuais</h2>
-        <p>Encontros 1:1 com metas claras e tarefas entre sessões.</p>
-    </section>
-
-    <section class="offers container" id="mentoria-grupo">
-        <h2 class="section-title">👥 Mentorias em Grupo</h2>
-        <p>Turmas pequenas para objetivos em comum (ex.: ansiedade; comunicação em casais).</p>
-    </section>
-
-    <section class="tcc container">
-        <h2 class="section-title" style="text-align: center;">O que é a Terapia Cognitivo Comportamental?</h2>
-        <div class="tcc-content">
-            <p style="margin-bottom: 1rem;">
-                A <strong>Terapia Cognitivo Comportamental (TCC)</strong> é uma abordagem com forte base científica, focada na relação entre pensamentos, emoções e comportamentos.
-            </p>
-            <p style="margin-bottom: 1rem;">
-                Identificamos padrões que mantêm o sofrimento e construímos estratégias práticas para mudar esses ciclos.
-            </p>
-            <p>
-                Na TCC, você participa ativamente do processo, com intervenções orientadas a objetivos e mensuráveis.
-            </p>
-        </div>
-    </section>
-
-    <!-- ===== BLOG ===== -->
-    <section class="blog container" id="blog">
-        <h2 class="section-title" st
+    <section class="service-section" id="palestras">
+        <div class="container">
+            <h2 class="section-title">💬 Palestras e Encontros</h2>
+            <div class="service-content">
+                <p style="margin-bottom: 1.5rem;">
+                    Se você faz parte de uma <strong>empresa, instituição de ensino ou grupo</strong> e busca alguém para falar sobre saúde mental, relações, emoções, autocuidado ou comportamento humano, posso desenvolver uma <strong>palestra personalizada</strong> conforme o tema e o público.
+                </p>
+                <p style="margin-bottom: 1.5rem;">
+                    O objetivo é promover <strong>reflexão, aprendizado e acolhimento</strong>, sempre com uma linguagem leve, prática e baseada na Psicologia Cognitivo-Comportamental.
+                </p>
+                
+                <h3 style="color: #ff6b35; margin-bottom: 1rem;">Temas disponíveis:</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem;">
+                    <div style="background: white; border-left: 4px solid #ff6b35; border-radius: 12px; padding: 1.25rem 1rem;">
+                        <h3 style="color: #ff6b35; margin-bottom: .4rem;">Saúde Mental no Trabalho</h3>
+                        <p>Ansiedade no ambiente corporativo, prevenção ao burnout e bem-estar organizacional.</p>
+                    </div>
+                    <div style="background: white; border-left: 4px solid #ff6b35; border-radius: 12px; padding: 1.25rem 1rem;">
+                        <h3 style="color: #ff6b35; margin-bottom: .4rem;">Comunicação Não Violenta</h3>
+                        <p>Estratégias para melhorar relações e resolver conflitos de forma saudável.</p>
+                    </div>
+                    <div style="background: white; border-left: 4px solid #ff6b35; border-radius: 12px; padding: 1.25rem 1rem;">
+                        <h3 style="color: #ff6b35; margin-bottom: .4rem;">Gestão das Emoções</h3>
+                        <p>Como lidar com ansiedade, estresse e regulação emocional no dia a dia.</p>
+                    </div>
+                    <div style="background: white; border-left: 4px solid #ff6b35; border-radius: 12px; padding: 1.25rem 1rem;">
+                        <h3 style="color: #ff6b35; margin-bottom: .4rem;">Relacionamentos Saudáveis</h3>
+                        <p>Habilidades de comunicação, estabelecimento de limites e empatia.</p>
+                    </div>
+                    <div style="background: white; border-left: 4px solid #ff6b35; border-radius: 12px; padding: 1.25rem 1rem;">
+                        <h3 style="color: #ff6b35; margin-bottom: .4rem;">Saúde Mental para Líderes</h3>
+                        <p>Como criar ambientes de trabalho mais acolhedores e produtivos.</p>
+                    </div>
+                    <div style="background: white; border-left: 4px solid #ff6b35; border-radius: 12px; padding: 1.25rem 1rem;">
+                        <h3 style="color: #ff6b35; margin-bottom: .4rem;">Autocuidado e Qualidade
