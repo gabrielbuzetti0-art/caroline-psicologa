@@ -352,7 +352,8 @@
                     <li><a href="#blog">Blog</a></li>
                     <li><a href="#depoimentos">Depoimentos</a></li>
                     <li><a href="#faq">FAQ</a></li>
-                    <li><a href="#contato">Contato</a></li>
+                    <li><a href="#contato" id="navContato">Contato</a></li>
+
                 </ul>
 
                 <div class="more">
@@ -583,4 +584,24 @@
 
     <section class="section-bg-light" id="mentoria-individual">
         <div class="container">
-            
+                        </div> <!-- fecha o último .container -->
+</section> <!-- fecha a seção mentoria-individual -->
+
+<script>
+// Rolagem suave até a seção #contato
+document.addEventListener("DOMContentLoaded", () => {
+  const linkContato = document.querySelector('#navContato');
+  const secContato = document.querySelector('#contato');
+
+  if (linkContato && secContato) {
+    linkContato.addEventListener('click', (e) => {
+      e.preventDefault();
+      secContato.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  }
+});
+</script>
+
+</body>
+</html>
+
