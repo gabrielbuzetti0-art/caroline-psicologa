@@ -1,848 +1,487 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <base href="https://gabrielbuzetti0-art.github.io/caroline-psicologa/">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Caroline Marques Brito - Psicóloga CRP 14/09165-4 em Bauru-SP. Especialista em TCC, atendimento online para ansiedade, depressão e relacionamentos.">
-    <meta name="keywords" content="psicóloga Bauru, psicóloga online, TCC, ansiedade, depressão, relacionamentos, DBT">
-    <title>Caroline Marques Brito - Psicóloga Online | TCC | Bauru-SP</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+  <meta charset="UTF-8" />
+  <base href="https://gabrielbuzetti0-art.github.io/caroline-psicologa/">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Caroline Marques Brito - Psicóloga CRP 14/09165-4 em Bauru-SP. Especialista em TCC, atendimento online para ansiedade, depressão e relacionamentos." />
+  <meta name="keywords" content="psicóloga Bauru, psicóloga online, TCC, ansiedade, depressão, relacionamentos, DBT" />
+  <title>Caroline Marques Brito - Psicóloga Online | TCC | Bauru-SP</title>
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            scroll-behavior: smooth;
-        }
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        header {
-            background: linear-gradient(135deg, #ff8c42 0%, #ff6b35 100%);
-            color: white;
-            padding: 1rem 0;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      scroll-behavior: smooth;
+    }
 
-        nav {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 2rem;
-            position: relative;
-        }
-.more {
-  position: relative;
-}
+    header {
+      background: linear-gradient(135deg, #ff8c42 0%, #ff6b35 100%);
+      color: white;
+      padding: 1rem 0;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
 
-.more-dropdown {
-  position: absolute;
-  top: 120%;
-  right: 0;
-  background: #fff;
-  color: #333;
-  border-radius: 12px;
-  min-width: 260px;
-  box-shadow: 0 12px 28px rgba(0,0,0,0.18);
-  overflow: hidden;
-  z-index: 1100;
-  display: none; /* começa escondido */
-}
+    nav {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 2rem;
+      position: relative;
+    }
 
-.more-dropdown a {
-  display: block;
-  padding: .9rem 1rem;
-  text-decoration: none;
-  color: #333;
-  font-weight: 500;
-}
+    .logo { font-size: 1.5rem; font-weight: bold; }
 
-.more-dropdown a:hover {
-  background: #fff3ee;
-  color: #ff6b35;
-}
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
 
-        .logo { font-size: 1.5rem; font-weight: bold; }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
 
-        .nav-right {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      transition: opacity 0.3s;
+      font-weight: 500;
+    }
+    .nav-links a:hover { opacity: 0.8; }
 
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
+    .menu-toggle {
+      display: none;
+      background: none; border: none; color: white;
+      font-size: 1.5rem; cursor: pointer;
+    }
 
-        .nav-links a {
-            color: white;
-            text-decoration: none;
-            transition: opacity 0.3s;
-            font-weight: 500;
-        }
-        .nav-links a:hover { opacity: 0.8; }
+    /* --- 3 pontinhos --- */
+    .more { position: relative; }
+    .more-toggle {
+      background: rgba(255,255,255,0.15);
+      border: none;
+      color: white;
+      font-size: 1.35rem;
+      line-height: 1;
+      padding: .5rem .7rem;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    .more-toggle:focus { outline: 2px solid rgba(255,255,255,0.5); }
 
-        .more {
-            position: relative;
-        }
-        .more-toggle {
-            background: rgba(255,255,255,0.15);
-            border: none;
-            color: white;
-            font-size: 1.35rem;
-            line-height: 1;
-            padding: .5rem .7rem;
-            border-radius: 10px;
-            cursor: pointer;
-        }
-        .more-toggle:focus { outline: 2px solid rgba(255,255,255,0.5); }
+    .more-dropdown {
+      position: absolute;
+      top: 120%;
+      right: 0;
+      background: #fff;
+      color: #333;
+      border-radius: 12px;
+      min-width: 260px;
+      box-shadow: 0 12px 28px rgba(0,0,0,0.18);
+      display: none;
+      overflow: hidden;
+      z-index: 1100;
+    }
+    .more-dropdown a {
+      display: block;
+      padding: .9rem 1rem;
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+    }
+    .more-dropdown a:hover {
+      background: #fff3ee;
+      color: #ff6b35;
+    }
 
-        .more-dropdown {
-            position: absolute;
-            top: 120%;
-            right: 0;
-            background: #fff;
-            color: #333;
-            border-radius: 12px;
-            min-width: 260px;
-            box-shadow: 0 12px 28px rgba(0,0,0,0.18);
-            display: none;
-            overflow: hidden;
-            z-index: 1100;
-        }
-        .more-dropdown a {
-            display: block;
-            padding: .9rem 1rem;
-            text-decoration: none;
-            color: #333;
-            font-weight: 500;
-        }
-        .more-dropdown a:hover {
-            background: #fff3ee;
-            color: #ff6b35;
-        }
+    .hero {
+      background: linear-gradient(135deg, #ff8c42 0%, #ff6b35 100%);
+      color: white;
+      padding: 120px 2rem 80px;
+      text-align: center;
+      margin-top: 60px;
+    }
+    .hero h1 { font-size: 3rem; margin-bottom: 1rem; animation: fadeInUp 1s ease; }
+    .hero p { font-size: 1.3rem; margin-bottom: 1.5rem; opacity: 0.95; }
+    .hero .location { font-size: 1.1rem; opacity: 0.9; margin-bottom: 2rem; }
+    .cta-button {
+      display: inline-block;
+      background: white; color: #ff6b35;
+      padding: 15px 40px; border-radius: 50px;
+      text-decoration: none; font-weight: bold; font-size: 1.1rem;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .cta-button:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
 
-        .hero {
-            background: linear-gradient(135deg, #ff8c42 0%, #ff6b35 100%);
-            color: white;
-            padding: 120px 2rem 80px;
-            text-align: center;
-            margin-top: 60px;
-        }
-        .hero h1 { font-size: 3rem; margin-bottom: 1rem; animation: fadeInUp 1s ease; }
-        .hero p { font-size: 1.3rem; margin-bottom: 1.5rem; opacity: 0.95; }
-        .hero .location { font-size: 1.1rem; opacity: 0.9; margin-bottom: 2rem; }
-        .cta-button {
-            display: inline-block;
-            background: white; color: #ff6b35;
-            padding: 15px 40px; border-radius: 50px;
-            text-decoration: none; font-weight: bold; font-size: 1.1rem;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        .cta-button:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
+    .container { max-width: 1200px; margin: 0 auto; padding: 4rem 2rem; }
 
-        .container { max-width: 1200px; margin: 0 auto; padding: 4rem 2rem; }
+    .about { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+    .about-image { width: 100%; height: 400px; }
+    .about-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: center;
+      border-radius: 20px;
+    }
 
-        .about { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
-        .about-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    object-position: center;
-    border-radius: 20px;
-}
-            background: linear-gradient(135deg, #ffe5d9 0%, #ffd4c1 100%);
-            border-radius: 20px; display: flex; align-items: center; justify-content: center; font-size: 6rem;
-        }
-        .section-title { font-size: 2.5rem; color: #ff6b35; margin-bottom: 1.5rem; }
+    .section-title { font-size: 2.5rem; color: #ff6b35; margin-bottom: 1.5rem; }
 
-        .section-bg-white { background: white; }
-        .section-bg-light { background: #fff8f5; }
+    .section-bg-white { background: white; }
+    .section-bg-light  { background: #fff8f5; }
 
-        .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin-top: 2rem; }
-        .card {
-            background: white; padding: 2rem; border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(255, 107, 53, 0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(255, 107, 53, 0.2); }
-        .card-icon { font-size: 3rem; margin-bottom: 1rem; }
-        .card h3 { color: #ff6b35; margin-bottom: 1rem; font-size: 1.5rem; }
+    .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin-top: 2rem; }
+    .card {
+      background: white; padding: 2rem; border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(255, 107, 53, 0.1);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(255, 107, 53, 0.2); }
+    .card-icon { font-size: 3rem; margin-bottom: 1rem; }
+    .card h3 { color: #ff6b35; margin-bottom: 1rem; font-size: 1.5rem; }
 
-        .service-content {
-            background: linear-gradient(135deg, #fff8f5 0%, #ffe5d9 100%);
-            padding: 2.5rem; border-radius: 20px; margin-top: 2rem;
-        }
+    .service-content {
+      background: linear-gradient(135deg, #fff8f5 0%, #ffe5d9 100%);
+      padding: 2.5rem; border-radius: 20px; margin-top: 2rem;
+    }
 
-        .highlight-box {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 12px;
-            margin-top: 1.5rem;
-            border-left: 4px solid #ff6b35;
-        }
+    .highlight-box {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 12px;
+      margin-top: 1.5rem;
+      border-left: 4px solid #ff6b35;
+    }
 
-        .blog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 2rem; }
-        .blog-card { background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 5px 15px rgba(255, 107, 53, 0.1); transition: transform 0.3s; }
-        .blog-card:hover { transform: translateY(-5px); }
-        .blog-image {
-            width: 100%; height: 200px;
-            background: linear-gradient(135deg, #ff8c42 0%, #ff6b35 100%);
-            display: flex; align-items: center; justify-content: center; font-size: 4rem;
-        }
-        .blog-content { padding: 1.5rem; }
-        .blog-content h3 { color: #ff6b35; margin-bottom: 0.5rem; }
+    .offer-item {
+      background: #fff8f5;
+      border-left: 4px solid #ff6b35;
+      border-radius: 12px;
+      padding: 1.25rem 1rem;
+      margin-bottom: 1rem;
+    }
+    .offer-item h3 { color: #ff6b35; margin-bottom: .4rem; }
 
-        .testimonial-card {
-            background: #fff8f5; padding: 2rem; border-radius: 15px;
-            margin-bottom: 1.5rem; border-left: 4px solid #ff6b35;
-        }
-        .testimonial-card p { font-style: italic; margin-bottom: 1rem; color: #555; }
-        .testimonial-author { font-weight: bold; color: #ff6b35; }
+    .contact { background: linear-gradient(135deg, #ff8c42 0%, #ff6b35 100%); color: white; text-align: center; padding: 4rem 2rem; }
+    .contact-buttons { display: flex; gap: 2rem; justify-content: center; margin-top: 2rem; flex-wrap: wrap; }
+    .contact-btn {
+      background: white; color: #ff6b35; padding: 15px 35px; border-radius: 50px;
+      text-decoration: none; font-weight: bold; display: inline-flex; align-items: center; gap: 10px;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .contact-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
+    .contact-info {
+      margin-top: 2rem; padding: 1.5rem; background: rgba(255,255,255,0.1);
+      border-radius: 15px; display: inline-block;
+    }
+    .contact-info p { margin: 0.5rem 0; font-size: 1.1rem; }
 
-        .testimonial-form {
-            background: linear-gradient(135deg, #fff8f5 0%, #ffe5d9 100%);
-            padding: 2.5rem;
-            border-radius: 20px;
-            margin-top: 3rem;
-        }
+    footer { background: #2c2c2c; color: white; text-align: center; padding: 2rem; }
 
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .menu-toggle { display: block; }
 
-        .form-group label {
-            display: block;
-            color: #ff6b35;
-            font-weight: bold;
-            margin-bottom: 0.5rem;
-        }
+      .hero h1 { font-size: 2rem; }
+      .hero p { font-size: 1.1rem; }
+      .about { grid-template-columns: 1fr; }
+      .section-title { font-size: 2rem; }
 
-        .form-group input,
-        .form-group textarea {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #ffe5d9;
-            border-radius: 10px;
-            font-family: inherit;
-            font-size: 1rem;
-            transition: border-color 0.3s;
-        }
+      .nav-links.active {
+        display: flex;
+        position: absolute;
+        top: 60px; right: 0;
+        background: #ff6b35;
+        flex-direction: column;
+        gap: 1rem; padding: 1rem 1.5rem;
+        border-bottom-left-radius: 12px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      }
+      .nav-links a { padding: .25rem 0; }
 
-        .form-group input:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: #ff6b35;
-        }
+      .more-dropdown { min-width: 220px; }
+      .contact-buttons { flex-direction: column; align-items: center; }
+    }
 
-        .form-group textarea {
-            min-height: 120px;
-            resize: vertical;
-        }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
 
-        .submit-btn {
-            background: linear-gradient(135deg, #ff8c42 0%, #ff6b35 100%);
-            color: white;
-            padding: 12px 40px;
-            border: none;
-            border-radius: 50px;
-            font-weight: bold;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
+    .whatsapp-float {
+      position: fixed; width: 60px; height: 60px; bottom: 40px; right: 40px;
+      background-color: #25d366; color: #FFF; border-radius: 50px; text-align: center; font-size: 30px;
+      box-shadow: 2px 2px 10px rgba(0,0,0,0.3); z-index: 999; display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: transform 0.3s; text-decoration: none;
+    }
+    .whatsapp-float:hover { transform: scale(1.1); }
 
-        .submit-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(255, 107, 53, 0.3);
-        }
-
-        .faq-item {
-            background: white; padding: 1.5rem; border-radius: 10px; margin-bottom: 1rem;
-            transition: background 0.3s;
-        }
-        .faq-item:hover { background: #fffaf7; }
-        .faq-question { font-weight: bold; color: #ff6b35; font-size: 1.1rem; margin-bottom: 0.5rem; }
-        .faq-answer { color: #555; line-height: 1.8; }
-
-        .contact { background: linear-gradient(135deg, #ff8c42 0%, #ff6b35 100%); color: white; text-align: center; padding: 4rem 2rem; }
-        .contact-buttons { display: flex; gap: 2rem; justify-content: center; margin-top: 2rem; flex-wrap: wrap; }
-        .contact-btn {
-            background: white; color: #ff6b35; padding: 15px 35px; border-radius: 50px;
-            text-decoration: none; font-weight: bold; display: inline-flex; align-items: center; gap: 10px;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        .contact-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
-
-        .contact-info {
-            margin-top: 2rem;
-            padding: 1.5rem;
-            background: rgba(255,255,255,0.1);
-            border-radius: 15px;
-            display: inline-block;
-        }
-
-        .contact-info p {
-            margin: 0.5rem 0;
-            font-size: 1.1rem;
-        }
-
-        footer { background: #2c2c2c; color: white; text-align: center; padding: 2rem; }
-
-        .menu-toggle {
-            display: none;
-            background: none; border: none; color: white;
-            font-size: 1.5rem; cursor: pointer;
-        }
-
-        .success-message {
-            background: #d4edda;
-            color: #155724;
-            padding: 1rem;
-            border-radius: 10px;
-            margin-top: 1rem;
-            display: none;
-        }
-
-        .offer-item {
-            background: #fff8f5; 
-            border-left: 4px solid #ff6b35; 
-            border-radius: 12px; 
-            padding: 1.25rem 1rem;
-            margin-bottom: 1rem;
-        }
-        .offer-item h3 { color: #ff6b35; margin-bottom: .4rem; }
-
-        @media (max-width: 768px) {
-            .nav-links { display: none; }
-            .menu-toggle { display: block; }
-
-            .hero h1 { font-size: 2rem; }
-            .hero p { font-size: 1.1rem; }
-            .about { grid-template-columns: 1fr; }
-            .section-title { font-size: 2rem; }
-
-            .nav-links.active {
-                display: flex;
-                position: absolute;
-                top: 60px; right: 0;
-                background: #ff6b35;
-                flex-direction: column;
-                gap: 1rem; padding: 1rem 1.5rem;
-                border-bottom-left-radius: 12px;
-                box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-            }
-            .nav-links a { padding: .25rem 0; }
-
-            .more-dropdown { min-width: 220px; }
-            
-            .contact-buttons { flex-direction: column; align-items: center; }
-        }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to   { opacity: 1; transform: translateY(0); }
-        }
-
-        .whatsapp-float {
-            position: fixed; width: 60px; height: 60px; bottom: 40px; right: 40px;
-            background-color: #25d366; color: #FFF; border-radius: 50px; text-align: center; font-size: 30px;
-            box-shadow: 2px 2px 10px rgba(0,0,0,0.3); z-index: 999; display: flex; align-items: center; justify-content: center;
-            cursor: pointer; transition: transform 0.3s; text-decoration: none;
-        }
-        .whatsapp-float:hover { transform: scale(1.1); }
-
-        section {
-            scroll-margin-top: 80px;
-        }
-    </style>
+    section { scroll-margin-top: 80px; }
+  </style>
 </head>
 <body>
-    <a href="https://wa.me/5517996258369?text=Olá! Gostaria de agendar uma consulta." class="whatsapp-float" target="_blank" rel="noopener noreferrer">💬</a>
+  <a href="https://wa.me/5517996258369?text=Olá! Gostaria de agendar uma consulta." class="whatsapp-float" target="_blank" rel="noopener noreferrer">💬</a>
 
-    <header>
-        <nav>
-            <div class="logo">Caroline M. Brito</div>
+  <header id="header">
+    <nav>
+      <div class="logo">Caroline M. Brito</div>
 
-            <div class="nav-right">
-                <button class="menu-toggle" aria-label="Abrir menu principal">☰</button>
+      <div class="nav-right">
+        <button class="menu-toggle" aria-label="Abrir menu principal">☰</button>
 
-                <ul class="nav-links">
-                    <li><a href="#inicio">Início</a></li>
-                    <li><a href="#sobre">Sobre</a></li>
-                    <li><a href="#especialidades">Especialidades</a></li>
-                    <li><a href="#contato" id="navContato">Contato</a></li>
+        <ul class="nav-links">
+          <li><a href="#inicio">Início</a></li>
+          <li><a href="#sobre">Sobre</a></li>
+          <li><a href="#especialidades">Especialidades</a></li>
+          <li><a href="#contato" id="navContato">Contato</a></li>
+        </ul>
 
-                </ul>
-<div class="more">
-  <button class="more-toggle" aria-haspopup="true" aria-expanded="false" aria-label="Mais opções">⋯</button>
-  <div class="more-dropdown" role="menu" aria-label="Mais opções">
-    <a href="#psicoterapia" role="menuitem">🧠 Psicoterapia</a>
-    <a href="#supervisao" role="menuitem">👩‍⚕️ Supervisão Clínica</a>
-    <a href="#palestras" role="menuitem">💬 Palestras</a>
-    <a href="#minicursos" role="menuitem">📚 Minicursos</a>
-    <a href="#mentoria-individual" role="menuitem">👤 Mentorias Individuais</a>
-    <a href="#mentoria-grupo" role="menuitem">👥 Mentorias em Grupo</a>
-  </div>
-</div>
-
-            </div>
-        </nav>
-    </header>
-
-    <section class="hero" id="inicio">
-        <h1>Caroline Marques Brito</h1>
-        <p>Psicóloga CRP 14/09165-4 | Especialista em Terapia Cognitivo Comportamental (TCC)</p>
-        <p class="location">📍 Bauru - SP | Atendimento Online para todo o Brasil</p>
-        <a href="https://wa.me/5517996258369?text=Olá! Gostaria de agendar uma consulta." class="cta-button" target="_blank">Agende sua Consulta</a>
-    </section>
-
-    <section class="section-bg-white" id="sobre">
-        <div class="container">
-            <div class="about">
-                  <div class="about-image">
-       <img src="imagescaroline.jpeg" alt="Caroline Marques Brito - Psicóloga">
-   </div>
-                <div>
-                    <h2 class="section-title">Sobre Mim</h2>
-                    <p style="margin-bottom: 1rem;">
-                        Olá! Sou Caroline Marques Brito, psicóloga com atuação em Bauru-SP e atendimento online para todo o Brasil.
-                    </p>
-                    <p style="margin-bottom: 1rem;">
-                        Meu trabalho é baseado em evidências científicas e voltado para ajudar você a compreender seus pensamentos, emoções e comportamentos, promovendo mudanças significativas em sua vida.
-                    </p>
-                    <p style="margin-bottom: 1rem;">
-                        Realizo atendimento 100% online, proporcionando conforto e praticidade para que você possa cuidar da sua saúde mental de onde estiver.
-                    </p>
-                    <p style="margin-bottom: 1rem;">
-                        <strong>CRP:</strong> 14/09165-4<br>
-                        <strong>Formações:</strong><br>
-                        • Psicologia + Pós-graduação em TCC<br>
-                        • Psicologia Baseada em Evidências - Instituto Fernanda Landeiro<br>
-                        • Obesidade e Emagrecimento - Instituto Fernanda Landeiro
-                    </p>
-                    <p style="margin-top: 1.5rem;">
-                        <strong>Serviços oferecidos:</strong><br>
-                        ✨ Psicoterapia individual<br>
-                        ✨ Supervisões clínicas para psicólogas<br>
-                        ✨ Mentorias para estudantes de Psicologia<br>
-                        ✨ Palestras e encontros sobre saúde mental
-                    </p>
-                </div>
-            </div>
+        <div class="more">
+          <button class="more-toggle" aria-haspopup="true" aria-expanded="false" aria-label="Mais opções">⋯</button>
+          <div class="more-dropdown" role="menu" aria-label="Mais opções">
+            <a href="#psicoterapia" role="menuitem">🧠 Psicoterapia</a>
+            <a href="#supervisao" role="menuitem">👩‍⚕️ Supervisão Clínica</a>
+            <a href="#palestras" role="menuitem">💬 Palestras</a>
+            <a href="#minicursos" role="menuitem">📚 Minicursos</a>
+            <a href="#mentoria-individual" role="menuitem">👤 Mentorias Individuais</a>
+            <a href="#mentoria-grupo" role="menuitem">👥 Mentorias em Grupo</a>
+          </div>
         </div>
-    </section>
+      </div>
+    </nav>
+  </header>
 
-    <section class="section-bg-light" id="especialidades">
-        <div class="container">
-            <h2 class="section-title" style="text-align: center;">Áreas de Atuação</h2>
-            <div class="cards-grid">
-                <div class="card">
-                    <div class="card-icon">😰</div>
-                    <h3>Ansiedade</h3>
-                    <p>Tratamento para transtornos de ansiedade, crises de pânico e preocupações excessivas que afetam seu dia a dia.</p>
-                </div>
-                <div class="card">
-                    <div class="card-icon">💙</div>
-                    <h3>Depressão</h3>
-                    <p>Acompanhamento terapêutico para sintomas depressivos, tristeza profunda e falta de motivação.</p>
-                </div>
-                <div class="card">
-                    <div class="card-icon">🎭</div>
-                    <h3>Transtorno Borderline</h3>
-                    <p>Suporte especializado utilizando a abordagem metodológica da DBT (Terapia Comportamental Dialética) para instabilidade emocional e regulação de emoções.</p>
-                </div>
-                <div class="card">
-                    <div class="card-icon">💔</div>
-                    <h3>Problemas de Relacionamento</h3>
-                    <p>Ajuda para conflitos conjugais, familiares e dificuldades nas relações interpessoais.</p>
-                </div>
-                <div class="card">
-                    <div class="card-icon">💼</div>
-                    <h3>Questões Profissionais</h3>
-                    <p>Orientação para estresse no trabalho, síndrome de burnout e dificuldades na carreira.</p>
-                </div>
-                <div class="card">
-                    <div class="card-icon">👨‍👩‍👧</div>
-                    <h3>Conflitos Familiares</h3>
-                    <p>Mediação e compreensão de dinâmicas familiares que causam sofrimento emocional.</p>
-                </div>
-            </div>
+  <section class="hero" id="inicio">
+    <h1>Caroline Marques Brito</h1>
+    <p>Psicóloga CRP 14/09165-4 | Especialista em Terapia Cognitivo Comportamental (TCC)</p>
+    <p class="location">📍 Bauru - SP | Atendimento Online para todo o Brasil</p>
+    <a href="https://wa.me/5517996258369?text=Olá! Gostaria de agendar uma consulta." class="cta-button" target="_blank">Agende sua Consulta</a>
+  </section>
+
+  <section class="section-bg-white" id="sobre">
+    <div class="container">
+      <div class="about">
+        <div class="about-image">
+          <img src="imagescaroline.jpeg" alt="Caroline Marques Brito - Psicóloga" />
         </div>
-    </section>
-
-    <section class="section-bg-white" id="psicoterapia">
-        <div class="container">
-            <h2 class="section-title">🧠 Psicoterapia Individual</h2>
-            <div class="service-content">
-                <h3 style="color: #ff6b35; margin-bottom: 1rem;">Como funciona?</h3>
-                <p style="margin-bottom: 1rem;">
-                    As sessões têm duração de <strong>50 minutos</strong>, realizadas <strong>100% online</strong>, por meio de uma plataforma de vídeo segura e estável.
-                </p>
-                <p style="margin-bottom: 1rem;">
-                    Basta encontrar um lugar confortável e reservado, onde você se sinta à vontade para conversar e se expressar.
-                </p>
-                <p style="margin-bottom: 1rem;">
-                    Os encontros acontecem <strong>uma vez por semana</strong> (ou conforme sua necessidade) e são conduzidos com base nas técnicas da <strong>Terapia Cognitivo-Comportamental (TCC)</strong>.
-                </p>
-                <p>
-                    Durante o processo, você encontrará <strong>acolhimento, escuta ativa e planos de ação personalizados</strong>, sempre com o objetivo de promover autoconhecimento e bem-estar emocional.
-                </p>
-            </div>
+        <div>
+          <h2 class="section-title">Sobre Mim</h2>
+          <p style="margin-bottom: 1rem;">Olá! Sou Caroline Marques Brito, psicóloga com atuação em Bauru-SP e atendimento online para todo o Brasil.</p>
+          <p style="margin-bottom: 1rem;">Meu trabalho é baseado em evidências científicas e voltado para ajudar você a compreender seus pensamentos, emoções e comportamentos, promovendo mudanças significativas em sua vida.</p>
+          <p style="margin-bottom: 1rem;">Realizo atendimento 100% online, proporcionando conforto e praticidade para que você possa cuidar da sua saúde mental de onde estiver.</p>
+          <p style="margin-bottom: 1rem;">
+            <strong>CRP:</strong> 14/09165-4<br>
+            <strong>Formações:</strong><br>
+            • Psicologia + Pós-graduação em TCC<br>
+            • Psicologia Baseada em Evidências - Instituto Fernanda Landeiro<br>
+            • Obesidade e Emagrecimento - Instituto Fernanda Landeiro
+          </p>
+          <p style="margin-top: 1.5rem;">
+            <strong>Serviços oferecidos:</strong><br>
+            ✨ Psicoterapia individual<br>
+            ✨ Supervisões clínicas para psicólogas<br>
+            ✨ Mentorias para estudantes de Psicologia<br>
+            ✨ Palestras e encontros sobre saúde mental
+          </p>
         </div>
-    </section>
-
-    <section class="section-bg-light" id="supervisao">
-        <div class="container">
-            <h2 class="section-title">👩‍⚕️ Supervisão para Psicólogas</h2>
-            <div class="service-content">
-                <p style="margin-bottom: 1rem;">
-                    Se você é psicóloga e sente <strong>insegurança na sua prática clínica</strong>, tem dúvidas sobre intervenções ou gostaria de aprimorar seu raciocínio clínico, eu posso te ajudar.
-                </p>
-                <p style="margin-bottom: 1rem;">
-                    Com base nas minhas formações e experiência em TCC, ofereço um <strong>espaço seguro e técnico</strong> para reflexão, construção de estratégias e fortalecimento da sua atuação profissional.
-                </p>
-                
-                <div class="highlight-box">
-                    <h3 style="color: #ff6b35; margin-bottom: 0.8rem;">Detalhes da Supervisão</h3>
-                    <p style="margin-bottom: 0.5rem;">⏰ <strong>Duração:</strong> 1 hora</p>
-                    <p style="margin-bottom: 1rem;">📋 <strong>Antes do encontro:</strong> Você preenche um formulário breve com suas principais dúvidas e desafios, para que possamos aproveitar ao máximo o tempo juntas.</p>
-                    <p style="margin-bottom: 1rem;">📋 <strong>No nosso tempo junto/as:</strong> Encontros com metas claras e acompanhamento entre sessões. Foco na sua demanda específica, com tarefas práticas e devolutivas objetivas.</p>
-                    <p style="margin-bottom: 1rem;">📄 <strong>Ao final:</strong> Você recebe um material de apoio com os pontos trabalhados durante a sessão.</p>
-                    <p style="color: #ff6b35; font-weight: bold;">💬 Entre em contato para saber valores e disponibilidade</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="section-bg-white" id="estudantes">
-        <div class="container">
-            <h2 class="section-title">🎓 Formação para Estudantes de Psicologia</h2>
-            <div class="service-content">
-                <p style="margin-bottom: 1rem;">
-                    Se você é <strong>estudante de Psicologia</strong> e tem curiosidade sobre o trabalho clínico, sente insegurança com os atendimentos ou quer entender melhor como funciona a TCC na prática, este espaço é para você.
-                </p>
-                <p style="margin-bottom: 1rem;">
-                    Vamos conversar sobre:
-                </p>
-                <ul style="margin-left: 2rem; margin-bottom: 1rem;">
-                    <li>Os primeiros passos na clínica</li>
-                    <li>O papel do terapeuta</li>
-                    <li>A estrutura da Terapia Cognitivo-Comportamental</li>
-                    <li>Esclarecimento de dúvidas práticas</li>
-                    <li>Ferramentas que vão te ajudar a se preparar para a atuação profissional</li>
-                </ul>
-                <p>
-                    Um espaço de aprendizado, troca e fortalecimento da sua formação em Psicologia.
-                </p>
-            </div>
-        </div>
-    </section>
-
-    <section class="section-bg-light" id="palestras">
-        <div class="container">
-            <h2 class="section-title">💬 Palestras e Encontros</h2>
-            <div class="service-content">
-                <p style="margin-bottom: 1.5rem;">
-                    Se você faz parte de uma <strong>empresa, instituição de ensino ou grupo</strong> e busca alguém para falar sobre saúde mental, relações, emoções, autocuidado ou comportamento humano, posso desenvolver uma <strong>palestra personalizada</strong> conforme o tema e o público.
-                </p>
-                <p style="margin-bottom: 1.5rem;">
-                    O objetivo é promover <strong>reflexão, aprendizado e acolhimento</strong>, sempre com uma linguagem leve, prática e baseada na Psicologia Cognitivo-Comportamental.
-                </p>
-                
-                <h3 style="color: #ff6b35; margin-bottom: 1rem;">Temas disponíveis:</h3>
-                <div class="offer-item">
-                    <h3>Saúde Mental no Trabalho</h3>
-                    <p>Ansiedade no ambiente corporativo, prevenção ao burnout e bem-estar organizacional.</p>
-                </div>
-                <div class="offer-item">
-                    <h3>Comunicação Não Violenta</h3>
-                    <p>Estratégias para melhorar relações e resolver conflitos de forma saudável.</p>
-                </div>
-                <div class="offer-item">
-                    <h3>Gestão das Emoções</h3>
-                    <p>Como lidar com ansiedade, estresse e regulação emocional no dia a dia.</p>
-                </div>
-                <div class="offer-item">
-                    <h3>Relacionamentos Saudáveis</h3>
-                    <p>Habilidades de comunicação, estabelecimento de limites e empatia.</p>
-                </div>
-                <div class="offer-item">
-                    <h3>Saúde Mental para Líderes</h3>
-                    <p>Como criar ambientes de trabalho mais acolhedores e produtivos.</p>
-                </div>
-                <div class="offer-item">
-                    <h3>Autocuidado e Qualidade de Vida</h3>
-                    <p>Reflexões práticas sobre equilíbrio emocional e bem-estar.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="section-bg-white" id="minicursos">
-        <div class="container">
-            <h2 class="section-title">📚 Minicursos</h2>
-            <p>Formações curtas e práticas (on-line), com material de apoio e exercícios.</p>
-            <div style="margin-top:2rem;">
-                <div class="offer-item">
-                    <h3>Gestão da Ansiedade em 4 Encontros</h3>
-                    <p>Psicoeducação, respiração diafragmática, reestruturação cognitiva e plano de ação.</p>
-                </div>
-                <div class="offer-item">
-                    <h3>Comunicação Não Violenta</h3>
-                    <p>Prática de CNV para conflitos familiares e profissionais.</p>
-                </div>
-                <div class="offer-item">
-                    <h3>Hábitos e Rotina Saudável</h3>
-                    <p>Ferramentas da TCC para criar e manter hábitos.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="section-bg-light" id="mentoria-individual">
-        <div class="container">
-                        </div> <!-- fecha o último .container -->
-</section> <!-- fecha a seção mentoria-individual -->
-
-<script>
-// Rolagem suave até a seção #contato
-document.addEventListener("DOMContentLoaded", () => {
-  const linkContato = document.querySelector('#navContato');
-  const secContato = document.querySelector('#contato');
-
-  if (linkContato && secContato) {
-    linkContato.addEventListener('click', (e) => {
-      e.preventDefault();
-      secContato.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    });
-  }
-});
-</script>
-<script>
-// util: rolar suave
-function smoothScrollTo(selector) {
-  const el = document.querySelector(selector);
-  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-  // --- menu mobile (hambúrguer)
-  const menuToggle = document.querySelector('.menu-toggle');
-  const navLinks = document.querySelector('.nav-links');
-  if (menuToggle && navLinks) {
-    menuToggle.addEventListener('click', () => {
-      navLinks.classList.toggle('active');
-    });
-  }
-
-  // --- botão Contato no menu principal
-  const linkContato = document.querySelector('#navContato');
-  const secContato  = document.querySelector('#contato');
-  if (linkContato && secContato) {
-    linkContato.addEventListener('click', (e) => {
-      e.preventDefault();
-      smoothScrollTo('#contato');
-      // fecha menu mobile se estiver aberto
-      if (navLinks && navLinks.classList.contains('active')) {
-        navLinks.classList.remove('active');
-      }
-    });
-  }
-
-  // --- três pontinhos (abrir/fechar)
-  const toggleBtn = document.querySelector('.more-toggle');
-  const dropdown  = document.querySelector('.more-dropdown');
-  if (toggleBtn && dropdown) {
-    toggleBtn.addEventListener('click', () => {
-      const vis = dropdown.style.display === 'block';
-      dropdown.style.display = vis ? 'none' : 'block';
-      toggleBtn.setAttribute('aria-expanded', String(!vis));
-    });
-    document.addEventListener('click', (e) => {
-      if (!dropdown.contains(e.target) && !toggleBtn.contains(e.target)) {
-        dropdown.style.display = 'none';
-        toggleBtn.setAttribute('aria-expanded', 'false');
-      }
-    });
-
-    // --- rolar suave ao clicar nos itens do dropdown + fechar dropdown
-    dropdown.querySelectorAll('a[href^="#"]').forEach(a => {
-      a.addEventListener('click', (e) => {
-        e.preventDefault();
-        smoothScrollTo(a.getAttribute('href'));
-        dropdown.style.display = 'none';
-        toggleBtn.setAttribute('aria-expanded', 'false');
-      });
-    });
-  }
-});
-</script>
-<script>
-// abrir/fechar os três pontinhos + rolar suave para as seções
-document.addEventListener('DOMContentLoaded', () => {
-  const toggleBtn = document.querySelector('.more-toggle');
-  const dropdown  = document.querySelector('.more-dropdown');
-
-  if (toggleBtn && dropdown) {
-    // abre/fecha o dropdown
-    toggleBtn.addEventListener('click', () => {
-      const vis = dropdown.style.display === 'block';
-      dropdown.style.display = vis ? 'none' : 'block';
-      toggleBtn.setAttribute('aria-expanded', String(!vis));
-    });
-
-    // fecha ao clicar fora
-    document.addEventListener('click', (e) => {
-      if (!dropdown.contains(e.target) && !toggleBtn.contains(e.target)) {
-        dropdown.style.display = 'none';
-        toggleBtn.setAttribute('aria-expanded', 'false');
-      }
-    });
-
-    // rola suave ao clicar num item e fecha o dropdown
-    dropdown.querySelectorAll('a[href^="#"]').forEach(a => {
-      a.addEventListener('click', (e) => {
-        e.preventDefault();
-        const sel = a.getAttribute('href'); // ex.: #psicoterapia
-        const el  = document.querySelector(sel);
-        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        dropdown.style.display = 'none';
-        toggleBtn.setAttribute('aria-expanded', 'false');
-      });
-    });
-  }
-});
-</script>
-<section class="contact" id="contato">
-  <div class="container">
-    <h2 class="section-title" style="color: white;">Entre em Contato</h2>
-    <p>💬 Vamos conversar? Escolha a melhor forma de falar comigo:</p>
-
-    <div class="contact-buttons">
-      <a href="https://wa.me/5517996258369?text=Olá! Gostaria de agendar uma consulta." class="contact-btn" target="_blank" rel="noopener noreferrer">
-        💬 WhatsApp
-      </a>
-
-      <a href="mailto:carolinemarquesbrito@gmail.com" class="contact-btn">
-        ✉️ E-mail
-      </a>
+      </div>
     </div>
+  </section>
 
-    <div class="contact-info">
-      <p>📍 Bauru - SP | Atendimento Online para todo o Brasil</p>
-      <p>📞 (17) 99625-8369</p>
-      <p>📧 carolinemarquesbrito@gmail.com</p>
+  <section class="section-bg-light" id="especialidades">
+    <div class="container">
+      <h2 class="section-title" style="text-align: center;">Áreas de Atuação</h2>
+      <div class="cards-grid">
+        <div class="card"><div class="card-icon">😰</div><h3>Ansiedade</h3><p>Tratamento para transtornos de ansiedade, crises de pânico e preocupações excessivas que afetam seu dia a dia.</p></div>
+        <div class="card"><div class="card-icon">💙</div><h3>Depressão</h3><p>Acompanhamento terapêutico para sintomas depressivos, tristeza profunda e falta de motivação.</p></div>
+        <div class="card"><div class="card-icon">🎭</div><h3>Transtorno Borderline</h3><p>Suporte especializado utilizando a abordagem metodológica da DBT (Terapia Comportamental Dialética) para instabilidade emocional e regulação de emoções.</p></div>
+        <div class="card"><div class="card-icon">💔</div><h3>Problemas de Relacionamento</h3><p>Ajuda para conflitos conjugais, familiares e dificuldades nas relações interpessoais.</p></div>
+        <div class="card"><div class="card-icon">💼</div><h3>Questões Profissionais</h3><p>Orientação para estresse no trabalho, síndrome de burnout e dificuldades na carreira.</p></div>
+        <div class="card"><div class="card-icon">👨‍👩‍👧</div><h3>Conflitos Familiares</h3><p>Mediação e compreensão de dinâmicas familiares que causam sofrimento emocional.</p></div>
+      </div>
     </div>
-  </div>
-</section>
-<script>
-// 3 pontinhos: abrir/fechar + rolar suave até a seção
-document.addEventListener('DOMContentLoaded', () => {
-  const toggleBtn = document.querySelector('.more-toggle');
-  const dropdown  = document.querySelector('.more-dropdown');
+  </section>
 
-  if (!toggleBtn || !dropdown) return;
+  <section class="section-bg-white" id="psicoterapia">
+    <div class="container">
+      <h2 class="section-title">🧠 Psicoterapia Individual</h2>
+      <div class="service-content">
+        <h3 style="color: #ff6b35; margin-bottom: 1rem;">Como funciona?</h3>
+        <p style="margin-bottom: 1rem;">As sessões têm duração de <strong>50 minutos</strong>, realizadas <strong>100% online</strong>, por meio de uma plataforma de vídeo segura e estável.</p>
+        <p style="margin-bottom: 1rem;">Basta encontrar um lugar confortável e reservado, onde você se sinta à vontade para conversar e se expressar.</p>
+        <p style="margin-bottom: 1rem;">Os encontros acontecem <strong>uma vez por semana</strong> (ou conforme sua necessidade) e são conduzidos com base nas técnicas da <strong>Terapia Cognitivo-Comportamental (TCC)</strong>.</p>
+        <p>Durante o processo, você encontrará <strong>acolhimento, escuta ativa e planos de ação personalizados</strong>, sempre com o objetivo de promover autoconhecimento e bem-estar emocional.</p>
+      </div>
+    </div>
+  </section>
 
-  // abre/fecha o dropdown
-  toggleBtn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    const vis = dropdown.style.display === 'block';
-    dropdown.style.display = vis ? 'none' : 'block';
-    toggleBtn.setAttribute('aria-expanded', String(!vis));
-  });
+  <section class="section-bg-light" id="supervisao">
+    <div class="container">
+      <h2 class="section-title">👩‍⚕️ Supervisão para Psicólogas</h2>
+      <div class="service-content">
+        <p style="margin-bottom: 1rem;">Se você é psicóloga e sente <strong>insegurança na sua prática clínica</strong>, tem dúvidas sobre intervenções ou gostaria de aprimorar seu raciocínio clínico, eu posso te ajudar.</p>
+        <p style="margin-bottom: 1rem;">Com base nas minhas formações e experiência em TCC, ofereço um <strong>espaço seguro e técnico</strong> para reflexão, construção de estratégias e fortalecimento da sua atuação profissional.</p>
+        <div class="highlight-box">
+          <h3 style="color: #ff6b35; margin-bottom: 0.8rem;">Detalhes da Supervisão</h3>
+          <p style="margin-bottom: 0.5rem;">⏰ <strong>Duração:</strong> 1 hora</p>
+          <p style="margin-bottom: 1rem;">📋 <strong>Antes do encontro:</strong> Você preenche um formulário breve com suas principais dúvidas e desafios, para que possamos aproveitar ao máximo o tempo juntas.</p>
+          <p style="margin-bottom: 1rem;">📋 <strong>No nosso tempo junto/as:</strong> Encontros com metas claras e acompanhamento entre sessões. Foco na sua demanda específica, com tarefas práticas e devolutivas objetivas.</p>
+          <p style="margin-bottom: 1rem;">📄 <strong>Ao final:</strong> Você recebe um material de apoio com os pontos trabalhados durante a sessão.</p>
+          <p style="color: #ff6b35; font-weight: bold;">💬 Entre em contato para saber valores e disponibilidade</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  // fecha ao clicar fora
-  document.addEventListener('click', (e) => {
-    if (!dropdown.contains(e.target) && !toggleBtn.contains(e.target)) {
-      dropdown.style.display = 'none';
-      toggleBtn.setAttribute('aria-expanded', 'false');
-    }
-  });
+  <section class="section-bg-white" id="estudantes">
+    <div class="container">
+      <h2 class="section-title">🎓 Formação para Estudantes de Psicologia</h2>
+      <div class="service-content">
+        <p style="margin-bottom: 1rem;">Se você é <strong>estudante de Psicologia</strong> e tem curiosidade sobre o trabalho clínico, sente insegurança com os atendimentos ou quer entender melhor como funciona a TCC na prática, este espaço é para você.</p>
+        <p style="margin-bottom: 1rem;">Vamos conversar sobre:</p>
+        <ul style="margin-left: 2rem; margin-bottom: 1rem;">
+          <li>Os primeiros passos na clínica</li>
+          <li>O papel do terapeuta</li>
+          <li>A estrutura da Terapia Cognitivo-Comportamental</li>
+          <li>Esclarecimento de dúvidas práticas</li>
+          <li>Ferramentas que vão te ajudar a se preparar para a atuação profissional</li>
+        </ul>
+        <p>Um espaço de aprendizado, troca e fortalecimento da sua formação em Psicologia.</p>
+      </div>
+    </div>
+  </section>
 
-  // rolar suave e fechar ao clicar em um item
-  dropdown.querySelectorAll('a[href^="#"]').forEach(a => {
-    a.addEventListener('click', (e) => {
-      e.preventDefault();
-      const alvo = document.querySelector(a.getAttribute('href')); // ex: #psicoterapia
-      if (alvo) alvo.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      dropdown.style.display = 'none';
-      toggleBtn.setAttribute('aria-expanded', 'false');
-    });
-  });
-});
-</script>
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const menuToggle = document.querySelector('.menu-toggle');
-  const navLinks = document.querySelector('.nav-links');
-  const moreToggle = document.querySelector('.more-toggle');
-  const moreDropdown = document.querySelector('.more-dropdown');
+  <section class="section-bg-light" id="palestras">
+    <div class="container">
+      <h2 class="section-title">💬 Palestras e Encontros</h2>
+      <div class="service-content">
+        <p style="margin-bottom: 1.5rem;">Se você faz parte de uma <strong>empresa, instituição de ensino ou grupo</strong> e busca alguém para falar sobre saúde mental, relações, emoções, autocuidado ou comportamento humano, posso desenvolver uma <strong>palestra personalizada</strong> conforme o tema e o público.</p>
+        <p style="margin-bottom: 1.5rem;">O objetivo é promover <strong>reflexão, aprendizado e acolhimento</strong>, sempre com uma linguagem leve, prática e baseada na Psicologia Cognitivo-Comportamental.</p>
+        <h3 style="color: #ff6b35; margin-bottom: 1rem;">Temas disponíveis:</h3>
+        <div class="offer-item"><h3>Saúde Mental no Trabalho</h3><p>Ansiedade no ambiente corporativo, prevenção ao burnout e bem-estar organizacional.</p></div>
+        <div class="offer-item"><h3>Comunicação Não Violenta</h3><p>Estratégias para melhorar relações e resolver conflitos de forma saudável.</p></div>
+        <div class="offer-item"><h3>Gestão das Emoções</h3><p>Como lidar com ansiedade, estresse e regulação emocional no dia a dia.</p></div>
+        <div class="offer-item"><h3>Relacionamentos Saudáveis</h3><p>Habilidades de comunicação, estabelecimento de limites e empatia.</p></div>
+        <div class="offer-item"><h3>Saúde Mental para Líderes</h3><p>Como criar ambientes de trabalho mais acolhedores e produtivos.</p></div>
+        <div class="offer-item"><h3>Autocuidado e Qualidade de Vida</h3><p>Reflexões práticas sobre equilíbrio emocional e bem-estar.</p></div>
+      </div>
+    </div>
+  </section>
 
-  // abre e fecha o menu principal (mobile)
-  if (menuToggle && navLinks) {
-    menuToggle.addEventListener('click', () => {
-      navLinks.classList.toggle('open');
-    });
-  }
+  <section class="section-bg-white" id="minicursos">
+    <div class="container">
+      <h2 class="section-title">📚 Minicursos</h2>
+      <p>Formações curtas e práticas (on-line), com material de apoio e exercícios.</p>
+      <div style="margin-top:2rem;">
+        <div class="offer-item"><h3>Gestão da Ansiedade em 4 Encontros</h3><p>Psicoeducação, respiração diafragmática, reestruturação cognitiva e plano de ação.</p></div>
+        <div class="offer-item"><h3>Comunicação Não Violenta</h3><p>Prática de CNV para conflitos familiares e profissionais.</p></div>
+        <div class="offer-item"><h3>Hábitos e Rotina Saudável</h3><p>Ferramentas da TCC para criar e manter hábitos.</p></div>
+      </div>
+    </div>
+  </section>
 
-  // abre e fecha o menu dos três pontinhos
-  if (moreToggle && moreDropdown) {
-    moreToggle.addEventListener('click', (e) => {
-      e.stopPropagation();
-      moreDropdown.style.display =
-        moreDropdown.style.display === 'block' ? 'none' : 'block';
-    });
+  <section class="section-bg-light" id="mentoria-individual">
+    <div class="container">
+      <!-- conteúdo da mentoria individual — mantenha/edite quando quiser -->
+    </div>
+  </section>
 
-    // fecha se clicar fora
-    document.addEventListener('click', (e) => {
-      if (!moreToggle.contains(e.target) && !moreDropdown.contains(e.target)) {
-        moreDropdown.style.display = 'none';
+  <!-- 👇 Seção de Contato -->
+  <section class="contact" id="contato">
+    <div class="container">
+      <h2 class="section-title" style="color: white;">Entre em Contato</h2>
+      <p>💬 Vamos conversar? Escolha a melhor forma de falar comigo:</p>
+
+      <div class="contact-buttons">
+        <a href="https://wa.me/5517996258369?text=Olá! Gostaria de agendar uma consulta." class="contact-btn" target="_blank" rel="noopener noreferrer">💬 WhatsApp</a>
+        <a href="mailto:carolinemarquesbrito@gmail.com" class="contact-btn">✉️ E-mail</a>
+      </div>
+
+      <div class="contact-info">
+        <p>📍 Bauru - SP | Atendimento Online para todo o Brasil</p>
+        <p>📞 (17) 99625-8369</p>
+        <p>📧 carolinemarquesbrito@gmail.com</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 👇 Script único: menu mobile, 3 pontinhos e rolagem suave -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const $  = (s, r=document) => r.querySelector(s);
+      const $$ = (s, r=document) => Array.from(r.querySelectorAll(s));
+      const smoothTo = (sel) => { const el = $(sel); if (el) el.scrollIntoView({ behavior:'smooth', block:'start' }); };
+
+      // Menu mobile (hambúrguer)
+      const menuToggle = $('.menu-toggle');
+      const navLinks   = $('.nav-links');
+      if (menuToggle && navLinks) {
+        const toggleNav = (e) => { e && e.preventDefault(); navLinks.classList.toggle('active'); };
+        menuToggle.addEventListener('click', toggleNav, { passive:false });
+        menuToggle.addEventListener('touchend', toggleNav, { passive:false });
+      }
+
+      // Contato no menu principal
+      const linkContato = $('#navContato');
+      if (linkContato) {
+        const goContato = (e) => {
+          e.preventDefault();
+          smoothTo('#contato');
+          if (navLinks && navLinks.classList.contains('active')) navLinks.classList.remove('active');
+        };
+        linkContato.addEventListener('click', goContato, { passive:false });
+        linkContato.addEventListener('touchend', goContato, { passive:false });
+      }
+
+      // Três pontinhos (⋯)
+      const moreToggle   = $('.more-toggle');
+      const moreDropdown = $('.more-dropdown');
+      if (moreToggle && moreDropdown) {
+        const toggleMore = (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          const open = moreDropdown.style.display === 'block';
+          moreDropdown.style.display = open ? 'none' : 'block';
+          moreToggle.setAttribute('aria-expanded', String(!open));
+        };
+        moreToggle.addEventListener('click', toggleMore, { passive:false });
+        moreToggle.addEventListener('touchend', toggleMore, { passive:false });
+
+        const closeIfOutside = (e) => {
+          if (!moreDropdown.contains(e.target) && !moreToggle.contains(e.target)) {
+            moreDropdown.style.display = 'none';
+            moreToggle.setAttribute('aria-expanded', 'false');
+          }
+        };
+        document.addEventListener('click', closeIfOutside);
+        document.addEventListener('touchend', closeIfOutside);
+
+        // Rolagem suave nos itens do dropdown
+        $$('.more-dropdown a[href^="#"]').forEach(a => {
+          const go = (e) => {
+            e.preventDefault();
+            smoothTo(a.getAttribute('href'));
+            moreDropdown.style.display = 'none';
+            moreToggle.setAttribute('aria-expanded', 'false');
+            if (navLinks && navLinks.classList.contains('active')) navLinks.classList.remove('active');
+          };
+          a.addEventListener('click', go, { passive:false });
+          a.addEventListener('touchend', go, { passive:false });
+        });
       }
     });
-  }
-});
-</script>
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  const toggleBtn = document.querySelector('.more-toggle');
-  const dropdown  = document.querySelector('.more-dropdown');
-  if (!toggleBtn || !dropdown) return;
-
-  // abrir/fechar (funciona em clique e toque)
-  const toggle = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    const open = dropdown.style.display === 'block';
-    dropdown.style.display = open ? 'none' : 'block';
-    toggleBtn.setAttribute('aria-expanded', String(!open));
-  };
-  toggleBtn.addEventListener('click', toggle, { passive:false });
-  toggleBtn.addEventListener('touchend', toggle, { passive:false });
-
-  // fechar ao tocar/clicar fora
-  const closeIfOutside = (e) => {
-    if (!dropdown.contains(e.target) && !toggleBtn.contains(e.target)) {
-      dropdown.style.display = 'none';
-      toggleBtn.setAttribute('aria-expanded', 'false');
-    }
-  };
-  document.addEventListener('click', closeIfOutside);
-  document.addEventListener('touchend', closeIfOutside);
-
-  // rolar suave ao clicar nos itens e fechar o dropdown
-  dropdown.querySelectorAll('a[href^="#"]').forEach(a => {
-    const go = (e) => {
-      e.preventDefault();
-
+  </script>
 </body>
 </html>
-
