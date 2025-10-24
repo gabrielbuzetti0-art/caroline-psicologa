@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <base href="https://gabrielbuzetti0-art.github.io/caroline-psicologa/">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Caroline Marques Brito - Psicóloga CRP 14/09165-4 em Bauru-SP. Especialista em TCC, atendimento online para ansiedade, depressão e relacionamentos." />
-  <meta name="keywords" content="psicóloga Bauru, psicóloga online, TCC, ansiedade, depressão, relacionamentos, DBT" />
+  <meta name="description" content="Caroline Marques Brito - Psicóloga (CRP 14/09165-4) em Bauru-SP, atendimento 100% online para todo o Brasil. Atuação baseada em evidências, TCC, ansiedade, depressão e relacionamentos." />
+  <meta name="keywords" content="psicóloga Bauru, psicóloga online, TCC, ansiedade, depressão, relacionamentos, DBT, psicoterapia online" />
   <title>Caroline Marques Brito - Psicóloga Online | TCC | Bauru-SP</title>
 
   <style>
@@ -25,6 +25,7 @@
       line-height: 1.6;
       color: var(--text);
       scroll-behavior: smooth;
+      background: #fff;
     }
 
     header {
@@ -123,8 +124,8 @@
       margin-top: 60px;
     }
     .hero h1 { font-size: 3rem; margin-bottom: 1rem; animation: fadeInUp 1s ease; }
-    .hero p { font-size: 1.3rem; margin-bottom: 1.5rem; opacity: 0.95; }
-    .hero .location { font-size: 1.1rem; opacity: 0.9; margin-bottom: 2rem; }
+    .hero p { font-size: 1.15rem; margin-bottom: 1rem; opacity: 0.95; }
+    .hero .location { font-size: 1.05rem; opacity: 0.9; margin-bottom: 2rem; }
     .cta-button {
       display: inline-block;
       background: white; color: var(--wine-600);
@@ -144,12 +145,13 @@
     .about-image img {
       width: 100%;
       height: 100%;
-      object-fit: contain;
+      object-fit: cover;
       object-position: center;
       border-radius: 20px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
     }
 
-    .section-title { font-size: 2.5rem; color: var(--wine-600); margin-bottom: 1.5rem; }
+    .section-title { font-size: 2.2rem; color: var(--wine-600); margin-bottom: 1.25rem; }
 
     .section-bg-white { background: #fff; }
     .section-bg-light  { background: var(--wine-100); }
@@ -166,14 +168,20 @@
 
     .service-content {
       background: linear-gradient(135deg, var(--wine-100) 0%, #fff 100%);
-      padding: 2.5rem; border-radius: 20px; margin-top: 2rem;
+      padding: 2.5rem; border-radius: 20px; margin-top: 1rem;
+      border: 1px solid rgba(109,31,43,0.12);
     }
+
+    .two-col {
+      display: grid; gap: 1.25rem; grid-template-columns: 1fr; margin-top: .5rem;
+    }
+    @media (min-width: 820px) { .two-col { grid-template-columns: 1fr 1fr; } }
 
     .highlight-box {
       background: white;
       padding: 1.5rem;
       border-radius: 12px;
-      margin-top: 1.5rem;
+      margin-top: 1.2rem;
       border-left: 4px solid var(--wine-500);
     }
 
@@ -203,7 +211,7 @@
       margin-top: 2rem; padding: 1.5rem; background: rgba(255,255,255,0.1);
       border-radius: 15px; display: inline-block;
     }
-    .contact-info p { margin: 0.5rem 0; font-size: 1.1rem; }
+    .contact-info p { margin: 0.5rem 0; font-size: 1.05rem; }
 
     footer { background: var(--wine-600); color: white; text-align: center; padding: 2rem; }
 
@@ -212,9 +220,9 @@
       .menu-toggle { display: block; }
 
       .hero h1 { font-size: 2rem; }
-      .hero p { font-size: 1.1rem; }
+      .hero p { font-size: 1.05rem; }
       .about { grid-template-columns: 1fr; }
-      .section-title { font-size: 2rem; }
+      .section-title { font-size: 1.9rem; }
 
       .nav-links.active {
         display: flex;
@@ -238,27 +246,11 @@
     }
 
     /* Botões flutuantes (WhatsApp e Instagram) */
-    .whatsapp-float {
-      position: fixed;
-      width: 60px; height: 60px;
-      bottom: 40px; right: 40px;
-      background-color: #25d366;
-      color: #FFF;
-      border-radius: 50%;
-      text-align: center;
-      box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
-      z-index: 999;
-      display: flex; align-items: center; justify-content: center;
-      cursor: pointer; transition: transform 0.3s; text-decoration: none;
-    }
-    .whatsapp-float:hover { transform: scale(1.1); }
-
+    .whatsapp-float,
     .instagram-float {
       position: fixed;
       width: 60px; height: 60px;
-      bottom: 110px; /* acima do WhatsApp */
       right: 40px;
-      background-color: #E4405F;
       color: #FFF;
       border-radius: 50%;
       text-align: center;
@@ -267,25 +259,26 @@
       display: flex; align-items: center; justify-content: center;
       cursor: pointer; transition: transform 0.3s; text-decoration: none;
     }
+    .whatsapp-float { bottom: 40px; background-color: #25d366; }
+    .instagram-float { bottom: 110px; background-color: #E4405F; }
+
+    .whatsapp-float:hover,
     .instagram-float:hover { transform: scale(1.1); }
 
-    /* tamanho dos ícones dos botões flutuantes */
     .whatsapp-float img,
-    .instagram-float img {
-      width: 28px; height: 28px; display: block;
-    }
+    .instagram-float img { width: 28px; height: 28px; display: block; }
   </style>
 </head>
 <body>
   <!-- WhatsApp flutuante com ícone -->
   <a href="https://wa.me/5517996258369?text=Olá! Gostaria de agendar uma consulta."
-     class="whatsapp-float" target="_blank" rel="noopener noreferrer">
+     class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="Conversar no WhatsApp">
     <img src="https://gabrielbuzetti0-art.github.io/caroline-psicologa/whatsapp.png" alt="WhatsApp" loading="lazy">
   </a>
 
   <!-- Instagram flutuante com ícone -->
   <a href="https://www.instagram.com/psicarolmarques/"
-     class="instagram-float" target="_blank" rel="noopener noreferrer">
+     class="instagram-float" target="_blank" rel="noopener noreferrer" aria-label="Abrir Instagram">
     <img src="https://gabrielbuzetti0-art.github.io/caroline-psicologa/Instagram.png" alt="Instagram" loading="lazy">
   </a>
 
@@ -320,44 +313,61 @@
 
   <section class="hero" id="inicio">
     <h1>Caroline Marques Brito</h1>
-    <p>Psicóloga CRP 14/09165-4 | Especialista em Terapia Cognitivo Comportamental (TCC)</p>
-    <p class="location">📍 Bauru - SP | Atendimento Online para todo o Brasil</p>
-    <a href="https://wa.me/5517996258369?text=Olá! Gostaria de agendar uma consulta." class="cta-button" target="_blank">Agende sua Consulta</a>
+    <p><strong>Psicóloga · CRP 14/09165-4</strong> | Especialista em Terapia Cognitivo-Comportamental (TCC)</p>
+    <p class="location">📍 Bauru - SP | Atendimento 100% online para todo o Brasil</p>
+    <a href="https://wa.me/5517996258369?text=Olá! Gostaria de agendar uma consulta." class="cta-button" target="_blank" rel="noopener noreferrer">Agende sua Consulta</a>
   </section>
 
   <section class="section-bg-white" id="sobre">
     <div class="container">
       <div class="about">
         <div class="about-image">
-          <img src="imagescaroline.jpeg" alt="Caroline Marques Brito - Psicóloga" />
+          <!-- Tenta carregar primeiro no raiz. Se falhar, troca para /images/caroline.jpeg -->
+          <img src="caroline.jpeg" alt="Caroline Marques Brito - Psicóloga"
+               onerror="this.onerror=null;this.src='images/caroline.jpeg';">
         </div>
         <div>
-          <h2 class="section-title">Sobre Mim</h2>
-          <p style="margin-bottom: 1rem;">Olá! Sou Caroline Marques Brito, psicóloga com atuação em Bauru-SP e atendimento online para todo o Brasil.</p>
-          <p style="margin-bottom: 1rem;">Meu trabalho é baseado em evidências científicas e voltado para ajudar você a compreender seus pensamentos, emoções e comportamentos, promovendo mudanças significativas em sua vida.</p>
-          <p style="margin-bottom: 1rem;">Realizo atendimento 100% online, proporcionando conforto e praticidade para que você possa cuidar da sua saúde mental de onde estiver.</p>
+          <h2 class="section-title">Sobre mim</h2>
           <p style="margin-bottom: 1rem;">
-            <strong>CRP:</strong> 14/09165-4<br>
-            <strong>Formações:</strong><br>
-            • Psicologia + Pós-graduação em TCC<br>
-            • Psicologia Baseada em Evidências - Instituto Fernanda Landeiro<br>
-            • Obesidade e Emagrecimento - Instituto Fernanda Landeiro
+            Sou <strong>Caroline Marques Brito</strong>, psicóloga (CRP 14/09165-4) com atuação em <strong>Bauru-SP</strong> e
+            <strong>atendimento online</strong> para todo o Brasil. Meu trabalho é fundamentado em
+            <strong>evidências científicas</strong> para ajudar você a compreender seus <strong>pensamentos, emoções e comportamentos</strong> e promover
+            <strong>mudanças reais e duradouras</strong>.
           </p>
-          <p style="margin-top: 1.5rem;">
-  <strong>Formação Acadêmica:</strong><br>
-  🎓 <strong>Universidade Federal de Mato Grosso do Sul (UFMS)</strong><br>
-  Bacharelado em Psicologia<br><br>
-  🎓 <strong>Faculdade da Região Serrana (FARESE)</strong><br>
-  Pós-graduação Lato Sensu – Especialização em Psicologia Clínica (fev/2021 – jun/2021)
-</p>
+          <p style="margin-bottom: 1rem;">
+            As sessões são <strong>100% online</strong>, com conforto, sigilo e flexibilidade — para você cuidar da sua saúde mental de onde estiver.
+          </p>
 
-          <p style="margin-top: 1.5rem;">
+          <div class="two-col" style="margin-top:.75rem;">
+            <div>
+              <h3 style="color:var(--wine-600); margin-bottom:.5rem;">Formação acadêmica</h3>
+              <ul style="padding-left: 1.2rem;">
+                <li style="margin-bottom:.5rem;">
+                  🎓 <strong>Universidade Federal de Mato Grosso do Sul (UFMS)</strong><br>
+                  Bacharelado em Psicologia
+                </li>
+                <li>
+                  🎓 <strong>Faculdade da Região Serrana (FARESE)</strong><br>
+                  Pós-graduação Lato Sensu em Psicologia Clínica <span style="opacity:.75;">(fev/2021 – jun/2021)</span>
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 style="color:var(--wine-600); margin-bottom:.5rem;">Aperfeiçoamentos profissionais</h3>
+              <ul style="padding-left: 1.2rem;">
+                <li style="margin-bottom:.35rem;"><strong>Terapia Cognitivo-Comportamental (TCC)</strong></li>
+                <li style="margin-bottom:.35rem;"><strong>Psicologia Baseada em Evidências</strong> — Instituto Fernanda Landeiro</li>
+                <li><strong>Obesidade e Emagrecimento</strong> — Instituto Fernanda Landeiro</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="highlight-box">
             <strong>Serviços oferecidos:</strong><br>
-            ✨ Psicoterapia individual<br>
-            ✨ Supervisões clínicas para psicólogas<br>
-            ✨ Mentorias para estudantes de Psicologia<br>
-            ✨ Palestras e encontros sobre saúde mental
-          </p>
+            ✨ Psicoterapia individual&nbsp;&nbsp;•&nbsp;&nbsp;✨ Supervisão clínica para psicólogas<br>
+            ✨ Mentorias para estudantes de Psicologia&nbsp;&nbsp;•&nbsp;&nbsp;✨ Palestras e encontros sobre saúde mental
+          </div>
         </div>
       </div>
     </div>
@@ -365,14 +375,14 @@
 
   <section class="section-bg-light" id="especialidades">
     <div class="container">
-      <h2 class="section-title" style="text-align: center;">Áreas de Atuação</h2>
+      <h2 class="section-title" style="text-align: center;">Áreas de atuação</h2>
       <div class="cards-grid">
         <div class="card"><div class="card-icon">😰</div><h3>Ansiedade</h3><p>Tratamento para transtornos de ansiedade, crises de pânico e preocupações excessivas que afetam seu dia a dia.</p></div>
         <div class="card"><div class="card-icon">💙</div><h3>Depressão</h3><p>Acompanhamento terapêutico para sintomas depressivos, tristeza profunda e falta de motivação.</p></div>
-        <div class="card"><div class="card-icon">🎭</div><h3>Transtorno Borderline</h3><p>Suporte especializado utilizando a abordagem metodológica da DBT (Terapia Comportamental Dialética) para instabilidade emocional e regulação de emoções.</p></div>
-        <div class="card"><div class="card-icon">💔</div><h3>Problemas de Relacionamento</h3><p>Ajuda para conflitos conjugais, familiares e dificuldades nas relações interpessoais.</p></div>
-        <div class="card"><div class="card-icon">💼</div><h3>Questões Profissionais</h3><p>Orientação para estresse no trabalho, síndrome de burnout e dificuldades na carreira.</p></div>
-        <div class="card"><div class="card-icon">👨‍👩‍👧</div><h3>Conflitos Familiares</h3><p>Mediação e compreensão de dinâmicas familiares que causam sofrimento emocional.</p></div>
+        <div class="card"><div class="card-icon">🎭</div><h3>Transtorno Borderline</h3><p>Suporte com abordagem da <strong>DBT</strong> (Terapia Comportamental Dialética) para instabilidade emocional e regulação de emoções.</p></div>
+        <div class="card"><div class="card-icon">💔</div><h3>Relacionamentos</h3><p>Ajuda em conflitos conjugais, familiares e dificuldades nas relações interpessoais.</p></div>
+        <div class="card"><div class="card-icon">💼</div><h3>Questões profissionais</h3><p>Orientação para estresse no trabalho, prevenção de burnout e dificuldades de carreira.</p></div>
+        <div class="card"><div class="card-icon">👨‍👩‍👧</div><h3>Conflitos familiares</h3><p>Compreensão de dinâmicas familiares e mediação de conflitos que causam sofrimento emocional.</p></div>
       </div>
     </div>
   </section>
@@ -382,10 +392,10 @@
       <h2 class="section-title">🧠 Psicoterapia Individual</h2>
       <div class="service-content">
         <h3 style="color: var(--wine-600); margin-bottom: 1rem;">Como funciona?</h3>
-        <p style="margin-bottom: 1rem;">As sessões têm duração de <strong>50 minutos</strong>, realizadas <strong>100% online</strong>, por meio de uma plataforma de vídeo segura e estável.</p>
-        <p style="margin-bottom: 1rem;">Basta encontrar um lugar confortável e reservado, onde você se sinta à vontade para conversar e se expressar.</p>
-        <p style="margin-bottom: 1rem;">Os encontros acontecem <strong>uma vez por semana</strong> (ou conforme sua necessidade) e são conduzidos com base nas técnicas da <strong>Terapia Cognitivo-Comportamental (TCC)</strong>.</p>
-        <p>Durante o processo, você encontrará <strong>acolhimento, escuta ativa e planos de ação personalizados</strong>, sempre com o objetivo de promover autoconhecimento e bem-estar emocional.</p>
+        <p style="margin-bottom: 1rem;">Sessões de <strong>50 minutos</strong>, realizadas <strong>100% online</strong> por plataforma de vídeo segura.</p>
+        <p style="margin-bottom: 1rem;">Você só precisa de um local reservado e confortável para conversar.</p>
+        <p style="margin-bottom: 1rem;">Encontros <strong>semanais</strong> (ou conforme necessidade), com técnicas da <strong>Terapia Cognitivo-Comportamental (TCC)</strong>.</p>
+        <p>Você encontrará <strong>acolhimento, escuta ativa e planos de ação personalizados</strong>, com foco em autoconhecimento e bem-estar emocional.</p>
       </div>
     </div>
   </section>
@@ -394,15 +404,13 @@
     <div class="container">
       <h2 class="section-title">👩‍⚕️ Supervisão para Psicólogas</h2>
       <div class="service-content">
-        <p style="margin-bottom: 1rem;">Se você é psicóloga e sente <strong>insegurança na sua prática clínica</strong>, tem dúvidas sobre intervenções ou gostaria de aprimorar seu raciocínio clínico, eu posso te ajudar.</p>
-        <p style="margin-bottom: 1rem;">Com base nas minhas formações e experiência em TCC, ofereço um <strong>espaço seguro e técnico</strong> para reflexão, construção de estratégias e fortalecimento da sua atuação profissional.</p>
+        <p style="margin-bottom: 1rem;">Para quem busca <strong>segurança técnica</strong>, discussão de casos e aprimoramento do raciocínio clínico em TCC.</p>
         <div class="highlight-box">
-          <h3 style="color: var(--wine-600); margin-bottom: 0.8rem;">Detalhes da Supervisão</h3>
+          <h3 style="color: var(--wine-600); margin-bottom: 0.8rem;">Detalhes</h3>
           <p style="margin-bottom: 0.5rem;">⏰ <strong>Duração:</strong> 1 hora</p>
-          <p style="margin-bottom: 1rem;">📋 <strong>Antes do encontro:</strong> Você preenche um formulário breve com suas principais dúvidas e desafios, para que possamos aproveitar ao máximo o tempo juntas.</p>
-          <p style="margin-bottom: 1rem;">📋 <strong>No nosso tempo junto/as:</strong> Encontros com metas claras e acompanhamento entre sessões. Foco na sua demanda específica, com tarefas práticas e devolutivas objetivas.</p>
-          <p style="margin-bottom: 1rem;">📄 <strong>Ao final:</strong> Você recebe um material de apoio com os pontos trabalhados durante a sessão.</p>
-          <p style="color: var(--wine-600); font-weight: bold;">💬 Entre em contato para saber valores e disponibilidade</p>
+          <p style="margin-bottom: 1rem;">📋 <strong>Pré-sessão:</strong> formulário breve com dúvidas e objetivos.</p>
+          <p style="margin-bottom: 1rem;">🎯 <strong>Durante:</strong> metas claras, discussão focada e tarefas práticas.</p>
+          <p style="margin-bottom: 0;">📄 <strong>Pós-sessão:</strong> material de apoio com os principais pontos trabalhados.</p>
         </div>
       </div>
     </div>
@@ -412,16 +420,12 @@
     <div class="container">
       <h2 class="section-title">🎓 Formação para Estudantes de Psicologia</h2>
       <div class="service-content">
-        <p style="margin-bottom: 1rem;">Se você é <strong>estudante de Psicologia</strong> e tem curiosidade sobre o trabalho clínico, sente insegurança com os atendimentos ou quer entender melhor como funciona a TCC na prática, este espaço é para você.</p>
-        <p style="margin-bottom: 1rem;">Vamos conversar sobre:</p>
-        <ul style="margin-left: 2rem; margin-bottom: 1rem;">
-          <li>Os primeiros passos na clínica</li>
-          <li>O papel do terapeuta</li>
-          <li>A estrutura da Terapia Cognitivo-Comportamental</li>
-          <li>Esclarecimento de dúvidas práticas</li>
-          <li>Ferramentas que vão te ajudar a se preparar para a atuação profissional</li>
+        <p style="margin-bottom: 1rem;">Para estudantes que desejam entender a prática clínica e a estrutura da TCC.</p>
+        <ul style="margin-left: 1.2rem; margin-bottom: 0;">
+          <li>Primeiros passos na clínica e papel do terapeuta</li>
+          <li>Estrutura da Terapia Cognitivo-Comportamental</li>
+          <li>Ferramentas e dúvidas práticas da atuação</li>
         </ul>
-        <p>Um espaço de aprendizado, troca e fortalecimento da sua formação em Psicologia.</p>
       </div>
     </div>
   </section>
@@ -430,15 +434,12 @@
     <div class="container">
       <h2 class="section-title">💬 Palestras e Encontros</h2>
       <div class="service-content">
-        <p style="margin-bottom: 1.5rem;">Se você faz parte de uma <strong>empresa, instituição de ensino ou grupo</strong> e busca alguém para falar sobre saúde mental, relações, emoções, autocuidado ou comportamento humano, posso desenvolver uma <strong>palestra personalizada</strong> conforme o tema e o público.</p>
-        <p style="margin-bottom: 1.5rem;">O objetivo é promover <strong>reflexão, aprendizado e acolhimento</strong>, sempre com uma linguagem leve, prática e baseada na Psicologia Cognitivo-Comportamental.</p>
-        <h3 style="color: var(--wine-600); margin-bottom: 1rem;">Temas disponíveis:</h3>
-        <div class="offer-item"><h3>Saúde Mental no Trabalho</h3><p>Ansiedade no ambiente corporativo, prevenção ao burnout e bem-estar organizacional.</p></div>
-        <div class="offer-item"><h3>Comunicação Não Violenta</h3><p>Estratégias para melhorar relações e resolver conflitos de forma saudável.</p></div>
-        <div class="offer-item"><h3>Gestão das Emoções</h3><p>Como lidar com ansiedade, estresse e regulação emocional no dia a dia.</p></div>
-        <div class="offer-item"><h3>Relacionamentos Saudáveis</h3><p>Habilidades de comunicação, estabelecimento de limites e empatia.</p></div>
-        <div class="offer-item"><h3>Saúde Mental para Líderes</h3><p>Como criar ambientes de trabalho mais acolhedores e produtivos.</p></div>
-        <div class="offer-item"><h3>Autocuidado e Qualidade de Vida</h3><p>Reflexões práticas sobre equilíbrio emocional e bem-estar.</p></div>
+        <p style="margin-bottom: 1.2rem;">Para <strong>empresas, escolas e grupos</strong> que buscam conteúdo acessível e baseado em evidências sobre saúde mental.</p>
+        <h3 style="color: var(--wine-600); margin-bottom: 1rem;">Temas disponíveis</h3>
+        <div class="offer-item"><h3>Saúde mental no trabalho</h3><p>Ansiedade, prevenção ao burnout e bem-estar organizacional.</p></div>
+        <div class="offer-item"><h3>Comunicação Não Violenta</h3><p>Estratégias para relações mais saudáveis e resolução de conflitos.</p></div>
+        <div class="offer-item"><h3>Gestão das emoções</h3><p>Ansiedade, estresse e regulação emocional no dia a dia.</p></div>
+        <div class="offer-item"><h3>Relacionamentos saudáveis</h3><p>Habilidades de comunicação e estabelecimento de limites.</p></div>
       </div>
     </div>
   </section>
@@ -446,18 +447,18 @@
   <section class="section-bg-white" id="minicursos">
     <div class="container">
       <h2 class="section-title">📚 Minicursos</h2>
-      <p>Formações curtas e práticas (on-line), com material de apoio e exercícios.</p>
-      <div style="margin-top:2rem;">
-        <div class="offer-item"><h3>Gestão da Ansiedade em 4 Encontros</h3><p>Psicoeducação, respiração diafragmática, reestruturação cognitiva e plano de ação.</p></div>
+      <p>Formações curtas e práticas (online), com material de apoio e exercícios.</p>
+      <div style="margin-top:1.2rem;">
+        <div class="offer-item"><h3>Gestão da Ansiedade em 4 encontros</h3><p>Psicoeducação, respiração diafragmática, reestruturação cognitiva e plano de ação.</p></div>
         <div class="offer-item"><h3>Comunicação Não Violenta</h3><p>Prática de CNV para conflitos familiares e profissionais.</p></div>
-        <div class="offer-item"><h3>Hábitos e Rotina Saudável</h3><p>Ferramentas da TCC para criar e manter hábitos.</p></div>
+        <div class="offer-item"><h3>Hábitos e rotina saudável</h3><p>Ferramentas da TCC para criar e manter hábitos.</p></div>
       </div>
     </div>
   </section>
 
   <section class="section-bg-light" id="mentoria-individual">
     <div class="container">
-      <!-- conteúdo da mentoria individual — mantenha/edite quando quiser -->
+      <!-- conteúdo da mentoria individual — personalize quando quiser -->
     </div>
   </section>
 
@@ -473,7 +474,7 @@
           <img src="https://gabrielbuzetti0-art.github.io/caroline-psicologa/whatsapp.png" alt=""> WhatsApp
         </a>
 
-        <a href="mailto:carolinemarquesbrito@gmail.com" class="contact-btn">✉️ E-mail</a>
+        <a href="mailto:carolinemarquesbrito@gmail.com" class="contact-btn" rel="noopener noreferrer">✉️ E-mail</a>
 
         <a href="https://www.instagram.com/psicarolmarques/"
            class="contact-btn" target="_blank" rel="noopener noreferrer">
@@ -481,10 +482,11 @@
         </a>
       </div>
 
-      <div class="contact-info">
-        <p>📍 Bauru - SP | Atendimento Online para todo o Brasil</p>
+      <div class="contact-info" aria-label="Informações de contato">
+        <p>📍 Bauru - SP | Atendimento online para todo o Brasil</p>
         <p>📞 (17) 99625-8369</p>
         <p>📧 carolinemarquesbrito@gmail.com</p>
+        <p>🆔 CRP 14/09165-4</p>
       </div>
     </div>
   </section>
@@ -554,6 +556,39 @@
         });
       }
     });
+  </script>
+
+  <!-- Schema.org para SEO -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Caroline Marques Brito",
+    "jobTitle": "Psicóloga",
+    "identifier": "CRP 14/09165-4",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Bauru",
+      "addressRegion": "SP",
+      "addressCountry": "BR"
+    },
+    "areaServed": "BR",
+    "description": "Psicóloga em Bauru-SP com atendimento online baseado em evidências científicas, focado em TCC e saúde mental.",
+    "alumniOf": [
+      { "@type": "CollegeOrUniversity", "name": "Universidade Federal de Mato Grosso do Sul (UFMS)" },
+      { "@type": "CollegeOrUniversity", "name": "Faculdade da Região Serrana (FARESE)" }
+    ],
+    "knowsAbout": [
+      "Terapia Cognitivo-Comportamental (TCC)",
+      "Psicologia Baseada em Evidências",
+      "Obesidade e Emagrecimento",
+      "Atendimento Psicológico Online",
+      "DBT"
+    ],
+    "sameAs": [
+      "https://www.instagram.com/psicarolmarques/"
+    ]
+  }
   </script>
 </body>
 </html>
