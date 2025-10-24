@@ -349,25 +349,20 @@
                     <li><a href="#inicio">Início</a></li>
                     <li><a href="#sobre">Sobre</a></li>
                     <li><a href="#especialidades">Especialidades</a></li>
-                    <li><a href="#blog">Blog</a></li>
-                    <li><a href="#depoimentos">Depoimentos</a></li>
-                    <li><a href="#faq">FAQ</a></li>
                     <li><a href="#contato" id="navContato">Contato</a></li>
 
                 </ul>
-
-                <div class="more">
-                    <button class="more-toggle" aria-haspopup="true" aria-expanded="false" aria-label="Mais opções">⋯</button>
-                    <div class="more-dropdown" role="menu" aria-label="Mais opções">
-                        <a href="#psicoterapia" role="menuitem">🧠 Psicoterapia</a>
-                        <a href="#supervisao" role="menuitem">👩‍⚕️ Supervisão Clínica</a>
-                        <a href="#estudantes" role="menuitem">🎓 Formação Estudantes</a>
-                        <a href="#palestras" role="menuitem">💬 Palestras</a>
-                        <a href="#minicursos" role="menuitem">📚 Minicursos</a>
-                        <a href="#mentoria-individual" role="menuitem">👤 Mentorias Individuais</a>
-                        <a href="#mentoria-grupo" role="menuitem">👥 Mentorias em Grupo</a>
-                    </div>
-                </div>
+<div class="more">
+  <button class="more-toggle" aria-haspopup="true" aria-expanded="false" aria-label="Mais opções">⋯</button>
+  <div class="more-dropdown" role="menu" aria-label="Mais opções">
+    <a href="#psicoterapia" role="menuitem">🧠 Psicoterapia</a>
+    <a href="#supervisao" role="menuitem">👩‍⚕️ Supervisão Clínica</a>
+    <a href="#palestras" role="menuitem">💬 Palestras</a>
+    <a href="#minicursos" role="menuitem">📚 Minicursos</a>
+    <a href="#mentoria-individual" role="menuitem">👤 Mentorias Individuais</a>
+    <a href="#mentoria-grupo" role="menuitem">👥 Mentorias em Grupo</a>
+  </div>
+</div>
             </div>
         </nav>
     </header>
@@ -597,6 +592,101 @@ document.addEventListener("DOMContentLoaded", () => {
     linkContato.addEventListener('click', (e) => {
       e.preventDefault();
       secContato.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  }
+});
+</script>
+<script>
+// util: rolar suave
+function smoothScrollTo(selector) {
+  const el = document.querySelector(selector);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  // --- menu mobile (hambúrguer)
+  const menuToggle = document.querySelector('.menu-toggle');
+  const navLinks = document.querySelector('.nav-links');
+  if (menuToggle && navLinks) {
+    menuToggle.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+    });
+  }
+
+  // --- botão Contato no menu principal
+  const linkContato = document.querySelector('#navContato');
+  const secContato  = document.querySelector('#contato');
+  if (linkContato && secContato) {
+    linkContato.addEventListener('click', (e) => {
+      e.preventDefault();
+      smoothScrollTo('#contato');
+      // fecha menu mobile se estiver aberto
+      if (navLinks && navLinks.classList.contains('active')) {
+        navLinks.classList.remove('active');
+      }
+    });
+  }
+
+  // --- três pontinhos (abrir/fechar)
+  const toggleBtn = document.querySelector('.more-toggle');
+  const dropdown  = document.querySelector('.more-dropdown');
+  if (toggleBtn && dropdown) {
+    toggleBtn.addEventListener('click', () => {
+      const vis = dropdown.style.display === 'block';
+      dropdown.style.display = vis ? 'none' : 'block';
+      toggleBtn.setAttribute('aria-expanded', String(!vis));
+    });
+    document.addEventListener('click', (e) => {
+      if (!dropdown.contains(e.target) && !toggleBtn.contains(e.target)) {
+        dropdown.style.display = 'none';
+        toggleBtn.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    // --- rolar suave ao clicar nos itens do dropdown + fechar dropdown
+    dropdown.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', (e) => {
+        e.preventDefault();
+        smoothScrollTo(a.getAttribute('href'));
+        dropdown.style.display = 'none';
+        toggleBtn.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+});
+</script>
+<script>
+// abrir/fechar os três pontinhos + rolar suave para as seções
+document.addEventListener('DOMContentLoaded', () => {
+  const toggleBtn = document.querySelector('.more-toggle');
+  const dropdown  = document.querySelector('.more-dropdown');
+
+  if (toggleBtn && dropdown) {
+    // abre/fecha o dropdown
+    toggleBtn.addEventListener('click', () => {
+      const vis = dropdown.style.display === 'block';
+      dropdown.style.display = vis ? 'none' : 'block';
+      toggleBtn.setAttribute('aria-expanded', String(!vis));
+    });
+
+    // fecha ao clicar fora
+    document.addEventListener('click', (e) => {
+      if (!dropdown.contains(e.target) && !toggleBtn.contains(e.target)) {
+        dropdown.style.display = 'none';
+        toggleBtn.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    // rola suave ao clicar num item e fecha o dropdown
+    dropdown.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', (e) => {
+        e.preventDefault();
+        const sel = a.getAttribute('href'); // ex.: #psicoterapia
+        const el  = document.querySelector(sel);
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        dropdown.style.display = 'none';
+        toggleBtn.setAttribute('aria-expanded', 'false');
+      });
     });
   }
 });
