@@ -780,6 +780,37 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 </script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const menuToggle = document.querySelector('.menu-toggle');
+  const navLinks = document.querySelector('.nav-links');
+  const moreToggle = document.querySelector('.more-toggle');
+  const moreDropdown = document.querySelector('.more-dropdown');
+
+  // abre e fecha o menu principal (mobile)
+  if (menuToggle && navLinks) {
+    menuToggle.addEventListener('click', () => {
+      navLinks.classList.toggle('open');
+    });
+  }
+
+  // abre e fecha o menu dos três pontinhos
+  if (moreToggle && moreDropdown) {
+    moreToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      moreDropdown.style.display =
+        moreDropdown.style.display === 'block' ? 'none' : 'block';
+    });
+
+    // fecha se clicar fora
+    document.addEventListener('click', (e) => {
+      if (!moreToggle.contains(e.target) && !moreDropdown.contains(e.target)) {
+        moreDropdown.style.display = 'none';
+      }
+    });
+  }
+});
+</script>
 
 </body>
 </html>
