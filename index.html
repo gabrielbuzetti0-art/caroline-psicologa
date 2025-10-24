@@ -363,6 +363,7 @@
     <a href="#mentoria-grupo" role="menuitem">👥 Mentorias em Grupo</a>
   </div>
 </div>
+
             </div>
         </nav>
     </header>
@@ -713,6 +714,42 @@ document.addEventListener('DOMContentLoaded', () => {
     </div>
   </div>
 </section>
+<script>
+// 3 pontinhos: abrir/fechar + rolar suave até a seção
+document.addEventListener('DOMContentLoaded', () => {
+  const toggleBtn = document.querySelector('.more-toggle');
+  const dropdown  = document.querySelector('.more-dropdown');
+
+  if (!toggleBtn || !dropdown) return;
+
+  // abre/fecha o dropdown
+  toggleBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const vis = dropdown.style.display === 'block';
+    dropdown.style.display = vis ? 'none' : 'block';
+    toggleBtn.setAttribute('aria-expanded', String(!vis));
+  });
+
+  // fecha ao clicar fora
+  document.addEventListener('click', (e) => {
+    if (!dropdown.contains(e.target) && !toggleBtn.contains(e.target)) {
+      dropdown.style.display = 'none';
+      toggleBtn.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  // rolar suave e fechar ao clicar em um item
+  dropdown.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', (e) => {
+      e.preventDefault();
+      const alvo = document.querySelector(a.getAttribute('href')); // ex: #psicoterapia
+      if (alvo) alvo.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      dropdown.style.display = 'none';
+      toggleBtn.setAttribute('aria-expanded', 'false');
+    });
+  });
+});
+</script>
 
 </body>
 </html>
