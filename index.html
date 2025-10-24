@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <base href="https://gabrielbuzetti0-art.github.io/caroline-psicologa/">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Caroline Marques Brito - Psicóloga CRP 14/0165-4 em Bauru-SP. Especialista em TCC, atendimento online para ansiedade, depressão e relacionamentos.">
+    <meta name="description" content="Caroline Marques Brito - Psicóloga CRP 14/09165-4 em Bauru-SP. Especialista em TCC, atendimento online para ansiedade, depressão e relacionamentos.">
     <meta name="keywords" content="psicóloga Bauru, psicóloga online, TCC, ansiedade, depressão, relacionamentos, DBT">
     <title>Caroline Marques Brito - Psicóloga Online | TCC | Bauru-SP</title>
     <style>
@@ -811,6 +811,37 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 </script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const toggleBtn = document.querySelector('.more-toggle');
+  const dropdown  = document.querySelector('.more-dropdown');
+  if (!toggleBtn || !dropdown) return;
+
+  // abrir/fechar (funciona em clique e toque)
+  const toggle = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const open = dropdown.style.display === 'block';
+    dropdown.style.display = open ? 'none' : 'block';
+    toggleBtn.setAttribute('aria-expanded', String(!open));
+  };
+  toggleBtn.addEventListener('click', toggle, { passive:false });
+  toggleBtn.addEventListener('touchend', toggle, { passive:false });
+
+  // fechar ao tocar/clicar fora
+  const closeIfOutside = (e) => {
+    if (!dropdown.contains(e.target) && !toggleBtn.contains(e.target)) {
+      dropdown.style.display = 'none';
+      toggleBtn.setAttribute('aria-expanded', 'false');
+    }
+  };
+  document.addEventListener('click', closeIfOutside);
+  document.addEventListener('touchend', closeIfOutside);
+
+  // rolar suave ao clicar nos itens e fechar o dropdown
+  dropdown.querySelectorAll('a[href^="#"]').forEach(a => {
+    const go = (e) => {
+      e.preventDefault();
 
 </body>
 </html>
