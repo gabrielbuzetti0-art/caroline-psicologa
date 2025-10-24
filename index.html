@@ -12,12 +12,12 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root{
-      --wine-600: #6D1F2B;  /* vinho escuro */
-      --wine-500: #8C2E3A;  /* vinho principal */
-      --wine-100: #F6ECEF;  /* vinho bem claro (fundos) */
-      --gray-50:  #F7F7F9;  /* cinza clarinho */
-      --gray-600: #6B7280;  /* cinza médio (texto secundário) */
-      --text:     #2B2B2B;  /* texto padrão */
+      --wine-600: #6D1F2B;
+      --wine-500: #8C2E3A;
+      --wine-100: #F6ECEF;
+      --gray-50:  #F7F7F9;
+      --gray-600: #6B7280;
+      --text:     #2B2B2B;
     }
 
     body {
@@ -197,6 +197,7 @@
       transition: transform 0.3s, box-shadow 0.3s;
     }
     .contact-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(109,31,43,0.25); }
+    .contact-btn img { width: 20px; height: 20px; display: inline-block; vertical-align: middle; }
 
     .contact-info {
       margin-top: 2rem; padding: 1.5rem; background: rgba(255,255,255,0.1);
@@ -237,11 +238,11 @@
     }
 
     /* Botões flutuantes (WhatsApp e Instagram) */
-    .whatsapp-float,
-    .instagram-float {
+    .whatsapp-float {
       position: fixed;
       width: 60px; height: 60px;
-      right: 40px;
+      bottom: 40px; right: 40px;
+      background-color: #25d366;
       color: #FFF;
       border-radius: 50%;
       text-align: center;
@@ -250,38 +251,42 @@
       display: flex; align-items: center; justify-content: center;
       cursor: pointer; transition: transform 0.3s; text-decoration: none;
     }
-    .whatsapp-float { bottom: 40px;  background-color: #25d366; }
-    .instagram-float { bottom: 110px; background-color: #E4405F; }
-    .whatsapp-float:hover, .instagram-float:hover { transform: scale(1.1); }
+    .whatsapp-float:hover { transform: scale(1.1); }
 
-    /* tamanho dos ícones dentro dos botões flutuantes */
+    .instagram-float {
+      position: fixed;
+      width: 60px; height: 60px;
+      bottom: 110px; /* acima do WhatsApp */
+      right: 40px;
+      background-color: #E4405F;
+      color: #FFF;
+      border-radius: 50%;
+      text-align: center;
+      box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+      z-index: 999;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: transform 0.3s; text-decoration: none;
+    }
+    .instagram-float:hover { transform: scale(1.1); }
+
+    /* tamanho dos ícones dos botões flutuantes */
     .whatsapp-float img,
-    .instagram-float img { width: 28px; height: 28px; display: block; }
-
-    /* ícones nos botões da seção Contato */
-    .contact-btn img {
-      width: 20px; height: 20px;
-      display: inline-block;
-      vertical-align: middle;
-      margin-right: 8px;
+    .instagram-float img {
+      width: 28px; height: 28px; display: block;
     }
   </style>
 </head>
 <body>
   <!-- WhatsApp flutuante com ícone -->
   <a href="https://wa.me/5517996258369?text=Olá! Gostaria de agendar uma consulta."
-     class="whatsapp-float"
-     target="_blank"
-     rel="noopener noreferrer">
-    <img src="whatsapp.png" alt="WhatsApp">
+     class="whatsapp-float" target="_blank" rel="noopener noreferrer">
+    <img src="https://gabrielbuzetti0-art.github.io/caroline-psicologa/whatsapp.png" alt="WhatsApp" loading="lazy">
   </a>
 
   <!-- Instagram flutuante com ícone -->
   <a href="https://www.instagram.com/psicarolmarques/"
-     class="instagram-float"
-     target="_blank"
-     rel="noopener noreferrer">
-    <img src="Instagram.png" alt="Instagram">
+     class="instagram-float" target="_blank" rel="noopener noreferrer">
+    <img src="https://gabrielbuzetti0-art.github.io/caroline-psicologa/Instagram.png" alt="Instagram" loading="lazy">
   </a>
 
   <header id="header">
@@ -457,14 +462,14 @@
       <div class="contact-buttons">
         <a href="https://wa.me/5517996258369?text=Olá! Gostaria de agendar uma consulta."
            class="contact-btn" target="_blank" rel="noopener noreferrer">
-          <img src="whatsapp.png" alt=""> WhatsApp
+          <img src="https://gabrielbuzetti0-art.github.io/caroline-psicologa/whatsapp.png" alt=""> WhatsApp
         </a>
 
         <a href="mailto:carolinemarquesbrito@gmail.com" class="contact-btn">✉️ E-mail</a>
 
         <a href="https://www.instagram.com/psicarolmarques/"
            class="contact-btn" target="_blank" rel="noopener noreferrer">
-          <img src="Instagram.png" alt=""> Instagram
+          <img src="https://gabrielbuzetti0-art.github.io/caroline-psicologa/Instagram.png" alt=""> Instagram
         </a>
       </div>
 
@@ -476,7 +481,7 @@
     </div>
   </section>
 
-  <!-- 👇 Script único: menu mobile, 3 pontinhos e rolagem suave -->
+  <!-- 👇 Script: menu mobile, 3 pontinhos e rolagem suave -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const $  = (s, r=document) => r.querySelector(s);
