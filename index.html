@@ -11,15 +11,24 @@
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
+    :root{
+      --wine-600: #6D1F2B;  /* vinho escuro */
+      --wine-500: #8C2E3A;  /* vinho principal */
+      --wine-100: #F6ECEF;  /* vinho bem claro (fundos) */
+      --gray-50:  #F7F7F9;  /* cinza clarinho */
+      --gray-600: #6B7280;  /* cinza médio (texto secundário) */
+      --text:     #2B2B2B;  /* texto padrão */
+    }
+
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       line-height: 1.6;
-      color: #333;
+      color: var(--text);
       scroll-behavior: smooth;
     }
 
     header {
-      background: linear-gradient(135deg, #ff8c42 0%, #ff6b35 100%);
+      background: linear-gradient(135deg, var(--wine-500) 0%, var(--wine-600) 100%);
       color: white;
       padding: 1rem 0;
       position: fixed;
@@ -86,7 +95,7 @@
       top: 120%;
       right: 0;
       background: #fff;
-      color: #333;
+      color: var(--text);
       border-radius: 12px;
       min-width: 260px;
       box-shadow: 0 12px 28px rgba(0,0,0,0.18);
@@ -98,16 +107,16 @@
       display: block;
       padding: .9rem 1rem;
       text-decoration: none;
-      color: #333;
+      color: var(--text);
       font-weight: 500;
     }
     .more-dropdown a:hover {
-      background: #fff3ee;
-      color: #ff6b35;
+      background: var(--wine-100);
+      color: var(--wine-600);
     }
 
     .hero {
-      background: linear-gradient(135deg, #ff8c42 0%, #ff6b35 100%);
+      background: linear-gradient(135deg, var(--wine-500) 0%, var(--wine-600) 100%);
       color: white;
       padding: 120px 2rem 80px;
       text-align: center;
@@ -118,12 +127,15 @@
     .hero .location { font-size: 1.1rem; opacity: 0.9; margin-bottom: 2rem; }
     .cta-button {
       display: inline-block;
-      background: white; color: #ff6b35;
+      background: white; color: var(--wine-600);
       padding: 15px 40px; border-radius: 50px;
       text-decoration: none; font-weight: bold; font-size: 1.1rem;
       transition: transform 0.3s, box-shadow 0.3s;
     }
-    .cta-button:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
+    .cta-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(109,31,43,0.25);
+    }
 
     .container { max-width: 1200px; margin: 0 auto; padding: 4rem 2rem; }
 
@@ -137,23 +149,23 @@
       border-radius: 20px;
     }
 
-    .section-title { font-size: 2.5rem; color: #ff6b35; margin-bottom: 1.5rem; }
+    .section-title { font-size: 2.5rem; color: var(--wine-600); margin-bottom: 1.5rem; }
 
-    .section-bg-white { background: white; }
-    .section-bg-light  { background: #fff8f5; }
+    .section-bg-white { background: #fff; }
+    .section-bg-light  { background: var(--wine-100); }
 
     .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin-top: 2rem; }
     .card {
       background: white; padding: 2rem; border-radius: 15px;
-      box-shadow: 0 5px 15px rgba(255, 107, 53, 0.1);
+      box-shadow: 0 5px 15px rgba(109,31,43,0.10);
       transition: transform 0.3s, box-shadow 0.3s;
     }
-    .card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(255, 107, 53, 0.2); }
+    .card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(109,31,43,0.20); }
     .card-icon { font-size: 3rem; margin-bottom: 1rem; }
-    .card h3 { color: #ff6b35; margin-bottom: 1rem; font-size: 1.5rem; }
+    .card h3 { color: var(--wine-600); margin-bottom: 1rem; font-size: 1.5rem; }
 
     .service-content {
-      background: linear-gradient(135deg, #fff8f5 0%, #ffe5d9 100%);
+      background: linear-gradient(135deg, var(--wine-100) 0%, #fff 100%);
       padding: 2.5rem; border-radius: 20px; margin-top: 2rem;
     }
 
@@ -162,33 +174,37 @@
       padding: 1.5rem;
       border-radius: 12px;
       margin-top: 1.5rem;
-      border-left: 4px solid #ff6b35;
+      border-left: 4px solid var(--wine-500);
     }
 
     .offer-item {
-      background: #fff8f5;
-      border-left: 4px solid #ff6b35;
+      background: var(--wine-100);
+      border-left: 4px solid var(--wine-500);
       border-radius: 12px;
       padding: 1.25rem 1rem;
       margin-bottom: 1rem;
     }
-    .offer-item h3 { color: #ff6b35; margin-bottom: .4rem; }
+    .offer-item h3 { color: var(--wine-600); margin-bottom: .4rem; }
 
-    .contact { background: linear-gradient(135deg, #ff8c42 0%, #ff6b35 100%); color: white; text-align: center; padding: 4rem 2rem; }
+    .contact {
+      background: linear-gradient(135deg, var(--wine-500) 0%, var(--wine-600) 100%);
+      color: white; text-align: center; padding: 4rem 2rem;
+    }
     .contact-buttons { display: flex; gap: 2rem; justify-content: center; margin-top: 2rem; flex-wrap: wrap; }
     .contact-btn {
-      background: white; color: #ff6b35; padding: 15px 35px; border-radius: 50px;
+      background: white; color: var(--wine-600); padding: 15px 35px; border-radius: 50px;
       text-decoration: none; font-weight: bold; display: inline-flex; align-items: center; gap: 10px;
       transition: transform 0.3s, box-shadow 0.3s;
     }
-    .contact-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
+    .contact-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(109,31,43,0.25); }
+
     .contact-info {
       margin-top: 2rem; padding: 1.5rem; background: rgba(255,255,255,0.1);
       border-radius: 15px; display: inline-block;
     }
     .contact-info p { margin: 0.5rem 0; font-size: 1.1rem; }
 
-    footer { background: #2c2c2c; color: white; text-align: center; padding: 2rem; }
+    footer { background: var(--wine-600); color: white; text-align: center; padding: 2rem; }
 
     @media (max-width: 768px) {
       .nav-links { display: none; }
@@ -203,7 +219,7 @@
         display: flex;
         position: absolute;
         top: 60px; right: 0;
-        background: #ff6b35;
+        background: var(--wine-600);
         flex-direction: column;
         gap: 1rem; padding: 1rem 1.5rem;
         border-bottom-left-radius: 12px;
@@ -318,7 +334,7 @@
     <div class="container">
       <h2 class="section-title">🧠 Psicoterapia Individual</h2>
       <div class="service-content">
-        <h3 style="color: #ff6b35; margin-bottom: 1rem;">Como funciona?</h3>
+        <h3 style="color: var(--wine-600); margin-bottom: 1rem;">Como funciona?</h3>
         <p style="margin-bottom: 1rem;">As sessões têm duração de <strong>50 minutos</strong>, realizadas <strong>100% online</strong>, por meio de uma plataforma de vídeo segura e estável.</p>
         <p style="margin-bottom: 1rem;">Basta encontrar um lugar confortável e reservado, onde você se sinta à vontade para conversar e se expressar.</p>
         <p style="margin-bottom: 1rem;">Os encontros acontecem <strong>uma vez por semana</strong> (ou conforme sua necessidade) e são conduzidos com base nas técnicas da <strong>Terapia Cognitivo-Comportamental (TCC)</strong>.</p>
@@ -334,12 +350,12 @@
         <p style="margin-bottom: 1rem;">Se você é psicóloga e sente <strong>insegurança na sua prática clínica</strong>, tem dúvidas sobre intervenções ou gostaria de aprimorar seu raciocínio clínico, eu posso te ajudar.</p>
         <p style="margin-bottom: 1rem;">Com base nas minhas formações e experiência em TCC, ofereço um <strong>espaço seguro e técnico</strong> para reflexão, construção de estratégias e fortalecimento da sua atuação profissional.</p>
         <div class="highlight-box">
-          <h3 style="color: #ff6b35; margin-bottom: 0.8rem;">Detalhes da Supervisão</h3>
+          <h3 style="color: var(--wine-600); margin-bottom: 0.8rem;">Detalhes da Supervisão</h3>
           <p style="margin-bottom: 0.5rem;">⏰ <strong>Duração:</strong> 1 hora</p>
           <p style="margin-bottom: 1rem;">📋 <strong>Antes do encontro:</strong> Você preenche um formulário breve com suas principais dúvidas e desafios, para que possamos aproveitar ao máximo o tempo juntas.</p>
           <p style="margin-bottom: 1rem;">📋 <strong>No nosso tempo junto/as:</strong> Encontros com metas claras e acompanhamento entre sessões. Foco na sua demanda específica, com tarefas práticas e devolutivas objetivas.</p>
           <p style="margin-bottom: 1rem;">📄 <strong>Ao final:</strong> Você recebe um material de apoio com os pontos trabalhados durante a sessão.</p>
-          <p style="color: #ff6b35; font-weight: bold;">💬 Entre em contato para saber valores e disponibilidade</p>
+          <p style="color: var(--wine-600); font-weight: bold;">💬 Entre em contato para saber valores e disponibilidade</p>
         </div>
       </div>
     </div>
@@ -369,7 +385,7 @@
       <div class="service-content">
         <p style="margin-bottom: 1.5rem;">Se você faz parte de uma <strong>empresa, instituição de ensino ou grupo</strong> e busca alguém para falar sobre saúde mental, relações, emoções, autocuidado ou comportamento humano, posso desenvolver uma <strong>palestra personalizada</strong> conforme o tema e o público.</p>
         <p style="margin-bottom: 1.5rem;">O objetivo é promover <strong>reflexão, aprendizado e acolhimento</strong>, sempre com uma linguagem leve, prática e baseada na Psicologia Cognitivo-Comportamental.</p>
-        <h3 style="color: #ff6b35; margin-bottom: 1rem;">Temas disponíveis:</h3>
+        <h3 style="color: var(--wine-600); margin-bottom: 1rem;">Temas disponíveis:</h3>
         <div class="offer-item"><h3>Saúde Mental no Trabalho</h3><p>Ansiedade no ambiente corporativo, prevenção ao burnout e bem-estar organizacional.</p></div>
         <div class="offer-item"><h3>Comunicação Não Violenta</h3><p>Estratégias para melhorar relações e resolver conflitos de forma saudável.</p></div>
         <div class="offer-item"><h3>Gestão das Emoções</h3><p>Como lidar com ansiedade, estresse e regulação emocional no dia a dia.</p></div>
@@ -401,7 +417,7 @@
   <!-- 👇 Seção de Contato -->
   <section class="contact" id="contato">
     <div class="container">
-      <h2 class="section-title" style="color: white;">💬 Vamos conversar? </h2>
+      <h2 class="section-title" style="color: white;">💬 Vamos conversar?</h2>
       <p>Escolha a melhor forma de falar comigo:</p>
 
       <div class="contact-buttons">
