@@ -11,10 +11,10 @@
   <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1" />
   <link rel="canonical" href="https://psicarolmarques.com.br/" />
 
-  <!-- Palavras-chave (opcional) -->
-  <meta name="keywords" content="psicóloga Bauru, psicóloga online, terapia online, TCC, terapia cognitivo-comportamental, ansiedade, depressão, DBT, relacionamentos" />
+  <!-- Palavras-chave -->
+  <meta name="keywords" content="psicóloga Bauru, psicóloga online, terapia online, TCC, terapia cognitivo-comportamental, ansiedade, depressão, DBT, relacionamentos, psicoterapia online" />
 
-  <!-- Open Graph / Facebook -->
+  <!-- Open Graph -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Psicoterapia Online | Caroline Marques Brito – Psicóloga TCC em Bauru" />
   <meta property="og:description" content="Atendimento psicológico online e em Bauru-SP com foco em TCC. Ansiedade, depressão e relacionamentos." />
@@ -28,7 +28,7 @@
   <meta name="twitter:description" content="Atendimento psicológico online e em Bauru-SP com foco em TCC. Ansiedade, depressão e relacionamentos." />
   <meta name="twitter:image" content="https://psicarolmarques.com.br/imagescaroline.jpeg" />
 
-  <!-- Cor do navegador no mobile -->
+  <!-- Cor do navegador -->
   <meta name="theme-color" content="#6D1F2B" />
 
   <style>
@@ -77,7 +77,6 @@
     .nav-right { display: flex; align-items: center; gap: 1rem; }
 
     .nav-links { display: flex; gap: 2rem; list-style: none; }
-
     .nav-links a {
       color: white; text-decoration: none; transition: opacity 0.3s; font-weight: 500;
     }
@@ -88,7 +87,7 @@
       font-size: 1.5rem; cursor: pointer;
     }
 
-    /* --- 3 pontinhos --- */
+    /* 3 pontinhos */
     .more { position: relative; }
     .more-toggle {
       background: rgba(255,255,255,0.15);
@@ -124,7 +123,7 @@
     .container { max-width: 1200px; margin: 0 auto; padding: 4rem 2rem; }
 
     .about { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
-    .about-image { width: 100%; height: 400px; }
+    .about-image { width: 100%; max-width: 400px; height: 400px; margin: 0 auto; }
     .about-image img {
       width: 100%; height: 100%; object-fit: cover; object-position: center;
       border-radius: 20px; box-shadow: 0 8px 24px rgba(0,0,0,0.12);
@@ -185,30 +184,28 @@
     .contact-info p { margin: 0.5rem 0; font-size: 1.05rem; }
 
     footer { background: var(--wine-600); color: white; text-align: center; padding: 2rem; }
+    footer p { margin: 0.5rem 0; font-size: 0.95rem; }
 
     @media (max-width: 768px) {
       .nav-links { display: none; }
       .menu-toggle { display: block; }
-
       .hero h1 { font-size: 2rem; }
       .hero p { font-size: 1.05rem; }
       .about { grid-template-columns: 1fr; }
       .section-title { font-size: 1.9rem; }
-
       .nav-links.active {
         display: flex; position: absolute; top: 60px; right: 0;
         background: var(--wine-600); flex-direction: column; gap: 1rem; padding: 1rem 1.5rem;
         border-bottom-left-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.2);
       }
       .nav-links a { padding: .25rem 0; }
-
       .more-dropdown { min-width: 220px; }
       .contact-buttons { flex-direction: column; align-items: center; }
     }
 
     @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
-    /* Botões flutuantes (WhatsApp e Instagram) */
+    /* Botões flutuantes */
     .whatsapp-float, .instagram-float {
       position: fixed; width: 60px; height: 60px; right: 40px; color: #FFF; border-radius: 50%;
       text-align: center; box-shadow: 2px 2px 10px rgba(0,0,0,0.3); z-index: 999;
@@ -219,16 +216,19 @@
     .instagram-float { bottom: 110px; background-color: #E4405F; }
     .whatsapp-float:hover, .instagram-float:hover { transform: scale(1.1); }
     .whatsapp-float img, .instagram-float img { width: 28px; height: 28px; display: block; }
+
+    /* Compensar header fixo nas âncoras */
+    section { scroll-margin-top: 80px; }
   </style>
 </head>
 <body>
-  <!-- WhatsApp flutuante com ícone -->
+  <!-- WhatsApp flutuante -->
   <a href="https://wa.me/5517996258369?text=Olá! Gostaria de agendar uma consulta."
      class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="Conversar no WhatsApp">
     <img src="whatsapp.png" alt="WhatsApp" loading="lazy">
   </a>
 
-  <!-- Instagram flutuante com ícone -->
+  <!-- Instagram flutuante -->
   <a href="https://www.instagram.com/psicarolmarques/"
      class="instagram-float" target="_blank" rel="noopener noreferrer" aria-label="Abrir Instagram">
     <img src="Instagram.png" alt="Instagram" loading="lazy">
@@ -245,6 +245,7 @@
           <li><a href="#inicio">Início</a></li>
           <li><a href="#sobre">Sobre</a></li>
           <li><a href="#especialidades">Especialidades</a></li>
+          <li><a href="#faq">FAQ</a></li>
           <li><a href="#contato" id="navContato">Contato</a></li>
         </ul>
 
@@ -337,7 +338,31 @@
     </div>
   </section>
 
-  <section class="section-bg-white" id="psicoterapia">
+  <!-- Seção explicativa: O que é TCC -->
+  <section class="section-bg-white" id="tcc">
+    <div class="container">
+      <h2 class="section-title" style="text-align: center;">O que é a Terapia Cognitivo-Comportamental?</h2>
+      <div class="service-content">
+        <p style="margin-bottom: 1rem;">
+          A <strong>Terapia Cognitivo-Comportamental (TCC)</strong> é uma abordagem terapêutica cientificamente comprovada que foca na relação entre <strong>pensamentos, emoções e comportamentos</strong>.
+        </p>
+        <p style="margin-bottom: 1rem;">
+          Na TCC, trabalhamos juntos para identificar padrões de pensamento disfuncionais que podem estar causando sofrimento emocional e comportamentos prejudiciais. A partir disso, desenvolvemos estratégias práticas para modificar esses padrões.
+        </p>
+        <p style="margin-bottom: 1rem;"><strong>Benefícios da TCC:</strong></p>
+        <ul style="margin-left: 2rem; margin-bottom: 1rem;">
+          <li>Resultados em curto/médio prazo</li>
+          <li>Técnicas práticas aplicáveis ao cotidiano</li>
+          <li>Foco em problemas atuais</li>
+          <li>Eficácia comprovada cientificamente</li>
+          <li>Prevenção de recaídas</li>
+        </ul>
+        <p>É uma terapia estruturada, diretiva e focada em objetivos, ideal para quem busca mudanças concretas em sua vida.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-bg-light" id="psicoterapia">
     <div class="container">
       <h2 class="section-title">🧠 Psicoterapia Individual</h2>
       <div class="service-content">
@@ -350,7 +375,7 @@
     </div>
   </section>
 
-  <section class="section-bg-light" id="supervisao">
+  <section class="section-bg-white" id="supervisao">
     <div class="container">
       <h2 class="section-title">👩‍⚕️ Supervisão para Psicólogas</h2>
       <div class="service-content">
@@ -366,7 +391,7 @@
     </div>
   </section>
 
-  <section class="section-bg-white" id="estudantes">
+  <section class="section-bg-light" id="estudantes">
     <div class="container">
       <h2 class="section-title">🎓 Formação para Estudantes de Psicologia</h2>
       <div class="service-content">
@@ -380,21 +405,30 @@
     </div>
   </section>
 
-  <section class="section-bg-light" id="palestras">
+  <section class="section-bg-white" id="palestras">
     <div class="container">
       <h2 class="section-title">💬 Palestras e Encontros</h2>
       <div class="service-content">
         <p style="margin-bottom: 1.2rem;">Para <strong>empresas, escolas e grupos</strong> que buscam conteúdo acessível e baseado em evidências sobre saúde mental.</p>
         <h3 style="color: var(--wine-600); margin-bottom: 1rem;">Temas disponíveis</h3>
-        <div class="offer-item"><h3>Saúde mental no trabalho</h3><p>Ansiedade, prevenção ao burnout e bem-estar organizacional.</p></div>
-        <div class="offer-item"><h3>Comunicação Não Violenta</h3><p>Estratégias para relações mais saudáveis e resolução de conflitos.</p></div>
-        <div class="offer-item"><h3>Gestão das emoções</h3><p>Ansiedade, estresse e regulação emocional no dia a dia.</p></div>
-        <div class="offer-item"><h3>Relacionamentos saudáveis</h3><p>Habilidades de comunicação e estabelecimento de limites.</p></div>
+
+        <h4 style="color: var(--wine-500); margin: 1.5rem 0 0.8rem 0; font-size: 1.1rem;">Para empresas e organizações</h4>
+        <div class="offer-item"><h3>Saúde Mental no Trabalho</h3><p>Ansiedade no ambiente corporativo, prevenção ao burnout e bem-estar organizacional.</p></div>
+        <div class="offer-item"><h3>Comunicação Não Violenta</h3><p>Estratégias para melhorar relações, resolver conflitos de forma saudável e criar ambientes mais empáticos.</p></div>
+        <div class="offer-item"><h3>Gestão das Emoções no Dia a Dia</h3><p>Como lidar com ansiedade, estresse e desenvolver inteligência emocional.</p></div>
+        <div class="offer-item"><h3>Relacionamentos Saudáveis</h3><p>Habilidades de comunicação, estabelecimento de limites e construção de vínculos genuínos.</p></div>
+
+        <h4 style="color: var(--wine-500); margin: 1.5rem 0 0.8rem 0; font-size: 1.1rem;">Para estudantes e recém-formados em Psicologia</h4>
+        <div class="offer-item"><h3>Introdução à TCC na Prática Clínica</h3><p>Fundamentos da TCC: estrutura das sessões, conceitualização de casos e primeiros passos no atendimento.</p></div>
+        <div class="offer-item"><h3>Do Consultório à Realidade: Desafios da Clínica</h3><p>Como lidar com a insegurança inicial, manejo de casos difíceis e autocuidado do terapeuta iniciante.</p></div>
+        <div class="offer-item"><h3>Técnicas Práticas de TCC</h3><p>Reestruturação cognitiva, registro de pensamentos, exposição gradual e outras ferramentas essenciais.</p></div>
+        <div class="offer-item"><h3>Psicologia Baseada em Evidências</h3><p>Como integrar ciência e prática clínica, buscar evidências científicas e tomar decisões terapêuticas fundamentadas.</p></div>
+        <div class="offer-item"><h3>Construindo sua Carreira em Psicologia Clínica</h3><p>Primeiros atendimentos, marketing ético, precificação, gestão de agenda e desenvolvimento profissional.</p></div>
       </div>
     </div>
   </section>
 
-  <section class="section-bg-white" id="minicursos">
+  <section class="section-bg-light" id="minicursos">
     <div class="container">
       <h2 class="section-title">📚 Minicursos</h2>
       <p>Formações curtas e práticas (online), com material de apoio e exercícios.</p>
@@ -412,7 +446,6 @@
     </div>
   </section>
 
-  <!-- 👇 Seção de Contato -->
   <section class="contact" id="contato">
     <div class="container">
       <h2 class="section-title" style="color: white;">💬 Vamos conversar?</h2>
@@ -441,14 +474,22 @@
     </div>
   </section>
 
-  <!-- 👇 Script: menu mobile, 3 pontinhos e rolagem suave -->
+  <footer>
+    <p>&copy; <span id="yearSpan"></span> Caroline Marques Brito — CRP 14/09165-4. Todos os direitos reservados.</p>
+  </footer>
+
+  <!-- Script: menu, âncoras suaves e 3 pontinhos -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const $  = (s, r=document) => r.querySelector(s);
       const $$ = (s, r=document) => Array.from(r.querySelectorAll(s));
       const smoothTo = (sel) => { const el = $(sel); if (el) el.scrollIntoView({ behavior:'smooth', block:'start' }); };
 
-      // Menu mobile (hambúrguer)
+      // Ano no rodapé
+      const ySpan = document.getElementById('yearSpan');
+      if (ySpan) ySpan.textContent = new Date().getFullYear();
+
+      // Menu mobile
       const menuToggle = $('.menu-toggle');
       const navLinks   = $('.nav-links');
       if (menuToggle && navLinks) {
@@ -461,17 +502,16 @@
         menuToggle.addEventListener('touchend', toggleNav, { passive:false });
       }
 
-      // Contato no menu principal
-      const linkContato = $('#navContato');
-      if (linkContato) {
-        const goContato = (e) => {
+      // Rolagem suave no menu principal
+      $$('.nav-links a[href^="#"]').forEach(a => {
+        const go = (e) => {
           e.preventDefault();
-          smoothTo('#contato');
+          smoothTo(a.getAttribute('href'));
           if (navLinks && navLinks.classList.contains('active')) navLinks.classList.remove('active');
         };
-        linkContato.addEventListener('click', goContato, { passive:false });
-        linkContato.addEventListener('touchend', goContato, { passive:false });
-      }
+        a.addEventListener('click', go, { passive:false });
+        a.addEventListener('touchend', go, { passive:false });
+      });
 
       // Três pontinhos (⋯)
       const moreToggle   = $('.more-toggle');
