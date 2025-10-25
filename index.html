@@ -2,11 +2,34 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <base href="https://gabrielbuzetti0-art.github.io/caroline-psicologa/">
+  <base href="https://psicarolmarques.com.br/">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Caroline Marques Brito - Psicóloga (CRP 14/09165-4) em Bauru-SP, atendimento 100% online para todo o Brasil. Atuação baseada em evidências, TCC, ansiedade, depressão e relacionamentos." />
-  <meta name="keywords" content="psicóloga Bauru, psicóloga online, TCC, ansiedade, depressão, relacionamentos, DBT, psicoterapia online" />
-  <title>Caroline Marques Brito - Psicóloga Online | TCC | Bauru-SP</title>
+
+  <!-- SEO básico -->
+  <title>Psicoterapia Online | Caroline Marques Brito – Psicóloga TCC em Bauru</title>
+  <meta name="description" content="Atendimento psicológico online e em Bauru-SP com Caroline Marques Brito (CRP 14/09165-4), especialista em Terapia Cognitivo-Comportamental (TCC) para ansiedade, depressão e relacionamentos." />
+  <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1" />
+  <link rel="canonical" href="https://psicarolmarques.com.br/" />
+
+  <!-- Palavras-chave (opcional) -->
+  <meta name="keywords" content="psicóloga Bauru, psicóloga online, terapia online, TCC, terapia cognitivo-comportamental, ansiedade, depressão, DBT, relacionamentos" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Psicoterapia Online | Caroline Marques Brito – Psicóloga TCC em Bauru" />
+  <meta property="og:description" content="Atendimento psicológico online e em Bauru-SP com foco em TCC. Ansiedade, depressão e relacionamentos." />
+  <meta property="og:url" content="https://psicarolmarques.com.br/" />
+  <meta property="og:image" content="https://psicarolmarques.com.br/imagescaroline.jpeg" />
+  <meta property="og:locale" content="pt_BR" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Psicoterapia Online | Caroline Marques Brito – Psicóloga TCC em Bauru" />
+  <meta name="twitter:description" content="Atendimento psicológico online e em Bauru-SP com foco em TCC. Ansiedade, depressão e relacionamentos." />
+  <meta name="twitter:image" content="https://psicarolmarques.com.br/imagescaroline.jpeg" />
+
+  <!-- Cor do navegador no mobile -->
+  <meta name="theme-color" content="#6D1F2B" />
 
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -51,29 +74,17 @@
 
     .logo { font-size: 1.5rem; font-weight: bold; }
 
-    .nav-right {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-    }
+    .nav-right { display: flex; align-items: center; gap: 1rem; }
 
-    .nav-links {
-      display: flex;
-      gap: 2rem;
-      list-style: none;
-    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
 
     .nav-links a {
-      color: white;
-      text-decoration: none;
-      transition: opacity 0.3s;
-      font-weight: 500;
+      color: white; text-decoration: none; transition: opacity 0.3s; font-weight: 500;
     }
     .nav-links a:hover { opacity: 0.8; }
 
     .menu-toggle {
-      display: none;
-      background: none; border: none; color: white;
+      display: none; background: none; border: none; color: white;
       font-size: 1.5rem; cursor: pointer;
     }
 
@@ -81,74 +92,42 @@
     .more { position: relative; }
     .more-toggle {
       background: rgba(255,255,255,0.15);
-      border: none;
-      color: white;
-      font-size: 1.35rem;
-      line-height: 1;
-      padding: .5rem .7rem;
-      border-radius: 10px;
-      cursor: pointer;
+      border: none; color: white; font-size: 1.35rem; line-height: 1;
+      padding: .5rem .7rem; border-radius: 10px; cursor: pointer;
     }
     .more-toggle:focus { outline: 2px solid rgba(255,255,255,0.5); }
 
     .more-dropdown {
-      position: absolute;
-      top: 120%;
-      right: 0;
-      background: #fff;
-      color: var(--text);
-      border-radius: 12px;
-      min-width: 260px;
-      box-shadow: 0 12px 28px rgba(0,0,0,0.18);
-      display: none;
-      overflow: hidden;
-      z-index: 1100;
+      position: absolute; top: 120%; right: 0; background: #fff; color: var(--text);
+      border-radius: 12px; min-width: 260px; box-shadow: 0 12px 28px rgba(0,0,0,0.18);
+      display: none; overflow: hidden; z-index: 1100;
     }
     .more-dropdown a {
-      display: block;
-      padding: .9rem 1rem;
-      text-decoration: none;
-      color: var(--text);
-      font-weight: 500;
+      display: block; padding: .9rem 1rem; text-decoration: none; color: var(--text); font-weight: 500;
     }
-    .more-dropdown a:hover {
-      background: var(--wine-100);
-      color: var(--wine-600);
-    }
+    .more-dropdown a:hover { background: var(--wine-100); color: var(--wine-600); }
 
     .hero {
       background: linear-gradient(135deg, var(--wine-500) 0%, var(--wine-600) 100%);
-      color: white;
-      padding: 120px 2rem 80px;
-      text-align: center;
-      margin-top: 60px;
+      color: white; padding: 120px 2rem 80px; text-align: center; margin-top: 60px;
     }
     .hero h1 { font-size: 3rem; margin-bottom: 1rem; animation: fadeInUp 1s ease; }
     .hero p { font-size: 1.15rem; margin-bottom: 1rem; opacity: 0.95; }
     .hero .location { font-size: 1.05rem; opacity: 0.9; margin-bottom: 2rem; }
     .cta-button {
-      display: inline-block;
-      background: white; color: var(--wine-600);
-      padding: 15px 40px; border-radius: 50px;
-      text-decoration: none; font-weight: bold; font-size: 1.1rem;
+      display: inline-block; background: white; color: var(--wine-600);
+      padding: 15px 40px; border-radius: 50px; text-decoration: none; font-weight: bold; font-size: 1.1rem;
       transition: transform 0.3s, box-shadow 0.3s;
     }
-    .cta-button:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 10px 25px rgba(109,31,43,0.25);
-    }
+    .cta-button:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(109,31,43,0.25); }
 
     .container { max-width: 1200px; margin: 0 auto; padding: 4rem 2rem; }
 
     .about { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
     .about-image { width: 100%; height: 400px; }
     .about-image img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center;
-      border-radius: 20px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+      width: 100%; height: 100%; object-fit: cover; object-position: center;
+      border-radius: 20px; box-shadow: 0 8px 24px rgba(0,0,0,0.12);
     }
 
     .section-title { font-size: 2.2rem; color: var(--wine-600); margin-bottom: 1.25rem; }
@@ -172,25 +151,17 @@
       border: 1px solid rgba(109,31,43,0.12);
     }
 
-    .two-col {
-      display: grid; gap: 1.25rem; grid-template-columns: 1fr; margin-top: .5rem;
-    }
+    .two-col { display: grid; gap: 1.25rem; grid-template-columns: 1fr; margin-top: .5rem; }
     @media (min-width: 820px) { .two-col { grid-template-columns: 1fr 1fr; } }
 
     .highlight-box {
-      background: white;
-      padding: 1.5rem;
-      border-radius: 12px;
-      margin-top: 1.2rem;
+      background: white; padding: 1.5rem; border-radius: 12px; margin-top: 1.2rem;
       border-left: 4px solid var(--wine-500);
     }
 
     .offer-item {
-      background: var(--wine-100);
-      border-left: 4px solid var(--wine-500);
-      border-radius: 12px;
-      padding: 1.25rem 1rem;
-      margin-bottom: 1rem;
+      background: var(--wine-100); border-left: 4px solid var(--wine-500);
+      border-radius: 12px; padding: 1.25rem 1rem; margin-bottom: 1rem;
     }
     .offer-item h3 { color: var(--wine-600); margin-bottom: .4rem; }
 
@@ -225,14 +196,9 @@
       .section-title { font-size: 1.9rem; }
 
       .nav-links.active {
-        display: flex;
-        position: absolute;
-        top: 60px; right: 0;
-        background: var(--wine-600);
-        flex-direction: column;
-        gap: 1rem; padding: 1rem 1.5rem;
-        border-bottom-left-radius: 12px;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        display: flex; position: absolute; top: 60px; right: 0;
+        background: var(--wine-600); flex-direction: column; gap: 1rem; padding: 1rem 1.5rem;
+        border-bottom-left-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.2);
       }
       .nav-links a { padding: .25rem 0; }
 
@@ -240,54 +206,40 @@
       .contact-buttons { flex-direction: column; align-items: center; }
     }
 
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
     /* Botões flutuantes (WhatsApp e Instagram) */
-    .whatsapp-float,
-    .instagram-float {
-      position: fixed;
-      width: 60px; height: 60px;
-      right: 40px;
-      color: #FFF;
-      border-radius: 50%;
-      text-align: center;
-      box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
-      z-index: 999;
-      display: flex; align-items: center; justify-content: center;
-      cursor: pointer; transition: transform 0.3s; text-decoration: none;
+    .whatsapp-float, .instagram-float {
+      position: fixed; width: 60px; height: 60px; right: 40px; color: #FFF; border-radius: 50%;
+      text-align: center; box-shadow: 2px 2px 10px rgba(0,0,0,0.3); z-index: 999;
+      display: flex; align-items: center; justify-content: center; cursor: pointer;
+      transition: transform 0.3s; text-decoration: none;
     }
     .whatsapp-float { bottom: 40px; background-color: #25d366; }
     .instagram-float { bottom: 110px; background-color: #E4405F; }
-
-    .whatsapp-float:hover,
-    .instagram-float:hover { transform: scale(1.1); }
-
-    .whatsapp-float img,
-    .instagram-float img { width: 28px; height: 28px; display: block; }
+    .whatsapp-float:hover, .instagram-float:hover { transform: scale(1.1); }
+    .whatsapp-float img, .instagram-float img { width: 28px; height: 28px; display: block; }
   </style>
 </head>
 <body>
   <!-- WhatsApp flutuante com ícone -->
   <a href="https://wa.me/5517996258369?text=Olá! Gostaria de agendar uma consulta."
      class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="Conversar no WhatsApp">
-    <img src="https://gabrielbuzetti0-art.github.io/caroline-psicologa/whatsapp.png" alt="WhatsApp" loading="lazy">
+    <img src="whatsapp.png" alt="WhatsApp" loading="lazy">
   </a>
 
   <!-- Instagram flutuante com ícone -->
   <a href="https://www.instagram.com/psicarolmarques/"
      class="instagram-float" target="_blank" rel="noopener noreferrer" aria-label="Abrir Instagram">
-    <img src="https://gabrielbuzetti0-art.github.io/caroline-psicologa/Instagram.png" alt="Instagram" loading="lazy">
+    <img src="Instagram.png" alt="Instagram" loading="lazy">
   </a>
 
   <header id="header">
-    <nav>
+    <nav aria-label="Menu principal">
       <div class="logo">Caroline M. Brito</div>
 
       <div class="nav-right">
-        <button class="menu-toggle" aria-label="Abrir menu principal">☰</button>
+        <button class="menu-toggle" aria-label="Abrir menu principal" aria-expanded="false">☰</button>
 
         <ul class="nav-links">
           <li><a href="#inicio">Início</a></li>
@@ -322,7 +274,6 @@
     <div class="container">
       <div class="about">
         <div class="about-image">
-          <!-- Caminho correto: arquivo está na raiz do site com este nome -->
           <img src="imagescaroline.jpeg" alt="Caroline Marques Brito - Psicóloga" loading="lazy">
         </div>
         <div>
@@ -470,14 +421,14 @@
       <div class="contact-buttons">
         <a href="https://wa.me/5517996258369?text=Olá! Gostaria de agendar uma consulta."
            class="contact-btn" target="_blank" rel="noopener noreferrer">
-          <img src="https://gabrielbuzetti0-art.github.io/caroline-psicologa/whatsapp.png" alt=""> WhatsApp
+          <img src="whatsapp.png" alt="Abrir conversa no WhatsApp"> WhatsApp
         </a>
 
         <a href="mailto:carolinemarquesbrito@gmail.com" class="contact-btn" rel="noopener noreferrer">✉️ E-mail</a>
 
         <a href="https://www.instagram.com/psicarolmarques/"
            class="contact-btn" target="_blank" rel="noopener noreferrer">
-          <img src="https://gabrielbuzetti0-art.github.io/caroline-psicologa/Instagram.png" alt=""> Instagram
+          <img src="Instagram.png" alt="Visitar Instagram"> Instagram
         </a>
       </div>
 
@@ -501,7 +452,11 @@
       const menuToggle = $('.menu-toggle');
       const navLinks   = $('.nav-links');
       if (menuToggle && navLinks) {
-        const toggleNav = (e) => { e && e.preventDefault(); navLinks.classList.toggle('active'); };
+        const toggleNav = (e) => {
+          e && e.preventDefault();
+          const open = navLinks.classList.toggle('active');
+          menuToggle.setAttribute('aria-expanded', String(open));
+        };
         menuToggle.addEventListener('click', toggleNav, { passive:false });
         menuToggle.addEventListener('touchend', toggleNav, { passive:false });
       }
@@ -523,8 +478,7 @@
       const moreDropdown = $('.more-dropdown');
       if (moreToggle && moreDropdown) {
         const toggleMore = (e) => {
-          e.preventDefault();
-          e.stopPropagation();
+          e.preventDefault(); e.stopPropagation();
           const open = moreDropdown.style.display === 'block';
           moreDropdown.style.display = open ? 'none' : 'block';
           moreToggle.setAttribute('aria-expanded', String(!open));
@@ -557,14 +511,16 @@
     });
   </script>
 
-  <!-- Schema.org para SEO -->
+  <!-- Dados estruturados (JSON-LD) -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "Person",
+    "@type": "Psychologist",
     "name": "Caroline Marques Brito",
-    "jobTitle": "Psicóloga",
-    "identifier": "CRP 14/09165-4",
+    "url": "https://psicarolmarques.com.br/",
+    "image": "https://psicarolmarques.com.br/imagescaroline.jpeg",
+    "telephone": "+55-17-99625-8369",
+    "email": "carolinemarquesbrito@gmail.com",
     "address": {
       "@type": "PostalAddress",
       "addressLocality": "Bauru",
@@ -572,18 +528,7 @@
       "addressCountry": "BR"
     },
     "areaServed": "BR",
-    "description": "Psicóloga em Bauru-SP com atendimento online baseado em evidências científicas, focado em TCC e saúde mental.",
-    "alumniOf": [
-      { "@type": "CollegeOrUniversity", "name": "Universidade Federal de Mato Grosso do Sul (UFMS)" },
-      { "@type": "CollegeOrUniversity", "name": "Faculdade da Região Serrana (FARESE)" }
-    ],
-    "knowsAbout": [
-      "Terapia Cognitivo-Comportamental (TCC)",
-      "Psicologia Baseada em Evidências",
-      "Obesidade e Emagrecimento",
-      "Atendimento Psicológico Online",
-      "DBT"
-    ],
+    "description": "Psicóloga especializada em TCC. Atendimento psicológico online e em Bauru-SP para ansiedade, depressão e relacionamentos.",
     "sameAs": [
       "https://www.instagram.com/psicarolmarques/"
     ]
