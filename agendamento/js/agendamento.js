@@ -429,13 +429,15 @@ async function finalizarAgendamento() {
     }
 
     try {
+        // 1. CRIAR/BUSCAR PACIENTE PRIMEIRO
         let pacienteId;
         
         try {
             const pacienteExistente = await pacienteAPI.buscarPorEmail(state.pacienteData.email);
             pacienteId = pacienteExistente.data._id;
-            console.log('Paciente existente');
+            console.log('✅ Paciente existente encontrado:', pacienteId);
         } catch (error) {
+            console.log('📝 Criando novo paciente...');
             const novoPaciente = await pacienteAPI.criar({
                 nome: state.pacienteData.nome,
                 email: state.pacienteData.email,
@@ -450,14 +452,15 @@ async function finalizarAgendamento() {
                     estado: state.pacienteData.estado || '',
                     cep: state.pacienteData.cep?.replace(/\D/g, '') || ''
                 },
-                primeiraConsulta: state.pacienteData.primeiraConsulta,
+                primeiraConsulta: state.pacienteData.primeiraConsulta || false,
                 observacoes: state.pacienteData.observacoes || ''
             });
             
             pacienteId = novoPaciente.data._id;
-            console.log('Novo paciente criado');
+            console.log('✅ Novo paciente criado:', pacienteId);
         }
 
+        // 2. PREPARAR DATA E HORA
         const [hora, minuto] = state.selectedTime.split(':');
         const dataHora = new Date(state.selectedDate);
         dataHora.setHours(parseInt(hora), parseInt(minuto), 0, 0);
@@ -465,42 +468,54 @@ async function finalizarAgendamento() {
         console.log('📤 Criando agendamento:', {
             pacienteId,
             dataHora: dataHora.toISOString(),
-            tipo: state.tipoSessao,
-            parcelas: state.parcelas
+            tipo: state.tipoSessao
         });
 
-        const agendamento = await agendamentoAPI.criar({
+        // 3. CRIAR AGENDAMENTO COM TODOS OS DADOS OBRIGATÓRIOS
+        const dadosAgendamento = {
             pacienteId: pacienteId,
             dataHora: dataHora.toISOString(),
             tipo: state.tipoSessao,
-            observacoes: state.pacienteData.observacoes || '',
-            parcelas: state.parcelas
-        });
+            observacoes: state.pacienteData.observacoes || ''
+        };
+
+        // Adicionar parcelas apenas se for pacote
+        if (state.tipoSessao === 'pacote_mensal' || state.tipoSessao === 'pacote_anual') {
+            dadosAgendamento.parcelas = state.parcelas;
+        }
+
+        const agendamento = await agendamentoAPI.criar(dadosAgendamento);
 
         console.log('✅ Agendamento criado:', agendamento);
 
         state.agendamentoId = agendamento.data._id;
 
+        // 4. PROCESSAR PAGAMENTO
         const metodoPagamento = document.querySelector('input[name="metodoPagamento"]:checked').value;
 
         if (metodoPagamento === 'pix') {
+            console.log('💳 Processando pagamento PIX...');
             await new Promise(resolve => setTimeout(resolve, 2000));
             
             await pagamentoAPI.confirmarManual({
                 agendamentoId: state.agendamentoId,
                 metodo: 'pix',
-                comprovante: 'simulado'
+                comprovante: 'aguardando_confirmacao'
             });
         }
 
+        // 5. MOSTRAR SUCESSO
         document.querySelectorAll('.step-content').forEach(content => {
             content.style.display = 'none';
         });
         document.getElementById('stepSucesso').style.display = 'block';
 
+        console.log('🎉 AGENDAMENTO FINALIZADO COM SUCESSO!');
+
     } catch (error) {
-        console.error('❌ Erro:', error);
-        alert('Erro: ' + error.message);
+        console.error('❌ Erro completo:', error);
+        console.error('Stack:', error.stack);
+        alert('Erro ao finalizar agendamento: ' + error.message);
         btnFinalizar.disabled = false;
         btnFinalizar.textContent = '✓ Confirmar e Pagar';
     }
