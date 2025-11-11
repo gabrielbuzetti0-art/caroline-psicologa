@@ -432,46 +432,64 @@ async function finalizarAgendamento() {
         // 1. CRIAR/BUSCAR PACIENTE PRIMEIRO
         let pacienteId;
         
+        console.log('🔍 Buscando paciente por email:', state.pacienteData.email);
+        
         try {
             const pacienteExistente = await pacienteAPI.buscarPorEmail(state.pacienteData.email);
             pacienteId = pacienteExistente.data._id;
             console.log('✅ Paciente existente encontrado:', pacienteId);
-        } catch (error) {
-            console.log('📝 Criando novo paciente...');
-            const novoPaciente = await pacienteAPI.criar({
-                nome: state.pacienteData.nome,
-                email: state.pacienteData.email,
-                telefone: state.pacienteData.telefone,
-                cpf: state.pacienteData.cpf.replace(/\D/g, ''),
-                dataNascimento: state.pacienteData.dataNascimento,
-                endereco: {
-                    rua: state.pacienteData.rua || '',
-                    numero: state.pacienteData.numero || '',
-                    bairro: state.pacienteData.bairro || '',
-                    cidade: state.pacienteData.cidade || '',
-                    estado: state.pacienteData.estado || '',
-                    cep: state.pacienteData.cep?.replace(/\D/g, '') || ''
-                },
-                primeiraConsulta: state.pacienteData.primeiraConsulta || false,
-                observacoes: state.pacienteData.observacoes || ''
-            });
+        } catch (errorBusca) {
+            console.log('📝 Paciente não encontrado, criando novo...');
             
-            pacienteId = novoPaciente.data._id;
-            console.log('✅ Novo paciente criado:', pacienteId);
+            // Criar novo paciente
+            try {
+                const novoPaciente = await pacienteAPI.criar({
+                    nome: state.pacienteData.nome,
+                    email: state.pacienteData.email,
+                    telefone: state.pacienteData.telefone,
+                    cpf: state.pacienteData.cpf.replace(/\D/g, ''),
+                    dataNascimento: state.pacienteData.dataNascimento,
+                    endereco: {
+                        rua: state.pacienteData.rua || '',
+                        numero: state.pacienteData.numero || '',
+                        bairro: state.pacienteData.bairro || '',
+                        cidade: state.pacienteData.cidade || '',
+                        estado: state.pacienteData.estado || '',
+                        cep: state.pacienteData.cep?.replace(/\D/g, '') || ''
+                    },
+                    primeiraConsulta: state.pacienteData.primeiraConsulta || false,
+                    observacoes: state.pacienteData.observacoes || ''
+                });
+                
+                pacienteId = novoPaciente.data._id;
+                console.log('✅ Novo paciente criado:', pacienteId);
+            } catch (errorCriar) {
+                console.error('❌ Erro ao criar paciente:', errorCriar);
+                throw new Error('Falha ao cadastrar paciente: ' + errorCriar.message);
+            }
         }
+
+        // VERIFICAÇÃO CRÍTICA
+        if (!pacienteId) {
+            throw new Error('Erro: ID do paciente não foi obtido!');
+        }
+
+        console.log('✅ pacienteId confirmado:', pacienteId);
 
         // 2. PREPARAR DATA E HORA
         const [hora, minuto] = state.selectedTime.split(':');
         const dataHora = new Date(state.selectedDate);
         dataHora.setHours(parseInt(hora), parseInt(minuto), 0, 0);
 
-        console.log('📤 Criando agendamento:', {
-            pacienteId,
+        console.log('📤 Criando agendamento com dados:', {
+            pacienteId: pacienteId,
             dataHora: dataHora.toISOString(),
-            tipo: state.tipoSessao
+            tipo: state.tipoSessao,
+            observacoes: state.pacienteData.observacoes || '',
+            parcelas: state.parcelas
         });
 
-        // 3. CRIAR AGENDAMENTO COM TODOS OS DADOS OBRIGATÓRIOS
+        // 3. CRIAR AGENDAMENTO
         const dadosAgendamento = {
             pacienteId: pacienteId,
             dataHora: dataHora.toISOString(),
@@ -519,4 +537,4 @@ async function finalizarAgendamento() {
         btnFinalizar.disabled = false;
         btnFinalizar.textContent = '✓ Confirmar e Pagar';
     }
-}
+}   
