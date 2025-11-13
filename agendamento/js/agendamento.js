@@ -512,17 +512,52 @@ async function finalizarAgendamento() {
         const metodoPagamento = document.querySelector('input[name="metodoPagamento"]:checked').value;
 
         if (metodoPagamento === 'pix') {
-            console.log('💳 Processando pagamento PIX...');
-            await new Promise(resolve => setTimeout(resolve, 2000));
+            console.log('💳 Criando pagamento PIX via Mercado Pago...');
             
-            await pagamentoAPI.confirmarManual({
-                agendamentoId: state.agendamentoId,
-                metodo: 'pix',
-                comprovante: 'aguardando_confirmacao'
-            });
+            try {
+                const preferencia = await pagamentoAPI.criarPreferencia(state.agendamentoId);
+                console.log('✅ Preferência criada:', preferencia);
+                
+                // Redirecionar para o checkout do Mercado Pago
+                if (preferencia.sandbox_init_point) {
+                    window.location.href = preferencia.sandbox_init_point; // TESTE
+                } else if (preferencia.init_point) {
+                    window.location.href = preferencia.init_point; // PRODUÇÃO
+                }
+                
+                return; // Não continua, pois vai redirecionar
+            } catch (errorPagamento) {
+                console.error('❌ Erro ao criar preferência:', errorPagamento);
+                alert('Erro ao processar pagamento. Tente novamente.');
+                btnFinalizar.disabled = false;
+                btnFinalizar.textContent = '✓ Confirmar e Pagar';
+                return;
+            }
+        } else if (metodoPagamento === 'cartao') {
+            console.log('💳 Processando pagamento com Cartão...');
+            
+            try {
+                const preferencia = await pagamentoAPI.criarPreferencia(state.agendamentoId);
+                console.log('✅ Preferência criada:', preferencia);
+                
+                // Redirecionar para o checkout do Mercado Pago
+                if (preferencia.sandbox_init_point) {
+                    window.location.href = preferencia.sandbox_init_point; // TESTE
+                } else if (preferencia.init_point) {
+                    window.location.href = preferencia.init_point; // PRODUÇÃO
+                }
+                
+                return; // Não continua, pois vai redirecionar
+            } catch (errorPagamento) {
+                console.error('❌ Erro ao criar preferência:', errorPagamento);
+                alert('Erro ao processar pagamento. Tente novamente.');
+                btnFinalizar.disabled = false;
+                btnFinalizar.textContent = '✓ Confirmar e Pagar';
+                return;
+            }
         }
 
-        // 5. MOSTRAR SUCESSO
+        // 5. MOSTRAR SUCESSO (apenas se não redirecionar)
         document.querySelectorAll('.step-content').forEach(content => {
             content.style.display = 'none';
         });
