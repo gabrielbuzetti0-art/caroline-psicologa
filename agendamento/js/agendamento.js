@@ -118,7 +118,6 @@ function initCEPSearch() {
         }
     });
 }
-
 // Navegar para um passo específico
 function goToStep(stepNumber) {
     console.log('===================================');
@@ -146,7 +145,7 @@ function goToStep(stepNumber) {
 
     if (stepNumber === 2) {
         console.log('🔄 PASSO 2 - Vai carregar horários');
-        loadHorarios();
+        carregarHorarios();
     } else if (stepNumber === 4) {
         console.log('📋 PASSO 4 - Vai mostrar resumo');
         mostrarResumo();
@@ -157,98 +156,78 @@ function goToStep(stepNumber) {
 }
 
 // Carregar horários disponíveis
-async function loadHorarios() {
-    console.log('🔍 ========== LOAD HORÁRIOS INICIADO ==========');
-    console.log('Data no state:', state.selectedDate);
-    console.log('Tipo no state:', state.tipoSessao);
-    
-    if (!state.selectedDate) {
-        console.error('❌ ERRO: Data não definida!');
-        alert('Erro: Selecione uma data primeiro.');
-        goToStep(1);
-        return;
-    }
-    
+async function carregarHorarios() {
     const horariosGrid = document.getElementById('horariosGrid');
-    const loadingHorarios = document.getElementById('loadingHorarios');
-    const selectedDateElement = document.getElementById('selectedDate');
-
-    selectedDateElement.textContent = utils.formatarData(state.selectedDate);
-
-    loadingHorarios.style.display = 'block';
+    const loading = document.getElementById('loadingHorarios');
+    
+    loading.style.display = 'block';
     horariosGrid.innerHTML = '';
-
+    
     try {
-        const dataISO = utils.formatarDataISO(state.selectedDate);
-        console.log('📤 Fazendo requisição para:', dataISO);
+        console.log('🔍 Buscando horários disponíveis para:', state.selectedDate);
         
-        const response = await agendamentoAPI.buscarHorariosDisponiveis(dataISO);
+        // Formatar data para enviar ao backend
+        const dataFormatada = state.selectedDate.toISOString().split('T')[0];
         
-        console.log('📥 Resposta recebida:', response);
-
-        loadingHorarios.style.display = 'none';
-
-       console.log('📥 Resposta recebida:', response);
-
-        loadingHorarios.style.display = 'none';
-
-        // VERIFICAÇÃO CRÍTICA
-        if (!response || !response.data || !response.data.horariosDisponiveis) {
-            console.error('❌ Resposta inválida:', response);
-            horariosGrid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #dc3545;">Erro: Resposta inválida da API.</p>';
+        // Buscar horários disponíveis do backend
+        const response = await agendamentoAPI.horariosDisponiveis(
+            dataFormatada, 
+            state.tipoSessao
+        );
+        
+        console.log('✅ Resposta da API:', response);
+        
+        const horariosDisponiveis = response.data || [];
+        
+        if (horariosDisponiveis.length === 0) {
+            horariosGrid.innerHTML = `
+                <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #999;">
+                    <p style="font-size: 18px; margin-bottom: 10px;">😔 Nenhum horário disponível</p>
+                    <p>Todos os horários deste dia já estão ocupados. Por favor, escolha outra data.</p>
+                </div>
+            `;
+            document.getElementById('btnNextStep2').disabled = true;
             return;
         }
-
-        const horariosDisponiveis = response.data.horariosDisponiveis;
         
-        console.log('✅ Horários disponíveis recebidos:', horariosDisponiveis);
-        console.log('✅ Tipo:', typeof horariosDisponiveis);
-        console.log('✅ É array?', Array.isArray(horariosDisponiveis));
-        console.log('✅ Length:', horariosDisponiveis.length);
-
-        if (!Array.isArray(horariosDisponiveis) || horariosDisponiveis.length === 0) {
-            horariosGrid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #999;">Não há horários disponíveis para esta data.</p>';
-            return;
-        }
-
-        // LIMPAR O GRID ANTES DE ADICIONAR
-        horariosGrid.innerHTML = '';
+        // Atualizar data selecionada no texto
+        document.getElementById('selectedDate').textContent = utils.formatarData(state.selectedDate);
         
-        console.log('🔨 Criando elementos de horário...');
-
-        horariosDisponiveis.forEach((horario, index) => {
-            console.log(`  Criando horário ${index + 1}:`, horario);
-            
-            const horarioElement = document.createElement('div');
-            horarioElement.className = 'horario-item';
-            horarioElement.textContent = horario;
-            horarioElement.dataset.horario = horario;
-
-            horarioElement.addEventListener('click', () => {
-                document.querySelectorAll('.horario-item').forEach(item => {
-                    item.classList.remove('selected');
-                });
-
-                horarioElement.classList.add('selected');
-                state.selectedTime = horario;
-                console.log('✅ Horário selecionado:', state.selectedTime);
-                document.getElementById('btnNextStep2').disabled = false;
-            });
-
-            horariosGrid.appendChild(horarioElement);
-            console.log('  ✓ Horário adicionado ao DOM');
+        // Renderizar horários disponíveis
+        horariosDisponiveis.forEach(horario => {
+            const button = document.createElement('button');
+            button.className = 'horario-btn';
+            button.textContent = horario;
+            button.onclick = () => selecionarHorario(horario);
+            horariosGrid.appendChild(button);
         });
         
-        console.log('✅ Total de horários renderizados:', horariosGrid.children.length);
-
+        console.log('✅ Total de horários renderizados:', horariosDisponiveis.length);
+        
     } catch (error) {
-        console.error('❌ ERRO NO CATCH:', error);
-        console.error('Stack:', error.stack);
-        loadingHorarios.style.display = 'none';
-        horariosGrid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #dc3545;">Erro ao carregar horários. Detalhes: ' + error.message + '</p>';
+        console.error('❌ Erro ao carregar horários:', error);
+        horariosGrid.innerHTML = `
+            <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #e74c3c;">
+                <p style="font-size: 18px; margin-bottom: 10px;">❌ Erro ao carregar horários</p>
+                <p>Tente novamente mais tarde ou entre em contato.</p>
+            </div>
+        `;
+        document.getElementById('btnNextStep2').disabled = true;
+    } finally {
+        loading.style.display = 'none';
     }
+}
+
+// Selecionar horário
+function selecionarHorario(horario) {
+    document.querySelectorAll('.horario-btn').forEach(btn => {
+        btn.classList.remove('selected');
+    });
     
-    console.log('🔍 ========== LOAD HORÁRIOS FINALIZADO ==========');
+    event.target.classList.add('selected');
+    state.selectedTime = horario;
+    document.getElementById('btnNextStep2').disabled = false;
+    console.log('✅ Horário selecionado:', horario);
 }
 
 // Validar e processar passo 3
@@ -290,7 +269,6 @@ function handleStep3() {
 
     goToStep(4);
 }
-
 // Configurar opções de parcelamento
 function configurarParcelamento() {
     console.log('⚙️ Configurando parcelamento para tipo:', state.tipoSessao);
@@ -441,35 +419,28 @@ async function finalizarAgendamento() {
         } catch (errorBusca) {
             console.log('📝 Paciente não encontrado, criando novo...');
             
-            // Criar novo paciente
-            try {
-                const novoPaciente = await pacienteAPI.criar({
-                    nome: state.pacienteData.nome,
-                    email: state.pacienteData.email,
-                    telefone: state.pacienteData.telefone,
-                    cpf: state.pacienteData.cpf.replace(/\D/g, ''),
-                    dataNascimento: state.pacienteData.dataNascimento,
-                    endereco: {
-                        rua: state.pacienteData.rua || '',
-                        numero: state.pacienteData.numero || '',
-                        bairro: state.pacienteData.bairro || '',
-                        cidade: state.pacienteData.cidade || '',
-                        estado: state.pacienteData.estado || '',
-                        cep: state.pacienteData.cep?.replace(/\D/g, '') || ''
-                    },
-                    primeiraConsulta: state.pacienteData.primeiraConsulta || false,
-                    observacoes: state.pacienteData.observacoes || ''
-                });
-                
-                pacienteId = novoPaciente.data._id;
-                console.log('✅ Novo paciente criado:', pacienteId);
-            } catch (errorCriar) {
-                console.error('❌ Erro ao criar paciente:', errorCriar);
-                throw new Error('Falha ao cadastrar paciente: ' + errorCriar.message);
-            }
+            const novoPaciente = await pacienteAPI.criar({
+                nome: state.pacienteData.nome,
+                email: state.pacienteData.email,
+                telefone: state.pacienteData.telefone,
+                cpf: state.pacienteData.cpf.replace(/\D/g, ''),
+                dataNascimento: state.pacienteData.dataNascimento,
+                endereco: {
+                    rua: state.pacienteData.rua || '',
+                    numero: state.pacienteData.numero || '',
+                    bairro: state.pacienteData.bairro || '',
+                    cidade: state.pacienteData.cidade || '',
+                    estado: state.pacienteData.estado || '',
+                    cep: state.pacienteData.cep?.replace(/\D/g, '') || ''
+                },
+                primeiraConsulta: state.pacienteData.primeiraConsulta || false,
+                observacoes: state.pacienteData.observacoes || ''
+            });
+            
+            pacienteId = novoPaciente.data._id;
+            console.log('✅ Novo paciente criado:', pacienteId);
         }
 
-        // VERIFICAÇÃO CRÍTICA
         if (!pacienteId) {
             throw new Error('Erro: ID do paciente não foi obtido!');
         }
@@ -497,57 +468,31 @@ async function finalizarAgendamento() {
             observacoes: state.pacienteData.observacoes || ''
         };
 
-        // Adicionar parcelas apenas se for pacote
         if (state.tipoSessao === 'pacote_mensal' || state.tipoSessao === 'pacote_anual') {
             dadosAgendamento.parcelas = state.parcelas;
         }
 
         const agendamento = await agendamentoAPI.criar(dadosAgendamento);
-
         console.log('✅ Agendamento criado:', agendamento);
-
         state.agendamentoId = agendamento.data._id;
 
         // 4. PROCESSAR PAGAMENTO
         const metodoPagamento = document.querySelector('input[name="metodoPagamento"]:checked').value;
 
-        if (metodoPagamento === 'pix') {
-            console.log('💳 Criando pagamento PIX via Mercado Pago...');
+        if (metodoPagamento === 'pix' || metodoPagamento === 'cartao') {
+            console.log('💳 Criando pagamento via Mercado Pago...');
             
             try {
                 const preferencia = await pagamentoAPI.criarPreferencia(state.agendamentoId);
                 console.log('✅ Preferência criada:', preferencia);
                 
-                // Redirecionar para o checkout do Mercado Pago
                 if (preferencia.sandbox_init_point) {
-                    window.location.href = preferencia.sandbox_init_point; // TESTE
+                    window.location.href = preferencia.sandbox_init_point;
                 } else if (preferencia.init_point) {
-                    window.location.href = preferencia.init_point; // PRODUÇÃO
+                    window.location.href = preferencia.init_point;
                 }
                 
-                return; // Não continua, pois vai redirecionar
-            } catch (errorPagamento) {
-                console.error('❌ Erro ao criar preferência:', errorPagamento);
-                alert('Erro ao processar pagamento. Tente novamente.');
-                btnFinalizar.disabled = false;
-                btnFinalizar.textContent = '✓ Confirmar e Pagar';
                 return;
-            }
-        } else if (metodoPagamento === 'cartao') {
-            console.log('💳 Processando pagamento com Cartão...');
-            
-            try {
-                const preferencia = await pagamentoAPI.criarPreferencia(state.agendamentoId);
-                console.log('✅ Preferência criada:', preferencia);
-                
-                // Redirecionar para o checkout do Mercado Pago
-                if (preferencia.sandbox_init_point) {
-                    window.location.href = preferencia.sandbox_init_point; // TESTE
-                } else if (preferencia.init_point) {
-                    window.location.href = preferencia.init_point; // PRODUÇÃO
-                }
-                
-                return; // Não continua, pois vai redirecionar
             } catch (errorPagamento) {
                 console.error('❌ Erro ao criar preferência:', errorPagamento);
                 alert('Erro ao processar pagamento. Tente novamente.');
@@ -557,7 +502,7 @@ async function finalizarAgendamento() {
             }
         }
 
-        // 5. MOSTRAR SUCESSO (apenas se não redirecionar)
+        // 5. MOSTRAR SUCESSO
         document.querySelectorAll('.step-content').forEach(content => {
             content.style.display = 'none';
         });
@@ -572,4 +517,4 @@ async function finalizarAgendamento() {
         btnFinalizar.disabled = false;
         btnFinalizar.textContent = '✓ Confirmar e Pagar';
     }
-}   
+}
