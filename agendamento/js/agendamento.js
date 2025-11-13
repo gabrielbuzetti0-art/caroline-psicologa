@@ -118,6 +118,7 @@ function initCEPSearch() {
         }
     });
 }
+
 // Navegar para um passo específico
 function goToStep(stepNumber) {
     console.log('===================================');
@@ -175,11 +176,30 @@ async function carregarHorarios() {
             state.tipoSessao
         );
         
-        console.log('✅ Resposta da API:', response);
+        console.log('✅ Resposta completa da API:', response);
+        console.log('✅ response.data:', response.data);
+        console.log('✅ Tipo de response.data:', typeof response.data);
+        console.log('✅ É array?', Array.isArray(response.data));
         
-        const horariosDisponiveis = response.data || [];
+        // Extrair horários do response
+        let horariosDisponiveis = [];
         
-        if (horariosDisponiveis.length === 0) {
+        if (Array.isArray(response.data)) {
+            horariosDisponiveis = response.data;
+        } else if (response.data && Array.isArray(response.data.horariosDisponiveis)) {
+            horariosDisponiveis = response.data.horariosDisponiveis;
+        } else if (response.data && typeof response.data === 'object') {
+            // Se for objeto, tentar pegar qualquer propriedade que seja array
+            const valores = Object.values(response.data);
+            const arrayEncontrado = valores.find(v => Array.isArray(v));
+            if (arrayEncontrado) {
+                horariosDisponiveis = arrayEncontrado;
+            }
+        }
+        
+        console.log('✅ Horários processados:', horariosDisponiveis);
+        
+        if (!Array.isArray(horariosDisponiveis) || horariosDisponiveis.length === 0) {
             horariosGrid.innerHTML = `
                 <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #999;">
                     <p style="font-size: 18px; margin-bottom: 10px;">😔 Nenhum horário disponível</p>
@@ -209,7 +229,8 @@ async function carregarHorarios() {
         horariosGrid.innerHTML = `
             <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #e74c3c;">
                 <p style="font-size: 18px; margin-bottom: 10px;">❌ Erro ao carregar horários</p>
-                <p>Tente novamente mais tarde ou entre em contato.</p>
+                <p>${error.message}</p>
+                <p style="font-size: 12px; margin-top: 10px;">Tente novamente mais tarde ou entre em contato.</p>
             </div>
         `;
         document.getElementById('btnNextStep2').disabled = true;
@@ -233,6 +254,13 @@ function selecionarHorario(horario) {
 // Validar e processar passo 3
 function handleStep3() {
     const form = document.getElementById('formDadosPaciente');
+    const lgpdCheckbox = document.getElementById('aceitoLGPD');
+    
+    if (!lgpdCheckbox || !lgpdCheckbox.checked) {
+        alert('Você precisa aceitar a Política de Privacidade para continuar.');
+        if (lgpdCheckbox) lgpdCheckbox.focus();
+        return;
+    }
     
     if (!form.checkValidity()) {
         form.reportValidity();
@@ -245,6 +273,8 @@ function handleStep3() {
     formData.forEach((value, key) => {
         if (key === 'primeiraConsulta') {
             dados[key] = document.getElementById('primeiraConsulta').checked;
+        } else if (key === 'aceitoLGPD') {
+            dados[key] = true;
         } else {
             dados[key] = typeof value === 'string' ? value.trim() : value;
         }
@@ -269,6 +299,7 @@ function handleStep3() {
 
     goToStep(4);
 }
+
 // Configurar opções de parcelamento
 function configurarParcelamento() {
     console.log('⚙️ Configurando parcelamento para tipo:', state.tipoSessao);
@@ -407,7 +438,6 @@ async function finalizarAgendamento() {
     }
 
     try {
-        // 1. CRIAR/BUSCAR PACIENTE PRIMEIRO
         let pacienteId;
         
         console.log('🔍 Buscando paciente por email:', state.pacienteData.email);
@@ -445,22 +475,10 @@ async function finalizarAgendamento() {
             throw new Error('Erro: ID do paciente não foi obtido!');
         }
 
-        console.log('✅ pacienteId confirmado:', pacienteId);
-
-        // 2. PREPARAR DATA E HORA
         const [hora, minuto] = state.selectedTime.split(':');
         const dataHora = new Date(state.selectedDate);
         dataHora.setHours(parseInt(hora), parseInt(minuto), 0, 0);
 
-        console.log('📤 Criando agendamento com dados:', {
-            pacienteId: pacienteId,
-            dataHora: dataHora.toISOString(),
-            tipo: state.tipoSessao,
-            observacoes: state.pacienteData.observacoes || '',
-            parcelas: state.parcelas
-        });
-
-        // 3. CRIAR AGENDAMENTO
         const dadosAgendamento = {
             pacienteId: pacienteId,
             dataHora: dataHora.toISOString(),
@@ -476,7 +494,6 @@ async function finalizarAgendamento() {
         console.log('✅ Agendamento criado:', agendamento);
         state.agendamentoId = agendamento.data._id;
 
-        // 4. PROCESSAR PAGAMENTO
         const metodoPagamento = document.querySelector('input[name="metodoPagamento"]:checked').value;
 
         if (metodoPagamento === 'pix' || metodoPagamento === 'cartao') {
@@ -502,7 +519,6 @@ async function finalizarAgendamento() {
             }
         }
 
-        // 5. MOSTRAR SUCESSO
         document.querySelectorAll('.step-content').forEach(content => {
             content.style.display = 'none';
         });
@@ -512,7 +528,6 @@ async function finalizarAgendamento() {
 
     } catch (error) {
         console.error('❌ Erro completo:', error);
-        console.error('Stack:', error.stack);
         alert('Erro ao finalizar agendamento: ' + error.message);
         btnFinalizar.disabled = false;
         btnFinalizar.textContent = '✓ Confirmar e Pagar';
