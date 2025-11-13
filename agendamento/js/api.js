@@ -72,10 +72,10 @@ const agendamentoAPI = {
         return fetchAPI(`/agendamentos${sufixo}`);
     },
 
-    // Buscar horários disponíveis para uma data (usado na Etapa 2)
-    buscarHorariosDisponiveis: (dataISO) => {
-        console.log('🔗 API: Buscando horários disponíveis para data:', dataISO);
-        return fetchAPI(`/agendamentos/horarios-disponiveis?data=${encodeURIComponent(dataISO)}`);
+    // Buscar horários disponíveis para uma data
+    horariosDisponiveis: (data, tipo = 'avulsa') => {
+        console.log('🔗 API: Buscando horários disponíveis para:', data, 'tipo:', tipo);
+        return fetchAPI(`/agendamentos/horarios-disponiveis?data=${encodeURIComponent(data)}&tipo=${tipo}`);
     },
 
     // Buscar agendamento por ID
@@ -89,7 +89,7 @@ const agendamentoAPI = {
 
     // Cancelar agendamento
     cancelar: (id, dados) => fetchAPI(`/agendamentos/${id}/cancelar`, {
-        method: 'PATCH',
+        method: 'POST',
         body: JSON.stringify(dados)
     })
 };
@@ -129,7 +129,7 @@ const pagamentoAPI = {
         method: 'POST',
         body: JSON.stringify({
             agendamentoId,
-            ...extras // caso queira mandar descricao, urls, etc.
+            ...extras
         })
     }),
 
@@ -147,7 +147,7 @@ const pagamentoAPI = {
 // Funções auxiliares (Utils)
 // ==============================
 const utils = {
-    // Formatar data para exibição longa (ex: segunda-feira, 10 de março de 2025)
+    // Formatar data para exibição longa
     formatarData: (data) => {
         const d = new Date(data);
         if (isNaN(d.getTime())) return '';
@@ -160,7 +160,7 @@ const utils = {
         return d.toLocaleDateString('pt-BR', options);
     },
 
-    // Formatar para ISO (YYYY-MM-DD) a partir de Date ou string
+    // Formatar para ISO (YYYY-MM-DD)
     formatarDataISO: (data) => {
         const d = new Date(data);
         if (isNaN(d.getTime())) return '';
