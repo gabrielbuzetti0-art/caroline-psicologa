@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Admin - Agendamentos</title>
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+    <!-- Tela de Login -->
+    <div id="loginScreen" class="login-screen">
+        <div class="login-box">
+            <h1>🔐 Painel Administrativo</h1>
+            <p>Sistema de Gerenciamento de Agendamentos</p>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="username">Usuário:</label>
+                    <input type="text" id="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Senha:</label>
+                    <input type="password" id="password" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Entrar</button>
+                <p id="loginError" class="error-message" style="display: none;"></p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Dashboard -->
+    <div id="dashboard" class="dashboard" style="display: none;">
+        <header class="admin-header">
+            <div class="header-content">
+                <h1>📋 Painel de Agendamentos</h1>
+                <div class="header-actions">
+                    <span class="user-info">👤 Admin</span>
+                    <button class="btn btn-logout" onclick="logout()">Sair</button>
+                </div>
+            </div>
+        </header>
+
+        <div class="filters-container">
+            <div class="filter-group">
+                <label>Data Inicial:</label>
+                <input type="date" id="filterDataInicio">
+            </div>
+            <div class="filter-group">
+                <label>Data Final:</label>
+                <input type="date" id="filterDataFim">
+            </div>
+            <div class="filter-group">
+                <label>Status:</label>
+                <select id="filterStatus">
+                    <option value="">Todos</option>
+                    <option value="pendente">Pendente</option>
+                    <option value="confirmado">Confirmado</option>
+                    <option value="cancelado">Cancelado</option>
+                </select>
+            </div>
+            <button class="btn btn-primary" onclick="carregarAgendamentos()">🔍 Filtrar</button>
+            <button class="btn btn-secondary" onclick="limparFiltros()">🔄 Limpar</button>
+        </div>
+
+        <div class="stats-container">
+            <div class="stat-card">
+                <h3>Total</h3>
+                <p class="stat-number" id="statTotal">0</p>
+            </div>
+            <div class="stat-card">
+                <h3>Pendentes</h3>
+                <p class="stat-number" id="statPendentes">0</p>
+            </div>
+            <div class="stat-card">
+                <h3>Confirmados</h3>
+                <p class="stat-number" id="statConfirmados">0</p>
+            </div>
+            <div class="stat-card">
+                <h3>Hoje</h3>
+                <p class="stat-number" id="statHoje">0</p>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <div class="loading" id="loading" style="display: none;">
+                <div class="spinner"></div>
+                <p>Carregando...</p>
+            </div>
+            <table class="table-agendamentos">
+                <thead>
+                    <tr>
+                        <th>Data/Hora</th>
+                        <th>Paciente</th>
+                        <th>Contato</th>
+                        <th>Tipo</th>
+                        <th>Valor</th>
+                        <th>Status</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="tabelaBody"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="modalDetalhes" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close" onclick="fecharModal()">&times;</span>
+            <h2>Detalhes do Agendamento</h2>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <script src="../agendamento/js/api.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+</html>
