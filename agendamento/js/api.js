@@ -2,7 +2,7 @@
 // Configuração base da API
 // ==============================
 // Detectar ambiente automaticamente
-const API_URL = window.location.hostname === 'localhost' 
+const API_URL = window.location.hostname === 'localhost'
   ? 'http://localhost:5000/api'
   : 'https://agendamento-psi-api.onrender.com/api';
 
@@ -46,7 +46,8 @@ const disponibilidadeAPI = {
     listar: () => fetchAPI('/disponibilidade'),
 
     // Buscar disponibilidade de um dia específico
-    buscarPorDia: (diaSemana) => fetchAPI(`/disponibilidade/${encodeURIComponent(diaSemana)}`),
+    buscarPorDia: (diaSemana) =>
+        fetchAPI(`/disponibilidade/${encodeURIComponent(diaSemana)}`),
 
     // Inicializar disponibilidade padrão
     inicializar: () => fetchAPI('/disponibilidade/inicializar', {
@@ -72,11 +73,21 @@ const agendamentoAPI = {
         return fetchAPI(`/agendamentos${sufixo}`);
     },
 
-    // Buscar horários disponíveis para uma data
-    horariosDisponiveis: (data, tipo = 'avulsa') => {
-        console.log('🔗 API: Buscando horários disponíveis para:', data, 'tipo:', tipo);
-        return fetchAPI(`/agendamentos/horarios-disponiveis?data=${encodeURIComponent(data)}&tipo=${tipo}`);
+    // *** NOVA FUNÇÃO USADA NO FRONT ***
+    // Buscar horários disponíveis para uma data e tipo de sessão
+    buscarHorariosDisponiveis: (dataISO, tipoSessao = 'avulsa') => {
+        console.log('🔗 API: Buscando horários disponíveis para:', dataISO, 'tipo:', tipoSessao);
+        return fetchAPI(
+            `/agendamentos/horarios-disponiveis?data=${encodeURIComponent(
+                dataISO
+            )}&tipo=${encodeURIComponent(tipoSessao)}`
+        );
     },
+
+    // Mantém a função antiga como "atalho"
+    // (caso alguma parte do código ainda use agendamentoAPI.horariosDisponiveis)
+    horariosDisponiveis: (data, tipo = 'avulsa') =>
+        agendamentoAPI.buscarHorariosDisponiveis(data, tipo),
 
     // Buscar agendamento por ID
     buscarPorId: (id) => fetchAPI(`/agendamentos/${id}`),
@@ -105,7 +116,8 @@ const pacienteAPI = {
     }),
 
     // Buscar paciente por email
-    buscarPorEmail: (email) => fetchAPI(`/pacientes/email/${encodeURIComponent(email)}`),
+    buscarPorEmail: (email) =>
+        fetchAPI(`/pacientes/email/${encodeURIComponent(email)}`),
 
     // Buscar paciente por ID
     buscarPorId: (id) => fetchAPI(`/pacientes/${id}`),
@@ -125,13 +137,14 @@ const pacienteAPI = {
 // ==============================
 const pagamentoAPI = {
     // Criar preferência de pagamento no Mercado Pago
-    criarPreferencia: (agendamentoId, extras = {}) => fetchAPI('/pagamentos/criar-preferencia', {
-        method: 'POST',
-        body: JSON.stringify({
-            agendamentoId,
-            ...extras
-        })
-    }),
+    criarPreferencia: (agendamentoId, extras = {}) =>
+        fetchAPI('/pagamentos/criar-preferencia', {
+            method: 'POST',
+            body: JSON.stringify({
+                agendamentoId,
+                ...extras
+            })
+        }),
 
     // Confirmar pagamento manual (PIX, dinheiro, transferência)
     confirmarManual: (dados) => fetchAPI('/pagamentos/confirmar-manual', {
@@ -140,7 +153,8 @@ const pagamentoAPI = {
     }),
 
     // Buscar status do pagamento de um agendamento
-    buscarStatus: (agendamentoId) => fetchAPI(`/pagamentos/${agendamentoId}`)
+    buscarStatus: (agendamentoId) =>
+        fetchAPI(`/pagamentos/${agendamentoId}`)
 };
 
 // ==============================
