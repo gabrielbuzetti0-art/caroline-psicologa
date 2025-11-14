@@ -1,6 +1,7 @@
 // ==============================
 // Configuração base da API
 // ==============================
+
 // Detectar ambiente automaticamente
 const API_URL = window.location.hostname === 'localhost'
   ? 'http://localhost:5000/api'
@@ -10,98 +11,105 @@ const API_URL = window.location.hostname === 'localhost'
 // Função auxiliar para requisições
 // ==============================
 async function fetchAPI(endpoint, options = {}) {
+  try {
+    const response = await fetch(`${API_URL}${endpoint}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+      },
+      ...options
+    });
+
+    let data = {};
     try {
-        const response = await fetch(`${API_URL}${endpoint}`, {
-            headers: {
-                'Content-Type': 'application/json',
-                ...options.headers
-            },
-            ...options
-        });
-
-        let data = {};
-        try {
-            data = await response.json();
-        } catch (e) {
-            console.error('Erro ao fazer parse do JSON da resposta:', e);
-        }
-
-        if (!response.ok) {
-            const msg = data.message || data.error || 'Erro na requisição';
-            throw new Error(msg);
-        }
-
-        return data;
-    } catch (error) {
-        console.error('Erro na API:', error);
-        throw error;
+      data = await response.json();
+    } catch (e) {
+      console.error('Erro ao fazer parse do JSON da resposta:', e);
     }
+
+    if (!response.ok) {
+      const msg = data.message || data.error || 'Erro na requisição';
+      throw new Error(msg);
+    }
+
+    return data;
+  } catch (error) {
+    console.error('Erro na API:', error);
+    throw error;
+  }
 }
 
 // ==============================
 // API de Disponibilidade
 // ==============================
 const disponibilidadeAPI = {
-    // Listar todas as disponibilidades
-    listar: () => fetchAPI('/disponibilidade'),
+  // Listar todas as disponibilidades
+  listar: () => fetchAPI('/disponibilidade'),
 
-    // Buscar disponibilidade de um dia específico
-    buscarPorDia: (diaSemana) =>
-        fetchAPI(`/disponibilidade/${encodeURIComponent(diaSemana)}`),
+  // Buscar disponibilidade de um dia específico (segunda, terça, etc.)
+  buscarPorDia: (diaSemana) =>
+    fetchAPI(`/disponibilidade/${encodeURIComponent(diaSemana)}`),
 
-    // Inicializar disponibilidade padrão
-    inicializar: () => fetchAPI('/disponibilidade/inicializar', {
-        method: 'POST'
-    })
+  // Inicializar disponibilidade padrão
+  inicializar: () =>
+    fetchAPI('/disponibilidade/inicializar', { method: 'POST' })
 };
 
 // ==============================
 // API de Agendamentos
 // ==============================
 const agendamentoAPI = {
-    // Criar novo agendamento
-    criar: (dados) => fetchAPI('/agendamentos', {
-        method: 'POST',
-        body: JSON.stringify(dados)
+  // Criar novo agendamento
+  criar: (dados) =>
+    fetchAPI('/agendamentos', {
+      method: 'POST',
+      body: JSON.stringify(dados)
     }),
 
-    // Listar agendamentos com filtros opcionais
-    listar: (filtros = {}) => {
-        const params = new URLSearchParams(filtros);
-        const query = params.toString();
-        const sufixo = query ? `?${query}` : '';
-        return fetchAPI(`/agendamentos${sufixo}`);
-    },
+  // Listar agendamentos com filtros opcionais
+  listar: (filtros = {}) => {
+    const params = new URLSearchParams(filtros);
+    const query = params.toString();
+    const sufixo = query ? `?${query}` : '';
+    return fetchAPI(`/agendamentos${sufixo}`);
+  },
 
-    // *** NOVA FUNÇÃO USADA NO FRONT ***
-    // Buscar horários disponíveis para uma data e tipo de sessão
-    buscarHorariosDisponiveis: (dataISO, tipoSessao = 'avulsa') => {
-        console.log('🔗 API: Buscando horários disponíveis para:', dataISO, 'tipo:', tipoSessao);
-        return fetchAPI(
-            `/agendamentos/horarios-disponiveis?data=${encodeURIComponent(
-                dataISO
-            )}&tipo=${encodeURIComponent(tipoSessao)}`
-        );
-    },
+  // === NOVO NOME principal (usado internamente) ===
+  horariosDisponiveis: (data, tipo = 'avulsa') => {
+    console.log('🔗 API: Buscando horários disponíveis para:', data, 'tipo:', tipo);
+    const params = new URLSearchParams({ data, tipo });
+    return fetchAPI(`/agendamentos/horarios-disponiveis?${params.toString()}`);
+  },
 
-    // Mantém a função antiga como "atalho"
-    // (caso alguma parte do código ainda use agendamentoAPI.horariosDisponiveis)
-    horariosDisponiveis: (data, tipo = 'avulsa') =>
-        agendamentoAPI.buscarHorariosDisponiveis(data, tipo),
+  // === ALIÁS com o NOME ANTIGO (para não quebrar agendamento.js) ===
+  buscarHorariosDisponiveis: (data, tipo = 'avulsa') =>
+    agendamentoAPI.horariosDisponiveis(data, tipo),
 
-    // Buscar agendamento por ID
-    buscarPorId: (id) => fetchAPI(`/agendamentos/${id}`),
+  // Disponibilidade resumida do calendário (cores dos dias)
+  // também como o NOME que o agendamento.js espera.
+  disponibilidadeCalendario: (ano, mes) => {
+    console.log('🔗 API: Buscando disponibilidade do calendário para:', mes, '/', ano);
+    const params = new URLSearchParams({ ano, mes });
+    // Se o backend tiver outro caminho depois a gente ajusta,
+    // por enquanto usamos esse padrão:
+    return fetchAPI(`/agendamentos/disponibilidade-calendario?${params.toString()}`);
+  },
 
-    // Atualizar status do agendamento
-    atualizarStatus: (id, status) => fetchAPI(`/agendamentos/${id}/status`, {
-        method: 'PATCH',
-        body: JSON.stringify({ status })
+  // Buscar agendamento por ID
+  buscarPorId: (id) => fetchAPI(`/agendamentos/${id}`),
+
+  // Atualizar status do agendamento
+  atualizarStatus: (id, status) =>
+    fetchAPI(`/agendamentos/${id}/status`, {
+      method: 'PATCH',
+      body: JSON.stringify({ status })
     }),
 
-    // Cancelar agendamento
-    cancelar: (id, dados) => fetchAPI(`/agendamentos/${id}/cancelar`, {
-        method: 'POST',
-        body: JSON.stringify(dados)
+  // Cancelar agendamento
+  cancelar: (id, dados) =>
+    fetchAPI(`/agendamentos/${id}/cancelar`, {
+      method: 'POST',
+      body: JSON.stringify(dados)
     })
 };
 
@@ -109,26 +117,28 @@ const agendamentoAPI = {
 // API de Pacientes
 // ==============================
 const pacienteAPI = {
-    // Criar novo paciente
-    criar: (dados) => fetchAPI('/pacientes', {
-        method: 'POST',
-        body: JSON.stringify(dados)
+  // Criar novo paciente
+  criar: (dados) =>
+    fetchAPI('/pacientes', {
+      method: 'POST',
+      body: JSON.stringify(dados)
     }),
 
-    // Buscar paciente por email
-    buscarPorEmail: (email) =>
-        fetchAPI(`/pacientes/email/${encodeURIComponent(email)}`),
+  // Buscar paciente por email
+  buscarPorEmail: (email) =>
+    fetchAPI(`/pacientes/email/${encodeURIComponent(email)}`),
 
-    // Buscar paciente por ID
-    buscarPorId: (id) => fetchAPI(`/pacientes/${id}`),
+  // Buscar paciente por ID
+  buscarPorId: (id) => fetchAPI(`/pacientes/${id}`),
 
-    // Listar todos os pacientes
-    listar: () => fetchAPI('/pacientes'),
+  // Listar todos os pacientes
+  listar: () => fetchAPI('/pacientes'),
 
-    // Atualizar paciente
-    atualizar: (id, dados) => fetchAPI(`/pacientes/${id}`, {
-        method: 'PUT',
-        body: JSON.stringify(dados)
+  // Atualizar paciente
+  atualizar: (id, dados) =>
+    fetchAPI(`/pacientes/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify(dados)
     })
 };
 
@@ -136,135 +146,136 @@ const pacienteAPI = {
 // API de Pagamentos
 // ==============================
 const pagamentoAPI = {
-    // Criar preferência de pagamento no Mercado Pago
-    criarPreferencia: (agendamentoId, extras = {}) =>
-        fetchAPI('/pagamentos/criar-preferencia', {
-            method: 'POST',
-            body: JSON.stringify({
-                agendamentoId,
-                ...extras
-            })
-        }),
-
-    // Confirmar pagamento manual (PIX, dinheiro, transferência)
-    confirmarManual: (dados) => fetchAPI('/pagamentos/confirmar-manual', {
-        method: 'POST',
-        body: JSON.stringify(dados)
+  // Criar preferência de pagamento no Mercado Pago
+  criarPreferencia: (agendamentoId, extras = {}) =>
+    fetchAPI('/pagamentos/criar-preferencia', {
+      method: 'POST',
+      body: JSON.stringify({
+        agendamentoId,
+        ...extras
+      })
     }),
 
-    // Buscar status do pagamento de um agendamento
-    buscarStatus: (agendamentoId) =>
-        fetchAPI(`/pagamentos/${agendamentoId}`)
+  // Confirmar pagamento manual (PIX, dinheiro, transferência)
+  confirmarManual: (dados) =>
+    fetchAPI('/pagamentos/confirmar-manual', {
+      method: 'POST',
+      body: JSON.stringify(dados)
+    }),
+
+  // Buscar status do pagamento de um agendamento
+  buscarStatus: (agendamentoId) =>
+    fetchAPI(`/pagamentos/${agendamentoId}`)
 };
 
 // ==============================
 // Funções auxiliares (Utils)
 // ==============================
 const utils = {
-    // Formatar data para exibição longa
-    formatarData: (data) => {
-        const d = new Date(data);
-        if (isNaN(d.getTime())) return '';
-        const options = {
-            weekday: 'long',
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-        };
-        return d.toLocaleDateString('pt-BR', options);
-    },
+  // Formatar data para exibição longa
+  formatarData: (data) => {
+    const d = new Date(data);
+    if (isNaN(d.getTime())) return '';
+    const options = {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    };
+    return d.toLocaleDateString('pt-BR', options);
+  },
 
-    // Formatar para ISO (YYYY-MM-DD)
-    formatarDataISO: (data) => {
-        const d = new Date(data);
-        if (isNaN(d.getTime())) return '';
-        const year = d.getFullYear();
-        const month = String(d.getMonth() + 1).padStart(2, '0');
-        const day = String(d.getDate()).padStart(2, '0');
-        return `${year}-${month}-${day}`;
-    },
+  // Formatar para ISO (YYYY-MM-DD)
+  formatarDataISO: (data) => {
+    const d = new Date(data);
+    if (isNaN(d.getTime())) return '';
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  },
 
-    // Validar CPF
-    validarCPF: (cpf) => {
-        cpf = cpf.replace(/[^\d]/g, '');
+  // Validar CPF
+  validarCPF: (cpf) => {
+    cpf = cpf.replace(/[^\d]/g, '');
 
-        if (cpf.length !== 11 || /^(\d)\1{10}$/.test(cpf)) {
-            return false;
-        }
-
-        let soma = 0;
-        let resto;
-
-        for (let i = 1; i <= 9; i++) {
-            soma += parseInt(cpf.substring(i - 1, i)) * (11 - i);
-        }
-
-        resto = (soma * 10) % 11;
-        if (resto === 10 || resto === 11) resto = 0;
-        if (resto !== parseInt(cpf.substring(9, 10))) return false;
-
-        soma = 0;
-        for (let i = 1; i <= 10; i++) {
-            soma += parseInt(cpf.substring(i - 1, i)) * (12 - i);
-        }
-
-        resto = (soma * 10) % 11;
-        if (resto === 10 || resto === 11) resto = 0;
-        if (resto !== parseInt(cpf.substring(10, 11))) return false;
-
-        return true;
-    },
-
-    // Validar email
-    validarEmail: (email) => {
-        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return regex.test(email);
-    },
-
-    // Máscara telefone
-    mascaraTelefone: (valor) => {
-        valor = valor.replace(/\D/g, '');
-        valor = valor.replace(/^(\d{2})(\d)/g, '($1) $2');
-        valor = valor.replace(/(\d)(\d{4})$/, '$1-$2');
-        return valor;
-    },
-
-    // Máscara CPF
-    mascaraCPF: (valor) => {
-        valor = valor.replace(/\D/g, '');
-        valor = valor.replace(/(\d{3})(\d)/, '$1.$2');
-        valor = valor.replace(/(\d{3})(\d)/, '$1.$2');
-        valor = valor.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
-        return valor;
-    },
-
-    // Máscara CEP
-    mascaraCEP: (valor) => {
-        valor = valor.replace(/\D/g, '');
-        valor = valor.replace(/(\d{5})(\d)/, '$1-$2');
-        return valor;
-    },
-
-    // Buscar endereço pelo CEP (ViaCEP)
-    buscarCEP: async (cep) => {
-        try {
-            cep = cep.replace(/\D/g, '');
-            if (cep.length !== 8) return null;
-
-            const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
-            const data = await response.json();
-
-            if (data.erro) return null;
-
-            return {
-                rua: data.logradouro,
-                bairro: data.bairro,
-                cidade: data.localidade,
-                estado: data.uf
-            };
-        } catch (error) {
-            console.error('Erro ao buscar CEP:', error);
-            return null;
-        }
+    if (cpf.length !== 11 || /^(\d)\1{10}$/.test(cpf)) {
+      return false;
     }
+
+    let soma = 0;
+    let resto;
+
+    for (let i = 1; i <= 9; i++) {
+      soma += parseInt(cpf.substring(i - 1, i)) * (11 - i);
+    }
+
+    resto = (soma * 10) % 11;
+    if (resto === 10 || resto === 11) resto = 0;
+    if (resto !== parseInt(cpf.substring(9, 10))) return false;
+
+    soma = 0;
+    for (let i = 1; i <= 10; i++) {
+      soma += parseInt(cpf.substring(i - 1, i)) * (12 - i);
+    }
+
+    resto = (soma * 10) % 11;
+    if (resto === 10 || resto === 11) resto = 0;
+    if (resto !== parseInt(cpf.substring(10, 11))) return false;
+
+    return true;
+  },
+
+  // Validar email
+  validarEmail: (email) => {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(email);
+  },
+
+  // Máscara telefone
+  mascaraTelefone: (valor) => {
+    valor = valor.replace(/\D/g, '');
+    valor = valor.replace(/^(\d{2})(\d)/g, '($1) $2');
+    valor = valor.replace(/(\d)(\d{4})$/, '$1-$2');
+    return valor;
+  },
+
+  // Máscara CPF
+  mascaraCPF: (valor) => {
+    valor = valor.replace(/\D/g, '');
+    valor = valor.replace(/(\d{3})(\d)/, '$1.$2');
+    valor = valor.replace(/(\d{3})(\d)/, '$1.$2');
+    valor = valor.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+    return valor;
+  },
+
+  // Máscara CEP
+  mascaraCEP: (valor) => {
+    valor = valor.replace(/\D/g, '');
+    valor = valor.replace(/(\d{5})(\d)/, '$1-$2');
+    return valor;
+  },
+
+  // Buscar endereço pelo CEP (ViaCEP)
+  buscarCEP: async (cep) => {
+    try {
+      cep = cep.replace(/\D/g, '');
+      if (cep.length !== 8) return null;
+
+      const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+      const data = await response.json();
+
+      if (data.erro) return null;
+
+      return {
+        rua: data.logradouro,
+        bairro: data.bairro,
+        cidade: data.localidade,
+        estado: data.uf
+      };
+    } catch (error) {
+      console.error('Erro ao buscar CEP:', error);
+      return null;
+    }
+  }
 };

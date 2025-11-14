@@ -752,3 +752,69 @@ body {
     font-style: normal;
     color: #6c5200;
 }
+/* ====== CORES DOS DIAS NO CALENDÁRIO (FLATPICKR) ====== */
+.flatpickr-day.dia-full {
+    background: rgba(40, 167, 69, 0.15);   /* verde - dia com todos horários */
+    border-color: #28a745;
+    color: #155724;
+}
+
+.flatpickr-day.dia-full:hover {
+    background: rgba(40, 167, 69, 0.25);
+}
+
+.flatpickr-day.dia-partial {
+    background: rgba(255, 193, 7, 0.15);   /* amarelo - parcial */
+    border-color: #ffc107;
+    color: #856404;
+}
+
+.flatpickr-day.dia-partial:hover {
+    background: rgba(255, 193, 7, 0.25);
+}
+
+.flatpickr-day.dia-none {
+    background: rgba(220, 53, 69, 0.15);   /* vermelho - sem horário */
+    border-color: #dc3545;
+    color: #721c24;
+}
+
+.flatpickr-day.dia-none:hover {
+    background: rgba(220, 53, 69, 0.25);
+}
+
+/* ====== LEGENDA DO CALENDÁRIO (quadradinhos coloridos) ====== */
+.legenda-calendario {
+    margin-top: 10px;
+    font-size: 0.85rem;
+    color: var(--text-light);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.legenda-calendario span {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.legenda-calendario .legenda {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;              /* deixa redondinho tipo bolinha */
+    display: inline-block;
+    border: 1px solid rgba(0,0,0,0.15);
+}
+
+.legenda-calendario .cor-full {
+    background: #28a745;             /* verde */
+}
+
+.legenda-calendario .cor-partial {
+    background: #ffc107;             /* amarelo */
+}
+
+.legenda-calendario .cor-none {
+    background: #dc3545;             /* vermelho */
+}
