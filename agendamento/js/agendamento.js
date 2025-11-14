@@ -1,4 +1,6 @@
-// Estado da aplicação
+// =========================
+// ESTADO GLOBAL DA APLICAÇÃO
+// =========================
 let state = {
     currentStep: 1,
     selectedDate: null,
@@ -9,7 +11,13 @@ let state = {
     parcelas: 1
 };
 
-// Inicialização
+// Disponibilidade por dia para o calendário
+// formato esperado: { 'YYYY-MM-DD': { status: 'full'|'partial'|'none', ... } }
+let calendarAvailability = {};
+
+// =========================
+// INICIALIZAÇÃO
+// =========================
 document.addEventListener('DOMContentLoaded', () => {
     console.log('🚀 Sistema iniciado');
     initCalendar();
@@ -18,28 +26,123 @@ document.addEventListener('DOMContentLoaded', () => {
     initCEPSearch();
 });
 
-// Inicializar calendário
+// =========================
+// CALENDÁRIO + DISPONIBILIDADE
+// =========================
+
+// Carregar disponibilidade do mês para o calendário
+async function carregarDisponibilidadeMes(instance, ano, mes) {
+    try {
+        console.log('📅 Carregando disponibilidade do mês:', ano, mes);
+        const response = await agendamentoAPI.disponibilidadeCalendario(ano, mes);
+
+        if (!response || !response.data) {
+            console.error('❌ Resposta inválida em disponibilidadeCalendario:', response);
+            calendarAvailability = {};
+            instance.redraw();
+            return;
+        }
+
+        // Ex.: response.data = { '2025-11-14': { status: 'full' }, ... }
+        calendarAvailability = response.data;
+        console.log('✅ Disponibilidade do calendário carregada:', calendarAvailability);
+
+        // Redesenha os dias (chama onDayCreate de novo)
+        instance.redraw();
+    } catch (error) {
+        console.error('❌ Erro ao carregar disponibilidade do mês:', error);
+        calendarAvailability = {};
+        instance.redraw();
+    }
+}
+
+// Inicializar calendário (com cores e bloqueio de dias sem horário)
 function initCalendar() {
-    const datepicker = flatpickr("#datepicker", {
+    flatpickr("#datepicker", {
         locale: "pt",
         minDate: "today",
         dateFormat: "d/m/Y",
         disable: [
             function(date) {
+                // Bloqueia sábado (6) e domingo (0)
                 return (date.getDay() === 0 || date.getDay() === 6);
             }
         ],
-        onChange: function(selectedDates, dateStr, instance) {
-            if (selectedDates.length > 0) {
-                state.selectedDate = selectedDates[0];
-                document.getElementById('btnNextStep1').disabled = false;
-                console.log('✅ Data selecionada:', state.selectedDate);
+        onReady: function(selectedDates, dateStr, instance) {
+            console.log('📅 Flatpickr pronto');
+            const anoAtual = instance.currentYear;
+            const mesAtual = instance.currentMonth + 1; // 0-based → 1-12
+            carregarDisponibilidadeMes(instance, anoAtual, mesAtual);
+        },
+        onMonthChange: function(selectedDates, dateStr, instance) {
+            const ano = instance.currentYear;
+            const mes = instance.currentMonth + 1;
+            console.log('📅 Mês alterado:', ano, mes);
+            carregarDisponibilidadeMes(instance, ano, mes);
+        },
+        onYearChange: function(selectedDates, dateStr, instance) {
+            const ano = instance.currentYear;
+            const mes = instance.currentMonth + 1;
+            console.log('📅 Ano alterado:', ano, mes);
+            carregarDisponibilidadeMes(instance, ano, mes);
+        },
+        onDayCreate: function(dObj, dStr, instance, dayElem) {
+            const d = dayElem.dateObj;
+            const year = d.getFullYear();
+            const month = String(d.getMonth() + 1).padStart(2, '0');
+            const day = String(d.getDate()).padStart(2, '0');
+            const key = `${year}-${month}-${day}`;
+
+            if (!calendarAvailability || !calendarAvailability[key]) return;
+
+            // Remove classes antigas
+            dayElem.classList.remove('dia-full', 'dia-partial', 'dia-none');
+
+            const status = calendarAvailability[key].status;
+            if (status === 'full') {
+                dayElem.classList.add('dia-full');      // verde
+            } else if (status === 'partial') {
+                dayElem.classList.add('dia-partial');   // amarelo
+            } else if (status === 'none') {
+                dayElem.classList.add('dia-none');      // vermelho
             }
+        },
+        onChange: function(selectedDates, dateStr, instance) {
+            const btnNext = document.getElementById('btnNextStep1');
+
+            if (!selectedDates.length) {
+                state.selectedDate = null;
+                btnNext.disabled = true;
+                return;
+            }
+
+            const selected = selectedDates[0];
+            const year = selected.getFullYear();
+            const month = String(selected.getMonth() + 1).padStart(2, '0');
+            const day = String(selected.getDate()).padStart(2, '0');
+            const key = `${year}-${month}-${day}`;
+
+            const info = calendarAvailability[key];
+
+            // Se for dia vermelho (none), não deixa avançar
+            if (info && info.status === 'none') {
+                alert('Não há horários disponíveis nesta data. Por favor, escolha outro dia.');
+                instance.clear();
+                state.selectedDate = null;
+                btnNext.disabled = true;
+                return;
+            }
+
+            state.selectedDate = selected;
+            btnNext.disabled = false;
+            console.log('✅ Data selecionada:', state.selectedDate, 'info:', info);
         }
     });
 }
 
-// Inicializar event listeners
+// =========================
+// EVENT LISTENERS GERAIS
+// =========================
 function initEventListeners() {
     document.getElementById('btnNextStep1').addEventListener('click', () => {
         console.log('▶️ Passo 1 → 2');
@@ -66,6 +169,12 @@ function initEventListeners() {
             } else {
                 alertaHorarioFixo.style.display = 'none';
             }
+
+            // Se já estiver no passo de horários, recarrega com a nova regra
+            if (state.currentStep === 2 && state.selectedDate) {
+                console.log('🔄 Recarregando horários com novo tipo de sessão...');
+                loadHorarios();
+            }
         });
     });
 
@@ -78,7 +187,9 @@ function initEventListeners() {
     }
 }
 
-// Inicializar máscaras
+// =========================
+// MÁSCARAS E CEP
+// =========================
 function initMasks() {
     const telefoneInput = document.getElementById('telefone');
     const cpfInput = document.getElementById('cpf');
@@ -97,7 +208,6 @@ function initMasks() {
     });
 }
 
-// Inicializar busca de CEP
 function initCEPSearch() {
     const cepInput = document.getElementById('cep');
     
@@ -119,7 +229,9 @@ function initCEPSearch() {
     });
 }
 
-// Navegar para um passo específico
+// =========================
+// NAVEGAÇÃO ENTRE PASSOS
+// =========================
 function goToStep(stepNumber) {
     console.log('===================================');
     console.log('📍 NAVEGANDO PARA PASSO:', stepNumber);
@@ -146,7 +258,7 @@ function goToStep(stepNumber) {
 
     if (stepNumber === 2) {
         console.log('🔄 PASSO 2 - Vai carregar horários');
-        carregarHorarios();
+        loadHorarios();
     } else if (stepNumber === 4) {
         console.log('📋 PASSO 4 - Vai mostrar resumo');
         mostrarResumo();
@@ -156,111 +268,99 @@ function goToStep(stepNumber) {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// Carregar horários disponíveis
-async function carregarHorarios() {
-    const horariosGrid = document.getElementById('horariosGrid');
-    const loading = document.getElementById('loadingHorarios');
+// =========================
+// CARREGAR HORÁRIOS
+// =========================
+async function loadHorarios() {
+    console.log('🔍 ========== LOAD HORÁRIOS INICIADO ==========');
+    console.log('Data no state:', state.selectedDate);
+    console.log('Tipo no state:', state.tipoSessao);
     
-    loading.style.display = 'block';
-    horariosGrid.innerHTML = '';
-    
-    try {
-        console.log('🔍 Buscando horários disponíveis para:', state.selectedDate);
-        
-        // Formatar data para enviar ao backend
-        const dataFormatada = state.selectedDate.toISOString().split('T')[0];
-        
-        // Buscar horários disponíveis do backend
-        const response = await agendamentoAPI.horariosDisponiveis(
-            dataFormatada, 
-            state.tipoSessao
-        );
-        
-        console.log('✅ Resposta completa da API:', response);
-        console.log('✅ response.data:', response.data);
-        console.log('✅ Tipo de response.data:', typeof response.data);
-        console.log('✅ É array?', Array.isArray(response.data));
-        
-        // Extrair horários do response
-        let horariosDisponiveis = [];
-        
-        if (Array.isArray(response.data)) {
-            horariosDisponiveis = response.data;
-        } else if (response.data && Array.isArray(response.data.horariosDisponiveis)) {
-            horariosDisponiveis = response.data.horariosDisponiveis;
-        } else if (response.data && typeof response.data === 'object') {
-            // Se for objeto, tentar pegar qualquer propriedade que seja array
-            const valores = Object.values(response.data);
-            const arrayEncontrado = valores.find(v => Array.isArray(v));
-            if (arrayEncontrado) {
-                horariosDisponiveis = arrayEncontrado;
-            }
-        }
-        
-        console.log('✅ Horários processados:', horariosDisponiveis);
-        
-        if (!Array.isArray(horariosDisponiveis) || horariosDisponiveis.length === 0) {
-            horariosGrid.innerHTML = `
-                <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #999;">
-                    <p style="font-size: 18px; margin-bottom: 10px;">😔 Nenhum horário disponível</p>
-                    <p>Todos os horários deste dia já estão ocupados. Por favor, escolha outra data.</p>
-                </div>
-            `;
-            document.getElementById('btnNextStep2').disabled = true;
-            return;
-        }
-        
-        // Atualizar data selecionada no texto
-        document.getElementById('selectedDate').textContent = utils.formatarData(state.selectedDate);
-        
-        // Renderizar horários disponíveis
-        horariosDisponiveis.forEach(horario => {
-            const button = document.createElement('button');
-            button.className = 'horario-btn';
-            button.textContent = horario;
-            button.onclick = () => selecionarHorario(horario);
-            horariosGrid.appendChild(button);
-        });
-        
-        console.log('✅ Total de horários renderizados:', horariosDisponiveis.length);
-        
-    } catch (error) {
-        console.error('❌ Erro ao carregar horários:', error);
-        horariosGrid.innerHTML = `
-            <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #e74c3c;">
-                <p style="font-size: 18px; margin-bottom: 10px;">❌ Erro ao carregar horários</p>
-                <p>${error.message}</p>
-                <p style="font-size: 12px; margin-top: 10px;">Tente novamente mais tarde ou entre em contato.</p>
-            </div>
-        `;
-        document.getElementById('btnNextStep2').disabled = true;
-    } finally {
-        loading.style.display = 'none';
-    }
-}
-
-// Selecionar horário
-function selecionarHorario(horario) {
-    document.querySelectorAll('.horario-btn').forEach(btn => {
-        btn.classList.remove('selected');
-    });
-    
-    event.target.classList.add('selected');
-    state.selectedTime = horario;
-    document.getElementById('btnNextStep2').disabled = false;
-    console.log('✅ Horário selecionado:', horario);
-}
-
-// Validar e processar passo 3
-function handleStep3() {
-    const form = document.getElementById('formDadosPaciente');
-    const lgpdCheckbox = document.getElementById('aceitoLGPD');
-    
-    if (!lgpdCheckbox || !lgpdCheckbox.checked) {
-        alert('Você precisa aceitar a Política de Privacidade para continuar.');
-        if (lgpdCheckbox) lgpdCheckbox.focus();
+    if (!state.selectedDate) {
+        console.error('❌ ERRO: Data não definida!');
+        alert('Erro: Selecione uma data primeiro.');
+        goToStep(1);
         return;
     }
+    
+    const horariosGrid = document.getElementById('horariosGrid');
+    const loadingHorarios = document.getElementById('loadingHorarios');
+    const selectedDateElement = document.getElementById('selectedDate');
+
+    selectedDateElement.textContent = utils.formatarData(state.selectedDate);
+
+    loadingHorarios.style.display = 'block';
+    horariosGrid.innerHTML = '';
+
+    try {
+        const dataISO = utils.formatarDataISO(state.selectedDate);
+        console.log('📤 Fazendo requisição para:', dataISO, 'tipo:', state.tipoSessao);
+        
+        // IMPORTANTE: envia também o tipo de sessão
+        const response = await agendamentoAPI.buscarHorariosDisponiveis(dataISO, state.tipoSessao);
+        
+        console.log('📥 Resposta recebida:', response);
+
+        loadingHorarios.style.display = 'none';
+
+        if (!response || !response.data || !response.data.horariosDisponiveis) {
+            console.error('❌ Resposta inválida:', response);
+            horariosGrid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #dc3545;">Erro: Resposta inválida da API.</p>';
+            return;
+        }
+
+        const horariosDisponiveis = response.data.horariosDisponiveis;
+        
+        console.log('✅ Horários disponíveis recebidos:', horariosDisponiveis);
+        console.log('✅ É array?', Array.isArray(horariosDisponiveis));
+        console.log('✅ Length:', horariosDisponiveis.length);
+
+        if (!Array.isArray(horariosDisponiveis) || horariosDisponiveis.length === 0) {
+            horariosGrid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #999;">Não há horários disponíveis para esta data.</p>';
+            return;
+        }
+
+        horariosGrid.innerHTML = '';
+        
+        horariosDisponiveis.forEach((horario, index) => {
+            console.log(`  Criando horário ${index + 1}:`, horario);
+            
+            const horarioElement = document.createElement('div');
+            horarioElement.className = 'horario-item';
+            horarioElement.textContent = horario;
+            horarioElement.dataset.horario = horario;
+
+            horarioElement.addEventListener('click', () => {
+                document.querySelectorAll('.horario-item').forEach(item => {
+                    item.classList.remove('selected');
+                });
+
+                horarioElement.classList.add('selected');
+                state.selectedTime = horario;
+                console.log('✅ Horário selecionado:', state.selectedTime);
+                document.getElementById('btnNextStep2').disabled = false;
+            });
+
+            horariosGrid.appendChild(horarioElement);
+        });
+        
+        console.log('✅ Total de horários renderizados:', horariosGrid.children.length);
+
+    } catch (error) {
+        console.error('❌ ERRO NO CATCH:', error);
+        console.error('Stack:', error.stack);
+        loadingHorarios.style.display = 'none';
+        horariosGrid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #dc3545;">Erro ao carregar horários. Detalhes: ' + error.message + '</p>';
+    }
+    
+    console.log('🔍 ========== LOAD HORÁRIOS FINALIZADO ==========');
+}
+
+// =========================
+// PASSO 3 - DADOS DO PACIENTE
+// =========================
+function handleStep3() {
+    const form = document.getElementById('formDadosPaciente');
     
     if (!form.checkValidity()) {
         form.reportValidity();
@@ -273,8 +373,6 @@ function handleStep3() {
     formData.forEach((value, key) => {
         if (key === 'primeiraConsulta') {
             dados[key] = document.getElementById('primeiraConsulta').checked;
-        } else if (key === 'aceitoLGPD') {
-            dados[key] = true;
         } else {
             dados[key] = typeof value === 'string' ? value.trim() : value;
         }
@@ -300,7 +398,9 @@ function handleStep3() {
     goToStep(4);
 }
 
-// Configurar opções de parcelamento
+// =========================
+// PARCELAMENTO (PASSO 4)
+// =========================
 function configurarParcelamento() {
     console.log('⚙️ Configurando parcelamento para tipo:', state.tipoSessao);
     
@@ -310,7 +410,6 @@ function configurarParcelamento() {
     
     if (tipoSessao === 'pacote_mensal' || tipoSessao === 'pacote_anual') {
         parcelamentoContainer.style.display = 'block';
-        
         selectParcelas.innerHTML = '';
         
         if (tipoSessao === 'pacote_mensal') {
@@ -343,7 +442,6 @@ function configurarParcelamento() {
     }
 }
 
-// Atualizar detalhes do parcelamento
 function atualizarDetalheParcelas() {
     const tipoSessao = state.tipoSessao;
     const parcelas = state.parcelas;
@@ -378,24 +476,25 @@ function atualizarDetalheParcelas() {
             • Economia de R$ ${economia.toFixed(2)}!<br>
             • Parcelamento: ${parcelas}x de R$ ${valorParcela}
         `;
+    } else {
+        detalheElement.innerHTML = '';
     }
 }
 
-// Obter dia da semana por extenso
 function obterDiaSemana(data) {
     if (!data) return 'dia da semana';
-    
     const dias = ['domingo', 'segunda-feira', 'terça-feira', 'quarta-feira', 'quinta-feira', 'sexta-feira', 'sábado'];
     return dias[data.getDay()];
 }
 
-// Mostrar resumo do agendamento
+// =========================
+// RESUMO E FINALIZAÇÃO
+// =========================
 function mostrarResumo() {
     console.log('📋 ========== MOSTRANDO RESUMO ==========');
     console.log('Estado completo:', JSON.parse(JSON.stringify(state)));
     
     const tipoSessao = state.tipoSessao;
-    
     let valorSessao, tipoTexto;
     
     if (tipoSessao === 'pacote_mensal') {
@@ -410,8 +509,6 @@ function mostrarResumo() {
     }
 
     const dataFormatada = state.selectedDate ? utils.formatarData(state.selectedDate) : 'Data não selecionada';
-    
-    console.log('Resumo gerado:', { dataFormatada, horario: state.selectedTime, tipo: tipoTexto, valor: valorSessao });
     
     document.getElementById('resumoData').textContent = dataFormatada;
     document.getElementById('resumoHorario').textContent = state.selectedTime || 'Horário não selecionado';
@@ -438,6 +535,7 @@ async function finalizarAgendamento() {
     }
 
     try {
+        // 1. CRIAR/BUSCAR PACIENTE PRIMEIRO
         let pacienteId;
         
         console.log('🔍 Buscando paciente por email:', state.pacienteData.email);
@@ -475,10 +573,20 @@ async function finalizarAgendamento() {
             throw new Error('Erro: ID do paciente não foi obtido!');
         }
 
+        // 2. PREPARAR DATA E HORA
         const [hora, minuto] = state.selectedTime.split(':');
         const dataHora = new Date(state.selectedDate);
         dataHora.setHours(parseInt(hora), parseInt(minuto), 0, 0);
 
+        console.log('📤 Criando agendamento com dados:', {
+            pacienteId: pacienteId,
+            dataHora: dataHora.toISOString(),
+            tipo: state.tipoSessao,
+            observacoes: state.pacienteData.observacoes || '',
+            parcelas: state.parcelas
+        });
+
+        // 3. CRIAR AGENDAMENTO
         const dadosAgendamento = {
             pacienteId: pacienteId,
             dataHora: dataHora.toISOString(),
@@ -491,34 +599,26 @@ async function finalizarAgendamento() {
         }
 
         const agendamento = await agendamentoAPI.criar(dadosAgendamento);
+
         console.log('✅ Agendamento criado:', agendamento);
+
         state.agendamentoId = agendamento.data._id;
 
+        // 4. PROCESSAR PAGAMENTO
         const metodoPagamento = document.querySelector('input[name="metodoPagamento"]:checked').value;
 
-        if (metodoPagamento === 'pix' || metodoPagamento === 'cartao') {
-            console.log('💳 Criando pagamento via Mercado Pago...');
+        if (metodoPagamento === 'pix') {
+            console.log('💳 Processando pagamento PIX...');
+            await new Promise(resolve => setTimeout(resolve, 2000));
             
-            try {
-                const preferencia = await pagamentoAPI.criarPreferencia(state.agendamentoId);
-                console.log('✅ Preferência criada:', preferencia);
-                
-                if (preferencia.sandbox_init_point) {
-                    window.location.href = preferencia.sandbox_init_point;
-                } else if (preferencia.init_point) {
-                    window.location.href = preferencia.init_point;
-                }
-                
-                return;
-            } catch (errorPagamento) {
-                console.error('❌ Erro ao criar preferência:', errorPagamento);
-                alert('Erro ao processar pagamento. Tente novamente.');
-                btnFinalizar.disabled = false;
-                btnFinalizar.textContent = '✓ Confirmar e Pagar';
-                return;
-            }
+            await pagamentoAPI.confirmarManual({
+                agendamentoId: state.agendamentoId,
+                metodo: 'pix',
+                comprovante: 'aguardando_confirmacao'
+            });
         }
 
+        // 5. MOSTRAR SUCESSO
         document.querySelectorAll('.step-content').forEach(content => {
             content.style.display = 'none';
         });
@@ -528,6 +628,7 @@ async function finalizarAgendamento() {
 
     } catch (error) {
         console.error('❌ Erro completo:', error);
+        console.error('Stack:', error.stack);
         alert('Erro ao finalizar agendamento: ' + error.message);
         btnFinalizar.disabled = false;
         btnFinalizar.textContent = '✓ Confirmar e Pagar';
