@@ -234,6 +234,16 @@
     <img src="Instagram.png" alt="Instagram" loading="lazy">
   </a>
 
+  <!-- Botão flutuante de agendamento -->
+  <a href="/agendamento" 
+     style="position: fixed; bottom: 180px; right: 40px; width: 60px; height: 60px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 2px 2px 10px rgba(0,0,0,0.3); z-index: 999; text-decoration: none; transition: transform 0.3s; font-size: 28px;"
+     onmouseover="this.style.transform='scale(1.1)'" 
+     onmouseout="this.style.transform='scale(1)'"
+     title="Agendar consulta online"
+     aria-label="Agendar consulta">
+    📅
+  </a>
+
   <header id="header">
     <nav aria-label="Menu principal">
       <div class="logo">Caroline M. Brito</div>
@@ -359,7 +369,6 @@
     </div>
   </section>
 
-  <!-- Seção explicativa: O que é TCC -->
   <section class="section-bg-white" id="tcc">
     <div class="container">
       <h2 class="section-title" style="text-align: center;">O que é a Terapia Cognitivo-Comportamental?</h2>
@@ -412,7 +421,6 @@
     </div>
   </section>
 
-  <!-- SEÇÃO ATUALIZADA -->
   <section class="section-bg-light" id="estudantes">
     <div class="container">
       <h2 class="section-title">🎓 Descomplicando a TCC e a clínica para estudantes e profissionais</h2>
@@ -468,21 +476,6 @@
           <h3>Relacionamentos Saudáveis</h3>
           <p>Habilidades de comunicação, estabelecimento de limites e construção de vínculos genuínos.</p>
         </div>
-
-        <h4 style="color: var(--wine-500); margin: 1.5rem 0 0.8rem 0; font-size: 1.1rem;">Para estudantes e recém-formados em Psicologia</h4>
-        <div class="offer-item">
-          <h3>Introdução à TCC na Prática Clínica</h3>
-          <p>Fundamentos da TCC, estrutura das sessões e primeiros passos com pacientes.</p>
-        </div>
-        <div class="offer-item">
-          <h3>Do Consultório à Realidade: Desafios da Clínica</h3>
-          <p>Inseguranças do início, manejo de casos e posicionamento profissional com responsabilidade.</p>
-        </div>
-        <div class="offer-item">
-          <h3>Técnicas Práticas de TCC</h3>
-          <p>Ferramentas aplicadas, formulários, registros e passo a passo prático para o dia a dia.</p>
-        </div>
-        <!-- Itens antigos de Psicologia Baseada em Evidências e Carreira foram removidos conforme solicitado -->
       </div>
     </div>
   </section>
@@ -508,38 +501,33 @@
     </div>
   </section>
 
-  <section class="section-bg-light" id="mentoria-individual">
-    <div class="container">
-      <!-- conteúdo da mentoria individual — personalize quando quiser -->
-    </div>
-  </section>
-
   <section class="contact" id="contato">
     <div class="container">
       <h2 class="section-title" style="color: white;">💬 Vamos conversar?</h2>
       <p>Escolha a melhor forma de falar comigo:</p>
 
       <div class="contact-buttons">
-  <a href="/agendamento" class="contact-btn">
-    📅 Agendamento Online
-  </a>
+        <a href="/agendamento" class="contact-btn">
+          📅 Agendamento Online
+        </a>
 
-  <a href="https://wa.me/5517996258369?text=Olá! Gostaria de agendar uma consulta."
-     class="contact-btn" target="_blank" rel="noopener noreferrer">
-    <img src="whatsapp.png" alt="Abrir conversa no WhatsApp"> WhatsApp
-  </a>
+        <a href="https://wa.me/5517996258369?text=Olá! Gostaria de agendar uma consulta."
+           class="contact-btn" target="_blank" rel="noopener noreferrer">
+          <img src="whatsapp.png" alt="Abrir conversa no WhatsApp"> WhatsApp
+        </a>
 
-  <a href="mailto:psicarolmarquesbrito@gmail.com" class="contact-btn" rel="noopener noreferrer">✉️ E-mail</a>
+        <a href="mailto:psicarolmarques@gmail.com" class="contact-btn" rel="noopener noreferrer">✉️ E-mail</a>
 
-  <a href="https://www.instagram.com/psicarolmarques/"
-     class="contact-btn" target="_blank" rel="noopener noreferrer">
-    <img src="Instagram.png" alt="Visitar Instagram"> Instagram
-  </a>
-</div>
+        <a href="https://www.instagram.com/psicarolmarques/"
+           class="contact-btn" target="_blank" rel="noopener noreferrer">
+          <img src="Instagram.png" alt="Visitar Instagram"> Instagram
+        </a>
+      </div>
+
       <div class="contact-info" aria-label="Informações de contato">
         <p>📍 Bauru - SP | Atendimento online para todo o Brasil</p>
         <p>📞 (17) 99625-8369</p>
-        <p>📧 psicarolinemarquesbrito@gmail.com</p>
+        <p>📧 psicarolmarques@gmail.com</p>
         <p>🆔 CRP 14/09165-4</p>
       </div>
     </div>
@@ -549,18 +537,15 @@
     <p>&copy; <span id="yearSpan"></span> Caroline Marques Brito — CRP 14/09165-4. Todos os direitos reservados.</p>
   </footer>
 
-  <!-- Script: menu, âncoras suaves e 3 pontinhos -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const $  = (s, r=document) => r.querySelector(s);
       const $$ = (s, r=document) => Array.from(r.querySelectorAll(s));
       const smoothTo = (sel) => { const el = $(sel); if (el) el.scrollIntoView({ behavior:'smooth', block:'start' }); };
 
-      // Ano no rodapé
       const ySpan = document.getElementById('yearSpan');
       if (ySpan) ySpan.textContent = new Date().getFullYear();
 
-      // Menu mobile
       const menuToggle = $('.menu-toggle');
       const navLinks   = $('.nav-links');
       if (menuToggle && navLinks) {
@@ -573,7 +558,6 @@
         menuToggle.addEventListener('touchend', toggleNav, { passive:false });
       }
 
-      // Rolagem suave no menu principal
       $$('.nav-links a[href^="#"]').forEach(a => {
         const go = (e) => {
           e.preventDefault();
@@ -584,7 +568,6 @@
         a.addEventListener('touchend', go, { passive:false });
       });
 
-      // Três pontinhos (⋯)
       const moreToggle   = $('.more-toggle');
       const moreDropdown = $('.more-dropdown');
       if (moreToggle && moreDropdown) {
@@ -606,7 +589,6 @@
         document.addEventListener('click', closeIfOutside);
         document.addEventListener('touchend', closeIfOutside);
 
-        // Rolagem suave nos itens do dropdown
         $$('.more-dropdown a[href^="#"]').forEach(a => {
           const go = (e) => {
             e.preventDefault();
@@ -622,7 +604,6 @@
     });
   </script>
 
-  <!-- Dados estruturados (JSON-LD) -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -631,7 +612,7 @@
     "url": "https://psicarolmarques.com.br/",
     "image": "https://psicarolmarques.com.br/imagescaroline.jpeg",
     "telephone": "+55-17-99625-8369",
-    "email": "psicarolmarquesbrito@gmail.com",
+    "email": "psicarolmarques@gmail.com",
     "address": {
       "@type": "PostalAddress",
       "addressLocality": "Bauru",
@@ -645,15 +626,5 @@
     ]
   }
   </script>
-  <!-- Botão flutuante de agendamento -->
-<a href="/agendamento" 
-   style="position: fixed; bottom: 180px; right: 40px; width: 60px; height: 60px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 2px 2px 10px rgba(0,0,0,0.3); z-index: 999; text-decoration: none; transition: transform 0.3s; font-size: 28px;"
-   onmouseover="this.style.transform='scale(1.1)'" 
-   onmouseout="this.style.transform='scale(1)'"
-   title="Agendar consulta online"
-   aria-label="Agendar consulta">
-  📅
-</a>
-</body>
 </body>
 </html>
