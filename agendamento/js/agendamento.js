@@ -11,14 +11,44 @@ let state = {
     parcelas: 1
 };
 let calendarAvailability = {};
-document.addEventListener('DOMContentLoaded', () => {
+
+// 🔥 Pré-carregar a disponibilidade do mês atual antes de criar o calendário
+async function preCarregarDisponibilidadeInicial() {
+    const hoje = new Date();
+    const ano = hoje.getFullYear();
+    const mes = hoje.getMonth() + 1;
+
+    try {
+        console.log('📅 Pré-carregando disponibilidade inicial:', ano, mes);
+        const resp = await agendamentoAPI.disponibilidadeCalendario(ano, mes);
+
+        if (resp && resp.data) {
+            calendarAvailability = resp.data;
+            console.log('✅ Disponibilidade inicial carregada:', calendarAvailability);
+        } else {
+            console.warn('⚠️ Resposta sem data em disponibilidadeCalendario:', resp);
+            calendarAvailability = {};
+        }
+    } catch (error) {
+        console.error('❌ Erro ao pré-carregar disponibilidade inicial:', error);
+        calendarAvailability = {};
+    }
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
     console.log('🚀 Sistema iniciado');
+
+    // 1) Espera a disponibilidade vir do backend
+    await preCarregarDisponibilidadeInicial();
+
+    // 2) Só então monta o calendário (já com cores prontas)
     initCalendar();
     initEventListeners();
     initMasks();
     initCEPSearch();
-    verificarRetornoMercadoPago(); // 👈 novo
+    verificarRetornoMercadoPago();
 });
+
 
 
 
