@@ -240,100 +240,117 @@
             </div>
 
             <!-- PASSO 4: Pagamento -->
-<div class="step-content" id="step4">
-    <h2>Confirmação e Pagamento</h2>
-    
-    <div class="resumo-agendamento">
-        <h3>📅 Resumo do Agendamento</h3>
-        <div class="resumo-item">
-            <span class="resumo-label">Data:</span>
-            <span class="resumo-value" id="resumoData"></span>
-        </div>
-        <div class="resumo-item">
-            <span class="resumo-label">Horário:</span>
-            <span class="resumo-value" id="resumoHorario"></span>
-        </div>
-        <div class="resumo-item">
-            <span class="resumo-label">Nome:</span>
-            <span class="resumo-value" id="resumoNome"></span>
-        </div>
-        <div class="resumo-item">
-            <span class="resumo-label">E-mail:</span>
-            <span class="resumo-value" id="resumoEmail"></span>
-        </div>
-        <div class="resumo-item">
-            <span class="resumo-label">Tipo:</span>
-            <span class="resumo-value" id="resumoTipo">Sessão Individual</span>
-        </div>
-        <div class="resumo-item destaque">
-            <span class="resumo-label">Valor:</span>
-            <span class="resumo-value" id="resumoValor">R$ 150,00</span>
-        </div>
+            <div class="step-content" id="step4">
+                <h2>Confirmação e Pagamento</h2>
+                
+                <div class="resumo-agendamento">
+                    <h3>📅 Resumo do Agendamento</h3>
+                    <div class="resumo-item">
+                        <span class="resumo-label">Data:</span>
+                        <span class="resumo-value" id="resumoData"></span>
+                    </div>
+                    <div class="resumo-item">
+                        <span class="resumo-label">Horário:</span>
+                        <span class="resumo-value" id="resumoHorario"></span>
+                    </div>
+                    <div class="resumo-item">
+                        <span class="resumo-label">Nome:</span>
+                        <span class="resumo-value" id="resumoNome"></span>
+                    </div>
+                    <div class="resumo-item">
+                        <span class="resumo-label">E-mail:</span>
+                        <span class="resumo-value" id="resumoEmail"></span>
+                    </div>
+                    <div class="resumo-item">
+                        <span class="resumo-label">Tipo:</span>
+                        <span class="resumo-value" id="resumoTipo">Sessão Individual</span>
+                    </div>
+                    <div class="resumo-item destaque">
+                        <span class="resumo-label">Valor:</span>
+                        <span class="resumo-value" id="resumoValor">R$ 150,00</span>
+                    </div>
+                </div>
+
+                <div class="pagamento-opcoes">
+                    <h3>💳 Pagamento via Mercado Pago</h3>
+                    <div class="info-box">
+                        <p><strong>Você será redirecionado para o Mercado Pago</strong> para concluir o pagamento de forma segura.</p>
+                        <p>Lá você poderá escolher entre:</p>
+                        <ul>
+                            <li>💳 <strong>Cartão de Crédito</strong> (parcelamento disponível)</li>
+                            <li>📱 <strong>PIX</strong> (pagamento instantâneo)</li>
+                            <li>💰 <strong>Outras formas de pagamento</strong></li>
+                        </ul>
+                        <p style="margin-top: 1rem;"><strong>⚠️ Importante:</strong> Você receberá o email de confirmação <strong>após a aprovação do pagamento</strong>.</p>
+                    </div>
+                </div>
+
+                <!-- CHECKBOX LGPD OBRIGATÓRIO -->
+                <div style="margin-top: 1.5rem; padding: 1.5rem; background: #f0f8ff; border-radius: 10px; border: 2px solid #4A90E2;">
+                    <label style="display: flex; align-items: flex-start; cursor: pointer; font-size: 0.95rem; line-height: 1.6;">
+                        <input 
+                            type="checkbox" 
+                            id="lgpd" 
+                            name="lgpd" 
+                            required 
+                            style="margin-top: 4px; margin-right: 12px; min-width: 20px; width: 20px; height: 20px; cursor: pointer; flex-shrink: 0;"
+                        >
+                        <span>
+                            Li e concordo com a 
+                            <a href="../politica-privacidade.html" target="_blank" rel="noopener noreferrer" style="color: #4A90E2; text-decoration: underline; font-weight: 600;">
+                                Política de Privacidade
+                            </a> 
+                            e autorizo o uso dos meus dados para fins de agendamento, contato e envio de comunicações relacionadas ao atendimento, conforme a LGPD.
+                        </span>
+                    </label>
+                </div>
+
+                <div class="button-group">
+                    <button class="btn btn-secondary" id="btnBackStep4">
+                        ← Voltar
+                    </button>
+                    <button class="btn btn-success" id="btnFinalizarAgendamento">
+                        ✓ Confirmar e Ir para Pagamento
+                    </button>
+                </div>
+            </div>
+
+            <!-- Tela de Sucesso -->
+            <div class="step-content" id="stepSucesso" style="display: none;">
+                <div class="sucesso-container">
+                    <div class="sucesso-icon">✓</div>
+                    <h2>Redirecionando para o Pagamento...</h2>
+                    <p>Você será redirecionado para o Mercado Pago em instantes.</p>
+                    
+                    <div class="info-box">
+                        <p><strong>⚠️ Importante:</strong></p>
+                        <ul>
+                            <li>Complete o pagamento para <strong>confirmar seu agendamento</strong></li>
+                            <li>Após a confirmação do pagamento, você receberá um <strong>e-mail com todos os detalhes</strong></li>
+                            <li>Seu horário será garantido após o pagamento ser aprovado</li>
+                        </ul>
+                    </div>
+
+                    <div class="loading" style="margin-top: 2rem;">
+                        <div class="spinner"></div>
+                        <p>Aguarde...</p>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p class="subtitle">Psicóloga Clínica - CRP 14/09165-4</p>
+            <p>Todos os direitos reservados</p>
+        </footer>
     </div>
 
-    <div class="pagamento-opcoes">
-        <h3>💳 Pagamento via Mercado Pago</h3>
-        <div class="info-box">
-            <p><strong>Você será redirecionado para o Mercado Pago</strong> para concluir o pagamento de forma segura.</p>
-            <p>Lá você poderá escolher entre:</p>
-            <ul>
-                <li>💳 <strong>Cartão de Crédito</strong> (parcelamento disponível)</li>
-                <li>📱 <strong>PIX</strong> (pagamento instantâneo)</li>
-                <li>💰 <strong>Outras formas de pagamento</strong></li>
-            </ul>
-            <p style="margin-top: 1rem;"><strong>⚠️ Importante:</strong> Você receberá o email de confirmação <strong>após a aprovação do pagamento</strong>.</p>
-        </div>
-    </div>
-
-    <!-- CHECKBOX LGPD OBRIGATÓRIO -->
-    <div style="margin-top: 1.5rem; padding: 1.5rem; background: #f0f8ff; border-radius: 10px; border: 2px solid #4A90E2;">
-        <label style="display: flex; align-items: flex-start; cursor: pointer; font-size: 0.95rem; line-height: 1.6;">
-            <input 
-                type="checkbox" 
-                id="lgpd" 
-                name="lgpd" 
-                required 
-                style="margin-top: 4px; margin-right: 12px; min-width: 20px; width: 20px; height: 20px; cursor: pointer; flex-shrink: 0;"
-            >
-            <span>
-                Li e concordo com a 
-                <a href="../politica-privacidade.html" target="_blank" rel="noopener noreferrer" style="color: #4A90E2; text-decoration: underline; font-weight: 600;">
-                    Política de Privacidade
-                </a> 
-                e autorizo o uso dos meus dados para fins de agendamento, contato e envio de comunicações relacionadas ao atendimento, conforme a LGPD.
-            </span>
-        </label>
-    </div>
-
-    <div class="button-group">
-        <button class="btn btn-secondary" id="btnBackStep4">
-            ← Voltar
-        </button>
-        <button class="btn btn-success" id="btnFinalizarAgendamento">
-            ✓ Confirmar e Ir para Pagamento
-        </button>
-    </div>
-</div>
-
-<!-- Tela de Sucesso -->
-<div class="step-content" id="stepSucesso" style="display: none;">
-    <div class="sucesso-container">
-        <div class="sucesso-icon">✓</div>
-        <h2>Redirecionando para o Pagamento...</h2>
-        <p>Você será redirecionado para o Mercado Pago em instantes.</p>
-        
-        <div class="info-box">
-            <p><strong>⚠️ Importante:</strong></p>
-            <ul>
-                <li>Complete o pagamento para <strong>confirmar seu agendamento</strong></li>
-                <li>Após a confirmação do pagamento, você receberá um <strong>e-mail com todos os detalhes</strong></li>
-                <li>Seu horário será garantido após o pagamento ser aprovado</li>
-            </ul>
-        </div>
-
-        <div class="loading" style="margin-top: 2rem;">
-            <div class="spinner"></div>
-            <p>Aguarde...</p>
-        </div>
-    </div>
-</div>
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/pt.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/agendamento.js"></script>
+</body>
+</html>
