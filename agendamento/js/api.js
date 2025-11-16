@@ -3,9 +3,13 @@
 // ==============================
 
 // Detectar ambiente automaticamente
-const API_URL = window.location.hostname === 'localhost'
+const API_URL = (window.location.hostname === 'localhost' || 
+                 window.location.hostname === '127.0.0.1')
   ? 'http://localhost:5000/api'
   : 'https://agendamento-psi-api.onrender.com/api';
+
+console.log('🔗 API_URL configurada:', API_URL);
+console.log('🌐 Hostname atual:', window.location.hostname);
 
 // ==============================
 // Função auxiliar para requisições
@@ -74,24 +78,26 @@ const agendamentoAPI = {
     return fetchAPI(`/agendamentos${sufixo}`);
   },
 
-  // === NOVO NOME principal (usado internamente) ===
-  horariosDisponiveis: (data, tipo = 'avulsa') => {
-    console.log('🔗 API: Buscando horários disponíveis para:', data, 'tipo:', tipo);
-    const params = new URLSearchParams({ data, tipo });
+  // Buscar horários disponíveis (NOME PRINCIPAL)
+  horariosDisponiveis: (data, tipoSessao = 'avulsa') => {
+    console.log('🔗 API: Buscando horários disponíveis para:', data, 'tipoSessao:', tipoSessao);
+    const params = new URLSearchParams({ data });
+
+    if (tipoSessao) {
+      params.append('tipoSessao', tipoSessao);
+    }
+
     return fetchAPI(`/agendamentos/horarios-disponiveis?${params.toString()}`);
   },
 
-  // === ALIÁS com o NOME ANTIGO (para não quebrar agendamento.js) ===
-  buscarHorariosDisponiveis: (data, tipo = 'avulsa') =>
-    agendamentoAPI.horariosDisponiveis(data, tipo),
+  // ALIÁS com o NOME ANTIGO (usado no agendamento.js)
+  buscarHorariosDisponiveis: (data, tipoSessao = 'avulsa') =>
+    agendamentoAPI.horariosDisponiveis(data, tipoSessao),
 
   // Disponibilidade resumida do calendário (cores dos dias)
-  // também como o NOME que o agendamento.js espera.
   disponibilidadeCalendario: (ano, mes) => {
     console.log('🔗 API: Buscando disponibilidade do calendário para:', mes, '/', ano);
     const params = new URLSearchParams({ ano, mes });
-    // Se o backend tiver outro caminho depois a gente ajusta,
-    // por enquanto usamos esse padrão:
     return fetchAPI(`/agendamentos/disponibilidade-calendario?${params.toString()}`);
   },
 

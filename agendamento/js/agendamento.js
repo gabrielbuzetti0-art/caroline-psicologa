@@ -10,21 +10,17 @@ let state = {
     tipoSessao: 'avulsa',
     parcelas: 1
 };
-
-// Disponibilidade por dia para o calendário
-// formato esperado: { 'YYYY-MM-DD': { status: 'full'|'partial'|'none', ... } }
 let calendarAvailability = {};
-
-// =========================
-// INICIALIZAÇÃO
-// =========================
 document.addEventListener('DOMContentLoaded', () => {
     console.log('🚀 Sistema iniciado');
     initCalendar();
     initEventListeners();
     initMasks();
     initCEPSearch();
+    verificarRetornoMercadoPago(); // 👈 novo
 });
+
+
 
 // =========================
 // CALENDÁRIO + DISPONIBILIDADE
@@ -298,6 +294,7 @@ async function loadHorarios() {
         
         // IMPORTANTE: envia também o tipo de sessão
         const response = await agendamentoAPI.buscarHorariosDisponiveis(dataISO, state.tipoSessao);
+
         
         console.log('📥 Resposta recebida:', response);
 
@@ -518,35 +515,54 @@ function mostrarResumo() {
     document.getElementById('resumoValor').textContent = valorSessao;
 }
 
-// Finalizar agendamento
+// Finalizar agendamento (versão que redireciona para o Mercado Pago)
 async function finalizarAgendamento() {
     const btnFinalizar = document.getElementById('btnFinalizarAgendamento');
+    if (!btnFinalizar) return;
+
     btnFinalizar.disabled = true;
     btnFinalizar.textContent = 'Processando...';
 
     console.log('🚀 ========== FINALIZANDO AGENDAMENTO ==========');
     console.log('Estado completo:', JSON.parse(JSON.stringify(state)));
 
+    // Conferência básica de data/horário
     if (!state.selectedDate || !state.selectedTime) {
         alert('Erro: Data ou horário não selecionados.');
         btnFinalizar.disabled = false;
-        btnFinalizar.textContent = '✓ Confirmar e Pagar';
+        btnFinalizar.textContent = '✓ Confirmar e Ir para Pagamento';
+        return;
+    }
+
+    // ✅ Validar LGPD
+    const lgpdCheckbox = document.getElementById('lgpd');
+    if (lgpdCheckbox && !lgpdCheckbox.checked) {
+        alert('Para continuar, é necessário aceitar a Política de Privacidade (LGPD).');
+        btnFinalizar.disabled = false;
+        btnFinalizar.textContent = '✓ Confirmar e Ir para Pagamento';
+        lgpdCheckbox.focus();
         return;
     }
 
     try {
         // 1. CRIAR/BUSCAR PACIENTE PRIMEIRO
         let pacienteId;
-        
+
+        if (!state.pacienteData || !state.pacienteData.email) {
+            throw new Error('Dados do paciente não encontrados. Volte e preencha seus dados novamente.');
+        }
+
         console.log('🔍 Buscando paciente por email:', state.pacienteData.email);
-        
+
         try {
             const pacienteExistente = await pacienteAPI.buscarPorEmail(state.pacienteData.email);
-            pacienteId = pacienteExistente.data._id;
-            console.log('✅ Paciente existente encontrado:', pacienteId);
+            if (pacienteExistente && pacienteExistente.data && pacienteExistente.data._id) {
+                pacienteId = pacienteExistente.data._id;
+                console.log('✅ Paciente existente encontrado:', pacienteId);
+            }
         } catch (errorBusca) {
-            console.log('📝 Paciente não encontrado, criando novo...');
-            
+            console.log('📝 Paciente não encontrado, criando novo...', errorBusca?.message);
+
             const novoPaciente = await pacienteAPI.criar({
                 nome: state.pacienteData.nome,
                 email: state.pacienteData.email,
@@ -559,12 +575,12 @@ async function finalizarAgendamento() {
                     bairro: state.pacienteData.bairro || '',
                     cidade: state.pacienteData.cidade || '',
                     estado: state.pacienteData.estado || '',
-                    cep: state.pacienteData.cep?.replace(/\D/g, '') || ''
+                    cep: state.pacienteData.cep ? state.pacienteData.cep.replace(/\D/g, '') : ''
                 },
                 primeiraConsulta: state.pacienteData.primeiraConsulta || false,
                 observacoes: state.pacienteData.observacoes || ''
             });
-            
+
             pacienteId = novoPaciente.data._id;
             console.log('✅ Novo paciente criado:', pacienteId);
         }
@@ -576,7 +592,7 @@ async function finalizarAgendamento() {
         // 2. PREPARAR DATA E HORA
         const [hora, minuto] = state.selectedTime.split(':');
         const dataHora = new Date(state.selectedDate);
-        dataHora.setHours(parseInt(hora), parseInt(minuto), 0, 0);
+        dataHora.setHours(parseInt(hora, 10), parseInt(minuto, 10), 0, 0);
 
         console.log('📤 Criando agendamento com dados:', {
             pacienteId: pacienteId,
@@ -604,33 +620,82 @@ async function finalizarAgendamento() {
 
         state.agendamentoId = agendamento.data._id;
 
-        // 4. PROCESSAR PAGAMENTO
-        const metodoPagamento = document.querySelector('input[name="metodoPagamento"]:checked').value;
+        // 4. PROCESSAR PAGAMENTO VIA MERCADO PAGO
+        console.log('💳 Criando preferência de pagamento no Mercado Pago para agendamento:', state.agendamentoId);
 
-        if (metodoPagamento === 'pix') {
-            console.log('💳 Processando pagamento PIX...');
-            await new Promise(resolve => setTimeout(resolve, 2000));
-            
-            await pagamentoAPI.confirmarManual({
-                agendamentoId: state.agendamentoId,
-                metodo: 'pix',
-                comprovante: 'aguardando_confirmacao'
-            });
+        const pref = await pagamentoAPI.criarPreferencia(state.agendamentoId);
+        console.log('🔁 Resposta da API de pagamento:', pref);
+
+        const initPoint = pref && (pref.init_point || pref.sandbox_init_point);
+
+        if (!initPoint) {
+            throw new Error('Não foi possível gerar o link de pagamento. Tente novamente em alguns instantes.');
         }
 
-        // 5. MOSTRAR SUCESSO
+        // 5. MOSTRAR TELA DE REDIRECIONAMENTO
         document.querySelectorAll('.step-content').forEach(content => {
             content.style.display = 'none';
         });
-        document.getElementById('stepSucesso').style.display = 'block';
+        const stepSucesso = document.getElementById('stepSucesso');
+        if (stepSucesso) {
+            stepSucesso.style.display = 'block';
+        }
 
-        console.log('🎉 AGENDAMENTO FINALIZADO COM SUCESSO!');
+        console.log('🎉 Preferência criada, redirecionando para o Mercado Pago...');
+
+        // 6. REDIRECIONAR PARA O MERCADO PAGO
+        window.location.href = initPoint;
 
     } catch (error) {
         console.error('❌ Erro completo:', error);
         console.error('Stack:', error.stack);
-        alert('Erro ao finalizar agendamento: ' + error.message);
+        alert('Erro ao finalizar agendamento: ' + (error.message || 'Erro inesperado.'));
         btnFinalizar.disabled = false;
-        btnFinalizar.textContent = '✓ Confirmar e Pagar';
+        btnFinalizar.textContent = '✓ Confirmar e Ir para Pagamento';
+    }
+}
+// =========================
+// TRATAR RETORNO DO MERCADO PAGO
+// =========================
+async function verificarRetornoMercadoPago() {
+    try {
+        const params = new URLSearchParams(window.location.search);
+        const status = params.get('status');
+        const agendamentoId = params.get('agendamentoId');
+
+        if (!status || !agendamentoId) {
+            return;
+        }
+
+        console.log('🔁 Retorno do Mercado Pago detectado:', { status, agendamentoId });
+
+        if (status === 'approved') {
+            try {
+                const resp = await pagamentoAPI.buscarStatus(agendamentoId);
+                const dados = resp && (resp.data || resp);
+                const statusPag = dados && (dados.statusPagamento || dados.status);
+
+                if (statusPag === 'pago' || statusPag === 'confirmado') {
+                    alert('✅ Seu pagamento foi aprovado e seu agendamento está confirmado! Você receberá um e-mail com os detalhes em instantes.');
+                } else {
+                    alert('✅ Seu pagamento foi aprovado no Mercado Pago. Em alguns minutos seu agendamento será confirmado e você receberá um e-mail com os detalhes.');
+                }
+            } catch (e) {
+                console.error('Erro ao consultar status do pagamento:', e);
+                alert('✅ Seu pagamento foi aprovado no Mercado Pago. Caso não receba o e-mail de confirmação em alguns minutos, entre em contato pelo WhatsApp.');
+            }
+        } else if (status === 'pending') {
+            alert('⌛ Seu pagamento ficou pendente no Mercado Pago. Se tiver dúvidas, entre em contato para receber ajuda.');
+        } else if (status === 'failure') {
+            alert('❌ O pagamento não foi concluído ou foi cancelado. Você pode tentar novamente realizando um novo agendamento.');
+        }
+
+        // Limpa os parâmetros da URL para não repetir a mensagem ao recarregar
+        if (window.history && window.history.replaceState) {
+            const newUrl = window.location.origin + window.location.pathname;
+            window.history.replaceState({}, document.title, newUrl);
+        }
+    } catch (error) {
+        console.error('Erro ao tratar retorno do Mercado Pago:', error);
     }
 }
