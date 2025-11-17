@@ -545,7 +545,7 @@ function mostrarResumo() {
     document.getElementById('resumoValor').textContent = valorSessao;
 }
 
-// Finalizar agendamento (versão que redireciona para o Mercado Pago)
+// Finalizar agendamento (versão que vai direto pro Mercado Pago)
 async function finalizarAgendamento() {
     const btnFinalizar = document.getElementById('btnFinalizarAgendamento');
     if (!btnFinalizar) return;
@@ -579,7 +579,11 @@ async function finalizarAgendamento() {
         let pacienteId;
 
         if (!state.pacienteData || !state.pacienteData.email) {
-            throw new Error('Dados do paciente não encontrados. Volte e preencha seus dados novamente.');
+            alert('Sua página foi recarregada ou ficou muito tempo aberta. Por segurança, precisamos que você preencha novamente seus dados pessoais.');
+            btnFinalizar.disabled = false;
+            btnFinalizar.textContent = '✓ Confirmar e Ir para Pagamento';
+            goToStep(3);
+            return;
         }
 
         console.log('🔍 Buscando paciente por email:', state.pacienteData.email);
@@ -632,7 +636,7 @@ async function finalizarAgendamento() {
             parcelas: state.parcelas
         });
 
-        // 3. CRIAR AGENDAMENTO
+        // 3. CRIAR AGENDAMENTO (fica como pendente até o pagamento)
         const dadosAgendamento = {
             pacienteId: pacienteId,
             dataHora: dataHora.toISOString(),
@@ -662,18 +666,10 @@ async function finalizarAgendamento() {
             throw new Error('Não foi possível gerar o link de pagamento. Tente novamente em alguns instantes.');
         }
 
-        // 5. MOSTRAR TELA DE REDIRECIONAMENTO
-        document.querySelectorAll('.step-content').forEach(content => {
-            content.style.display = 'none';
-        });
-        const stepSucesso = document.getElementById('stepSucesso');
-        if (stepSucesso) {
-            stepSucesso.style.display = 'block';
-        }
-
         console.log('🎉 Preferência criada, redirecionando para o Mercado Pago...');
 
-        // 6. REDIRECIONAR PARA O MERCADO PAGO
+        // 👉 Não mostra mais tela de “Redirecionando…”
+        // vai direto para o checkout do Mercado Pago
         window.location.href = initPoint;
 
     } catch (error) {
@@ -684,6 +680,8 @@ async function finalizarAgendamento() {
         btnFinalizar.textContent = '✓ Confirmar e Ir para Pagamento';
     }
 }
+
+
 // =========================
 // TRATAR RETORNO DO MERCADO PAGO
 // =========================

@@ -40,13 +40,19 @@ async function carregarAgendamentos() {
     
     try {
         const dataInicio = document.getElementById('filterDataInicio').value;
-        const dataFim = document.getElementById('filterDataFim').value;
-        const status = document.getElementById('filterStatus').value;
+        const dataFim    = document.getElementById('filterDataFim').value;
+        const statusSel  = document.getElementById('filterStatus').value;
         
         const filtros = {};
         if (dataInicio) filtros.dataInicio = dataInicio;
         if (dataFim) filtros.dataFim = dataFim;
-        if (status) filtros.status = status;
+
+        // 👇 Se nada foi escolhido no filtro, mostra só CONFIRMADO
+        if (statusSel) {
+            filtros.status = statusSel;        // pendente / confirmado / cancelado
+        } else {
+            filtros.status = 'confirmado';     // padrão: só quem pagou
+        }
         
         const response = await agendamentoAPI.listar(filtros);
         agendamentos = response.data || [];
@@ -61,6 +67,7 @@ async function carregarAgendamentos() {
         loading.style.display = 'none';
     }
 }
+
 
 // Atualizar estatísticas
 function atualizarEstatisticas() {
@@ -191,7 +198,6 @@ async function confirmarAgendamento(id) {
     }
 }
 
-// Cancelar agendamento
 async function cancelarAgendamento(id) {
     const motivo = prompt('Motivo do cancelamento:');
     if (!motivo) return;
@@ -202,12 +208,13 @@ async function cancelarAgendamento(id) {
             canceladoPor: 'admin'
         });
         alert('✅ Agendamento cancelado!');
-        carregarAgendamentos();
+        await carregarAgendamentos(); // 👈 garante recarga completa
     } catch (error) {
         alert('❌ Erro ao cancelar agendamento');
         console.error(error);
     }
 }
+
 
 // Limpar filtros
 function limparFiltros() {
