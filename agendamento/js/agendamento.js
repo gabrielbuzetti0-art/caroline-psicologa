@@ -434,6 +434,12 @@ function configurarParcelamento() {
     const tipoSessao = state.tipoSessao;
     const parcelamentoContainer = document.getElementById('parcelamentoContainer');
     const selectParcelas = document.getElementById('selectParcelas');
+
+    // 👇 Garante que só tenta mexer se o HTML tiver esses elementos
+    if (!parcelamentoContainer || !selectParcelas) {
+        console.warn('Parcelamento não encontrado no HTML, ignorando configuração de parcelamento.');
+        return;
+    }
     
     if (tipoSessao === 'pacote_mensal' || tipoSessao === 'pacote_anual') {
         parcelamentoContainer.style.display = 'block';
@@ -546,6 +552,7 @@ function mostrarResumo() {
 }
 
 // Finalizar agendamento (versão que vai direto pro Mercado Pago)
+// Finalizar agendamento (versão nova: cria LEAD + preferência MP)
 async function finalizarAgendamento() {
     const btnFinalizar = document.getElementById('btnFinalizarAgendamento');
     if (!btnFinalizar) return;
@@ -564,7 +571,7 @@ async function finalizarAgendamento() {
         return;
     }
 
-    // ✅ Validar LGPD
+    // ✅ Validar LGPD, se existir o checkbox
     const lgpdCheckbox = document.getElementById('lgpd');
     if (lgpdCheckbox && !lgpdCheckbox.checked) {
         alert('Para continuar, é necessário aceitar a Política de Privacidade (LGPD).');
@@ -575,31 +582,33 @@ async function finalizarAgendamento() {
     }
 
     try {
-        // 1. CRIAR/BUSCAR PACIENTE PRIMEIRO
-        let pacienteId;
-
+        // 1. GARANTIR DADOS DO PACIENTE
         if (!state.pacienteData || !state.pacienteData.email) {
-            alert('Sua página foi recarregada ou ficou muito tempo aberta. Por segurança, precisamos que você preencha novamente seus dados pessoais.');
-            btnFinalizar.disabled = false;
-            btnFinalizar.textContent = '✓ Confirmar e Ir para Pagamento';
-            goToStep(3);
-            return;
+            throw new Error('Dados do paciente não encontrados. Volte e preencha seus dados novamente.');
         }
 
-        console.log('🔍 Buscando paciente por email:', state.pacienteData.email);
+        const emailLimpo = state.pacienteData.email.trim();
+        let pacienteId = null;
 
+        // 2. TENTAR BUSCAR PACIENTE POR E-MAIL
         try {
-            const pacienteExistente = await pacienteAPI.buscarPorEmail(state.pacienteData.email);
+            console.log('🔍 Buscando paciente por email:', emailLimpo);
+            const pacienteExistente = await pacienteAPI.buscarPorEmail(emailLimpo);
+
             if (pacienteExistente && pacienteExistente.data && pacienteExistente.data._id) {
                 pacienteId = pacienteExistente.data._id;
                 console.log('✅ Paciente existente encontrado:', pacienteId);
             }
         } catch (errorBusca) {
-            console.log('📝 Paciente não encontrado, criando novo...', errorBusca?.message);
+            console.log('📝 Paciente não encontrado, será criado um novo. Detalhes:', errorBusca?.message);
+        }
 
+        // 3. SE NÃO EXISTIR, CRIA NOVO PACIENTE
+        if (!pacienteId) {
+            console.log('🆕 Criando novo paciente...');
             const novoPaciente = await pacienteAPI.criar({
                 nome: state.pacienteData.nome,
-                email: state.pacienteData.email,
+                email: emailLimpo,
                 telefone: state.pacienteData.telefone,
                 cpf: state.pacienteData.cpf.replace(/\D/g, ''),
                 dataNascimento: state.pacienteData.dataNascimento,
@@ -620,56 +629,61 @@ async function finalizarAgendamento() {
         }
 
         if (!pacienteId) {
-            throw new Error('Erro: ID do paciente não foi obtido!');
+            throw new Error('Erro ao obter o ID do paciente.');
         }
 
-        // 2. PREPARAR DATA E HORA
+        // 4. MONTAR DATA/HORA DA SESSÃO EM FORMATO ISO
         const [hora, minuto] = state.selectedTime.split(':');
         const dataHora = new Date(state.selectedDate);
         dataHora.setHours(parseInt(hora, 10), parseInt(minuto, 10), 0, 0);
 
-        console.log('📤 Criando agendamento com dados:', {
-            pacienteId: pacienteId,
-            dataHora: dataHora.toISOString(),
-            tipo: state.tipoSessao,
-            observacoes: state.pacienteData.observacoes || '',
-            parcelas: state.parcelas
-        });
+        // 5. DEFINIR VALOR CONFORME TIPO DE SESSÃO
+        let valorNumber = 150; // sessão avulsa
 
-        // 3. CRIAR AGENDAMENTO (fica como pendente até o pagamento)
-        const dadosAgendamento = {
-            pacienteId: pacienteId,
-            dataHora: dataHora.toISOString(),
-            tipo: state.tipoSessao,
+        if (state.tipoSessao === 'pacote_mensal') {
+            valorNumber = 480;
+        } else if (state.tipoSessao === 'pacote_anual') {
+            valorNumber = 5760;
+        }
+
+        const payload = {
+            pacienteId,
+            nome: state.pacienteData.nome,
+            email: emailLimpo,
+            telefone: state.pacienteData.telefone,
+            cpf: state.pacienteData.cpf.replace(/\D/g, ''),
+            dataNascimento: state.pacienteData.dataNascimento,
+            endereco: {
+                rua: state.pacienteData.rua || '',
+                numero: state.pacienteData.numero || '',
+                bairro: state.pacienteData.bairro || '',
+                cidade: state.pacienteData.cidade || '',
+                estado: state.pacienteData.estado || '',
+                cep: state.pacienteData.cep ? state.pacienteData.cep.replace(/\D/g, '') : ''
+            },
+            tipoSessao: state.tipoSessao,             // 'avulsa' | 'pacote_mensal' | 'pacote_anual'
+            dataHoraISO: dataHora.toISOString(),
+            valor: valorNumber,
+            parcelas: state.parcelas || 1,
             observacoes: state.pacienteData.observacoes || ''
         };
 
-        if (state.tipoSessao === 'pacote_mensal' || state.tipoSessao === 'pacote_anual') {
-            dadosAgendamento.parcelas = state.parcelas;
-        }
+        console.log('📤 Enviando dados para criar preferência de pagamento:', payload);
 
-        const agendamento = await agendamentoAPI.criar(dadosAgendamento);
-
-        console.log('✅ Agendamento criado:', agendamento);
-
-        state.agendamentoId = agendamento.data._id;
-
-        // 4. PROCESSAR PAGAMENTO VIA MERCADO PAGO
-        console.log('💳 Criando preferência de pagamento no Mercado Pago para agendamento:', state.agendamentoId);
-
-        const pref = await pagamentoAPI.criarPreferencia(state.agendamentoId);
+        // 6. CRIAR PREFERÊNCIA NO BACKEND (LEAD + MP)
+        const pref = await pagamentoAPI.criarPreferencia(payload);
         console.log('🔁 Resposta da API de pagamento:', pref);
 
-        const initPoint = pref && (pref.init_point || pref.sandbox_init_point);
+        // 👇 AQUI está o pulo do gato: pegar o init_point de dentro de data
+        const prefData = pref && pref.data ? pref.data : pref;
+        const initPoint = prefData && (prefData.init_point || prefData.sandbox_init_point);
 
         if (!initPoint) {
             throw new Error('Não foi possível gerar o link de pagamento. Tente novamente em alguns instantes.');
         }
 
         console.log('🎉 Preferência criada, redirecionando para o Mercado Pago...');
-
-        // 👉 Não mostra mais tela de “Redirecionando…”
-        // vai direto para o checkout do Mercado Pago
+        // 7. REDIRECIONA DIRETO PRO MERCADO PAGO (sem tela de sucesso antes)
         window.location.href = initPoint;
 
     } catch (error) {
@@ -680,6 +694,7 @@ async function finalizarAgendamento() {
         btnFinalizar.textContent = '✓ Confirmar e Ir para Pagamento';
     }
 }
+
 
 
 // =========================
