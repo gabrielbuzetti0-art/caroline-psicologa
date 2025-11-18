@@ -63,15 +63,14 @@ const disponibilidadeAPI = {
 // API de Agendamentos
 // ==============================
 const agendamentoAPI = {
-  // Criar novo agendamento (usado mais no fluxo antigo;
-  // hoje o fluxo principal cria LEAD + preference pelo endpoint de pagamentos)
+  // Criar novo agendamento
   criar: (dados) =>
     fetchAPI('/agendamentos', {
       method: 'POST',
       body: JSON.stringify(dados)
     }),
 
-  // Listar agendamentos com filtros opcionais (usado no painel admin)
+  // Listar agendamentos com filtros opcionais
   listar: (filtros = {}) => {
     const params = new URLSearchParams(filtros);
     const query = params.toString();
@@ -79,7 +78,7 @@ const agendamentoAPI = {
     return fetchAPI(`/agendamentos${sufixo}`);
   },
 
-  // Buscar horários disponíveis
+  // Buscar horários disponíveis (NOME PRINCIPAL)
   horariosDisponiveis: (data, tipoSessao = 'avulsa') => {
     console.log('🔗 API: Buscando horários disponíveis para:', data, 'tipoSessao:', tipoSessao);
     const params = new URLSearchParams({ data });
@@ -91,7 +90,7 @@ const agendamentoAPI = {
     return fetchAPI(`/agendamentos/horarios-disponiveis?${params.toString()}`);
   },
 
-  // Alias usado no agendamento.js (mantém compatibilidade)
+  // ALIÁS com o NOME ANTIGO (usado no agendamento.js)
   buscarHorariosDisponiveis: (data, tipoSessao = 'avulsa') =>
     agendamentoAPI.horariosDisponiveis(data, tipoSessao),
 
@@ -117,15 +116,7 @@ const agendamentoAPI = {
     fetchAPI(`/agendamentos/${id}/cancelar`, {
       method: 'POST',
       body: JSON.stringify(dados)
-    }),
-
-  // Estatísticas de evolução (usado no painel)
-  estatisticasEvolucao: (filtros = {}) => {
-    const params = new URLSearchParams(filtros);
-    const query = params.toString();
-    const sufixo = query ? `?${query}` : '';
-    return fetchAPI(`/agendamentos/estatisticas-evolucao${sufixo}`);
-  }
+    })
 };
 
 // ==============================
@@ -158,18 +149,17 @@ const pacienteAPI = {
 };
 
 // ==============================
-// API de Pagamentos / Leads
+// API de Pagamentos
 // ==============================
 const pagamentoAPI = {
-  // 🔹 Fluxo novo: cria LEAD + Preference do Mercado Pago
-  // Recebe todos os dados do formulário (paciente, data, tipoSessao, etc.)
-  criarPreferencia: (dados) =>
+  // Criar preferência de pagamento no Mercado Pago
+  criarPreferencia: (payload) =>
     fetchAPI('/pagamentos/criar-preferencia', {
       method: 'POST',
-      body: JSON.stringify(dados)
+      body: JSON.stringify(payload)
     }),
 
-  // Confirmar pagamento manual (PIX, dinheiro, transferência – se usar no futuro)
+  // Confirmar pagamento manual (PIX, dinheiro, transferência)
   confirmarManual: (dados) =>
     fetchAPI('/pagamentos/confirmar-manual', {
       method: 'POST',
@@ -182,27 +172,7 @@ const pagamentoAPI = {
 };
 
 // ==============================
-// API de Leads (pré-agendamentos)
-// ==============================
-const leadAPI = {
-  // Listar leads com filtros (usado na aba "Leads (Aguardando Pagamento)")
-  listar: (filtros = {}) => {
-    const params = new URLSearchParams(filtros);
-    const query = params.toString();
-    const sufixo = query ? `?${query}` : '';
-    return fetchAPI(`/leads${sufixo}`);
-  },
-
-  // Atualizar status do lead (ex: convertido, expirado)
-  atualizarStatus: (id, statusLead) =>
-    fetchAPI(`/leads/${id}/status`, {
-      method: 'PATCH',
-      body: JSON.stringify({ statusLead })
-    })
-};
-
-// ==============================
-// Utils (funções auxiliares)
+// Funções auxiliares (Utils)
 // ==============================
 const utils = {
   // Formatar data para exibição longa
