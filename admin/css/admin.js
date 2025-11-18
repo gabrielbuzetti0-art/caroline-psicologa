@@ -211,3 +211,41 @@ window.onclick = function(event) {
         fecharModal();
     }
 }
+/* ======== ABAS DO PAINEL ======== */
+.tabs-container {
+    max-width: 1400px;
+    margin: 20px auto 0;
+    padding: 0 20px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.tab-button {
+    padding: 10px 16px;
+    border-radius: 20px;
+    border: none;
+    background: #ecf0f1;
+    color: #555;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.tab-button.active {
+    background: #667eea;
+    color: #fff;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+.tab-button:hover {
+    background: #dfe6e9;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}

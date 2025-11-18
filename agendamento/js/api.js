@@ -158,6 +158,25 @@ const pagamentoAPI = {
       method: 'POST',
       body: JSON.stringify(dados)
     }),
+// ==============================
+// API de Leads (pré-agendamentos)
+// ==============================
+const leadAPI = {
+  // Listar leads com filtros opcionais (ex.: { statusLead: 'aguardando_pagamento' })
+  listar: (filtros = {}) => {
+    const params = new URLSearchParams(filtros);
+    const query = params.toString();
+    const sufixo = query ? `?${query}` : '';
+    return fetchAPI(`/leads${sufixo}`);
+  },
+
+  // Atualizar status do lead (se você quiser usar depois)
+  atualizarStatus: (id, statusLead) =>
+    fetchAPI(`/leads/${id}/status`, {
+      method: 'PATCH',
+      body: JSON.stringify({ statusLead })
+    })
+};
 
   // Confirmar pagamento manual (PIX, dinheiro, transferência)
   confirmarManual: (dados) =>

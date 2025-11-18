@@ -31,7 +31,7 @@
     <div id="dashboard" class="dashboard" style="display: none;">
         <header class="admin-header">
             <div class="header-content">
-                <h1>📋 Painel de Agendamentos</h1>
+                <h1>📋 Painel Administrativo</h1>
                 <div class="header-actions">
                     <span class="user-info">👤 Admin</span>
                     <button class="btn btn-logout" onclick="logout()">Sair</button>
@@ -39,73 +39,143 @@
             </div>
         </header>
 
-        <div class="filters-container">
-            <div class="filter-group">
-                <label>Data Inicial:</label>
-                <input type="date" id="filterDataInicio">
-            </div>
-            <div class="filter-group">
-                <label>Data Final:</label>
-                <input type="date" id="filterDataFim">
-            </div>
-            <div class="filter-group">
-                <label>Status:</label>
-                <select id="filterStatus">
-                    <option value="">Todos</option>
-                    <option value="pendente">Pendente</option>
-                    <option value="confirmado">Confirmado</option>
-                    <option value="cancelado">Cancelado</option>
-                </select>
-            </div>
-            <button class="btn btn-primary" onclick="carregarAgendamentos()">🔍 Filtrar</button>
-            <button class="btn btn-secondary" onclick="limparFiltros()">🔄 Limpar</button>
+        <!-- Abas -->
+        <div class="tabs-container">
+            <button class="tab-button active" data-tab="agendamentos">📅 Agendamentos</button>
+            <button class="tab-button" data-tab="leads">🧲 Leads (Aguardando Pagamento)</button>
+            <button class="tab-button" data-tab="estatisticas">📈 Estatísticas</button>
         </div>
 
-        <div class="stats-container">
-            <div class="stat-card">
-                <h3>Total</h3>
-                <p class="stat-number" id="statTotal">0</p>
+        <!-- TAB: AGENDAMENTOS -->
+        <div id="tab-agendamentos" class="tab-content active">
+            <div class="filters-container">
+                <div class="filter-group">
+                    <label>Data Inicial:</label>
+                    <input type="date" id="filterDataInicio">
+                </div>
+                <div class="filter-group">
+                    <label>Data Final:</label>
+                    <input type="date" id="filterDataFim">
+                </div>
+                <div class="filter-group">
+                    <label>Status:</label>
+                    <select id="filterStatus">
+                        <option value="">Confirmados (padrão)</option>
+                        <option value="pendente">Pendentes</option>
+                        <option value="confirmado">Confirmados</option>
+                        <option value="cancelado">Cancelados</option>
+                    </select>
+                </div>
+                <button class="btn btn-primary" onclick="carregarAgendamentos()">🔍 Filtrar</button>
+                <button class="btn btn-secondary" onclick="limparFiltros()">🔄 Limpar</button>
             </div>
-            <div class="stat-card">
-                <h3>Pendentes</h3>
-                <p class="stat-number" id="statPendentes">0</p>
+
+            <div class="stats-container">
+                <div class="stat-card">
+                    <h3>Total</h3>
+                    <p class="stat-number" id="statTotal">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Pendentes</h3>
+                    <p class="stat-number" id="statPendentes">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Confirmados</h3>
+                    <p class="stat-number" id="statConfirmados">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Hoje</h3>
+                    <p class="stat-number" id="statHoje">0</p>
+                </div>
             </div>
-            <div class="stat-card">
-                <h3>Confirmados</h3>
-                <p class="stat-number" id="statConfirmados">0</p>
-            </div>
-            <div class="stat-card">
-                <h3>Hoje</h3>
-                <p class="stat-number" id="statHoje">0</p>
+
+            <div class="table-container">
+                <div class="loading" id="loading" style="display: none;">
+                    <div class="spinner"></div>
+                    <p>Carregando...</p>
+                </div>
+                <table class="table-agendamentos">
+                    <thead>
+                        <tr>
+                            <th>Data/Hora</th>
+                            <th>Paciente</th>
+                            <th>Contato</th>
+                            <th>Tipo</th>
+                            <th>Valor</th>
+                            <th>Status</th>
+                            <th>Pagamento</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabelaBody"></tbody>
+                </table>
             </div>
         </div>
 
-        <div class="table-container">
-            <div class="loading" id="loading" style="display: none;">
-                <div class="spinner"></div>
-                <p>Carregando...</p>
+        <!-- TAB: LEADS -->
+        <div id="tab-leads" class="tab-content">
+            <div class="filters-container">
+                <p><strong>🧲 Leads aguardando pagamento</strong> (pré-agendamentos que ainda não viraram sessão confirmada).</p>
             </div>
-            <table class="table-agendamentos">
-                <thead>
-                    <tr>
-                        <th>Data/Hora</th>
-                        <th>Paciente</th>
-                        <th>Contato</th>
-                        <th>Tipo</th>
-                        <th>Valor</th>
-                        <th>Status</th>
-                        <th>Ações</th>
-                    </tr>
-                </thead>
-                <tbody id="tabelaBody"></tbody>
-            </table>
+
+            <div class="table-container">
+                <div class="loading" id="loadingLeads" style="display: none;">
+                    <div class="spinner"></div>
+                    <p>Carregando leads...</p>
+                </div>
+                <table class="table-agendamentos">
+                    <thead>
+                        <tr>
+                            <th>Data/Hora</th>
+                            <th>Nome</th>
+                            <th>Contato</th>
+                            <th>Tipo</th>
+                            <th>Valor</th>
+                            <th>Status Lead</th>
+                            <th>Status Pgto</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabelaLeadsBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- TAB: ESTATÍSTICAS -->
+        <div id="tab-estatisticas" class="tab-content">
+            <div class="filters-container">
+                <p><strong>📈 Painel de evolução</strong> baseado em todos os agendamentos (confirmados, cancelados, etc.).</p>
+            </div>
+
+            <div class="stats-container">
+                <div class="stat-card">
+                    <h3>Últimos 7 dias</h3>
+                    <p class="stat-number" id="statUltimos7">0</p>
+                    <p>Agendamentos criados nos últimos 7 dias.</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Mês atual</h3>
+                    <p class="stat-number" id="statMesAtual">0</p>
+                    <p>Total de agendamentos neste mês.</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Mês anterior</h3>
+                    <p class="stat-number" id="statMesAnterior">0</p>
+                    <p>Total de agendamentos no mês passado.</p>
+                </div>
+                <div class="stat-card">
+                    <h3>No-show (faltou)</h3>
+                    <p class="stat-number" id="statFaltou">0</p>
+                    <p>Quantidade com status "faltou".</p>
+                </div>
+            </div>
         </div>
     </div>
 
+    <!-- Modal de Detalhes (reutilizado para agendamentos; se quiser, dá pra usar para leads também) -->
     <div id="modalDetalhes" class="modal" style="display: none;">
         <div class="modal-content">
             <span class="close" onclick="fecharModal()">&times;</span>
-            <h2>Detalhes do Agendamento</h2>
+            <h2>Detalhes</h2>
             <div id="modalBody"></div>
         </div>
     </div>
