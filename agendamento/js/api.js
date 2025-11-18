@@ -3,7 +3,7 @@
 // ==============================
 
 // Detectar ambiente automaticamente
-const API_URL = (window.location.hostname === 'localhost' || 
+const API_URL = (window.location.hostname === 'localhost' ||
                  window.location.hostname === '127.0.0.1')
   ? 'http://localhost:5000/api'
   : 'https://agendamento-psi-api.onrender.com/api';
@@ -63,14 +63,15 @@ const disponibilidadeAPI = {
 // API de Agendamentos
 // ==============================
 const agendamentoAPI = {
-  // Criar novo agendamento
+  // Criar novo agendamento (usado mais no fluxo antigo;
+  // hoje o fluxo principal cria LEAD + preference pelo endpoint de pagamentos)
   criar: (dados) =>
     fetchAPI('/agendamentos', {
       method: 'POST',
       body: JSON.stringify(dados)
     }),
 
-  // Listar agendamentos com filtros opcionais
+  // Listar agendamentos com filtros opcionais (usado no painel admin)
   listar: (filtros = {}) => {
     const params = new URLSearchParams(filtros);
     const query = params.toString();
@@ -78,7 +79,7 @@ const agendamentoAPI = {
     return fetchAPI(`/agendamentos${sufixo}`);
   },
 
-  // Buscar horários disponíveis (NOME PRINCIPAL)
+  // Buscar horários disponíveis
   horariosDisponiveis: (data, tipoSessao = 'avulsa') => {
     console.log('🔗 API: Buscando horários disponíveis para:', data, 'tipoSessao:', tipoSessao);
     const params = new URLSearchParams({ data });
@@ -90,7 +91,7 @@ const agendamentoAPI = {
     return fetchAPI(`/agendamentos/horarios-disponiveis?${params.toString()}`);
   },
 
-  // ALIÁS com o NOME ANTIGO (usado no agendamento.js)
+  // Alias usado no agendamento.js (mantém compatibilidade)
   buscarHorariosDisponiveis: (data, tipoSessao = 'avulsa') =>
     agendamentoAPI.horariosDisponiveis(data, tipoSessao),
 
@@ -116,7 +117,15 @@ const agendamentoAPI = {
     fetchAPI(`/agendamentos/${id}/cancelar`, {
       method: 'POST',
       body: JSON.stringify(dados)
-    })
+    }),
+
+  // Estatísticas de evolução (usado no painel)
+  estatisticasEvolucao: (filtros = {}) => {
+    const params = new URLSearchParams(filtros);
+    const query = params.toString();
+    const sufixo = query ? `?${query}` : '';
+    return fetchAPI(`/agendamentos/estatisticas-evolucao${sufixo}`);
+  }
 };
 
 // ==============================
@@ -149,20 +158,34 @@ const pacienteAPI = {
 };
 
 // ==============================
-// API de Pagamentos
+// API de Pagamentos / Leads
 // ==============================
 const pagamentoAPI = {
-  // Criar preferência de pagamento no Mercado Pago (NOVO FLUXO: envia os dados do lead)
+  // 🔹 Fluxo novo: cria LEAD + Preference do Mercado Pago
+  // Recebe todos os dados do formulário (paciente, data, tipoSessao, etc.)
   criarPreferencia: (dados) =>
     fetchAPI('/pagamentos/criar-preferencia', {
       method: 'POST',
       body: JSON.stringify(dados)
     }),
+
+  // Confirmar pagamento manual (PIX, dinheiro, transferência – se usar no futuro)
+  confirmarManual: (dados) =>
+    fetchAPI('/pagamentos/confirmar-manual', {
+      method: 'POST',
+      body: JSON.stringify(dados)
+    }),
+
+  // Buscar status do pagamento de um agendamento
+  buscarStatus: (agendamentoId) =>
+    fetchAPI(`/pagamentos/${agendamentoId}`)
+};
+
 // ==============================
 // API de Leads (pré-agendamentos)
 // ==============================
 const leadAPI = {
-  // Listar leads com filtros opcionais (ex.: { statusLead: 'aguardando_pagamento' })
+  // Listar leads com filtros (usado na aba "Leads (Aguardando Pagamento)")
   listar: (filtros = {}) => {
     const params = new URLSearchParams(filtros);
     const query = params.toString();
@@ -170,7 +193,7 @@ const leadAPI = {
     return fetchAPI(`/leads${sufixo}`);
   },
 
-  // Atualizar status do lead (se você quiser usar depois)
+  // Atualizar status do lead (ex: convertido, expirado)
   atualizarStatus: (id, statusLead) =>
     fetchAPI(`/leads/${id}/status`, {
       method: 'PATCH',
@@ -178,20 +201,8 @@ const leadAPI = {
     })
 };
 
-  // Confirmar pagamento manual (PIX, dinheiro, transferência)
-  confirmarManual: (dados) =>
-    fetchAPI('/pagamentos/confirmar-manual', {
-      method: 'POST',
-      body: JSON.stringify(dados)
-    }),
-
-  // Buscar status do pagamento de um agendamento (por enquanto quase não usamos aqui)
-  buscarStatus: (agendamentoId) =>
-    fetchAPI(`/pagamentos/${agendamentoId}`)
-};
-
 // ==============================
-// Funções auxiliares (Utils)
+// Utils (funções auxiliares)
 // ==============================
 const utils = {
   // Formatar data para exibição longa
