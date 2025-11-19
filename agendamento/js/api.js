@@ -151,13 +151,43 @@ const pacienteAPI = {
 // ==============================
 // API de Pagamentos
 // ==============================
+// ==============================
+// API de Pagamentos
+// ==============================
 const pagamentoAPI = {
-  // Criar preferência de pagamento no Mercado Pago
-  criarPreferencia: (payload) =>
-    fetchAPI('/pagamentos/criar-preferencia', {
+  /**
+   * Pode ser usado de duas formas:
+   *
+   * 1) MODO NOVO (recomendado):
+   *    pagamentoAPI.criarPreferencia({
+   *      nome, email, telefone, cpf, dataNascimento, endereco,
+   *      tipoSessao, dataHoraISO, valor, parcelas, observacoes, pacienteId
+   *    })
+   *
+   * 2) MODO LEGADO:
+   *    pagamentoAPI.criarPreferencia(agendamentoId, { extra1, extra2 })
+   */
+  criarPreferencia: (arg1, arg2 = {}) => {
+    let body;
+
+    if (typeof arg1 === 'string') {
+      // 🔙 MODO ANTIGO: primeiro parâmetro é o agendamentoId
+      body = {
+        agendamentoId: arg1,
+        ...(arg2 || {})
+      };
+    } else if (typeof arg1 === 'object' && arg1 !== null) {
+      // ✅ MODO NOVO: passa o objeto do formulário direto
+      body = arg1;
+    } else {
+      body = {};
+    }
+
+    return fetchAPI('/pagamentos/criar-preferencia', {
       method: 'POST',
-      body: JSON.stringify(payload)
-    }),
+      body: JSON.stringify(body)
+    });
+  },
 
   // Confirmar pagamento manual (PIX, dinheiro, transferência)
   confirmarManual: (dados) =>
