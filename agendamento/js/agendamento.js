@@ -698,39 +698,31 @@ async function finalizarAgendamento() {
 
 
 // =========================
-// TRATAR RETORNO DO MERCADO PAGO
+// TRATAR RETORNO DO MERCADO PAGO (USANDO leadId)
 // =========================
 async function verificarRetornoMercadoPago() {
     try {
         const params = new URLSearchParams(window.location.search);
         const status = params.get('status');
-        const agendamentoId = params.get('agendamentoId');
+        const leadId = params.get('leadId'); // 👈 agora usamos leadId
 
-        if (!status || !agendamentoId) {
+        // Se não veio status, não faz nada
+        if (!status) {
             return;
         }
 
-        console.log('🔁 Retorno do Mercado Pago detectado:', { status, agendamentoId });
+        console.log('🔁 Retorno do Mercado Pago detectado:', { status, leadId });
 
         if (status === 'approved') {
-            try {
-                const resp = await pagamentoAPI.buscarStatus(agendamentoId);
-                const dados = resp && (resp.data || resp);
-                const statusPag = dados && (dados.statusPagamento || dados.status);
-
-                if (statusPag === 'pago' || statusPag === 'confirmado') {
-                    alert('✅ Seu pagamento foi aprovado e seu agendamento está confirmado! Você receberá um e-mail com os detalhes em instantes.');
-                } else {
-                    alert('✅ Seu pagamento foi aprovado no Mercado Pago. Em alguns minutos seu agendamento será confirmado e você receberá um e-mail com os detalhes.');
-                }
-            } catch (e) {
-                console.error('Erro ao consultar status do pagamento:', e);
-                alert('✅ Seu pagamento foi aprovado no Mercado Pago. Caso não receba o e-mail de confirmação em alguns minutos, entre em contato pelo WhatsApp.');
-            }
+            // O webhook vai converter o lead em agendamento e mandar e-mail
+            alert('✅ Seu pagamento foi concluído no Mercado Pago! ' +
+                  'Assim que o sistema confirmar o agendamento, você receberá um e-mail com todos os detalhes.');
         } else if (status === 'pending') {
-            alert('⌛ Seu pagamento ficou pendente no Mercado Pago. Se tiver dúvidas, entre em contato para receber ajuda.');
+            alert('⌛ Seu pagamento ficou pendente no Mercado Pago. ' +
+                  'Se tiver dúvidas, entre em contato para receber ajuda.');
         } else if (status === 'failure') {
-            alert('❌ O pagamento não foi concluído ou foi cancelado. Você pode tentar novamente realizando um novo agendamento.');
+            alert('❌ O pagamento não foi concluído ou foi cancelado. ' +
+                  'Você pode tentar novamente realizando um novo agendamento.');
         }
 
         // Limpa os parâmetros da URL para não repetir a mensagem ao recarregar
@@ -742,3 +734,4 @@ async function verificarRetornoMercadoPago() {
         console.error('Erro ao tratar retorno do Mercado Pago:', error);
     }
 }
+

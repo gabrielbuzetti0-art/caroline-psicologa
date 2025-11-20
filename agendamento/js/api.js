@@ -118,6 +118,16 @@ const agendamentoAPI = {
       body: JSON.stringify(dados)
     })
 };
+// API de Leads
+const leadAPI = {
+  // Listar leads com filtros opcionais
+  listar: (filtros = {}) => {
+    const params = new URLSearchParams(filtros);
+    const query = params.toString();
+    const sufixo = query ? `?${query}` : '';
+    return fetchAPI(`/leads${sufixo}`);
+  }
+};
 
 // ==============================
 // API de Pacientes
